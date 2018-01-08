@@ -1,5 +1,6 @@
 package com.springboot.system.service;
 
+import com.springboot.common.service.CommonService;
 import com.springboot.system.entity.firstDsE.ShiroResources;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 /**
  * Created by AlbertXmas on 17/8/29.
  */
-public interface ShiroResourcesService extends CommonService<ShiroResources>{
+public interface ShiroResourcesService extends CommonService<ShiroResources> {
 
     public List<ShiroResources> findOneBy(ShiroResources shiroResources);
 

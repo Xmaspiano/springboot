@@ -1,5 +1,6 @@
 package com.springboot.system.web;
 
+import com.springboot.common.util.CommonUtil;
 import com.springboot.system.entity.firstDsE.Favarite;
 import com.springboot.system.entity.firstDsE.OsMenu;
 import com.springboot.system.entity.secondDsE.Hrmresource;
@@ -71,25 +72,11 @@ public class FavariteController {
     public Map getFavariteDataUrl(){
         Map jsonMap = new HashMap();
         jsonMap.put("success", true);
-
-
         Subject subject = SecurityUtils.getSubject();
-
         Hrmresource hrmresource=(Hrmresource) subject.getPrincipal();
-
         List<Favarite> favarites = favariteService.findByUserId(hrmresource.getId());
 
-        Map[] treeMap = new HashMap[favarites.size()];
-        Favarite favarite;
-        jsonMap.put("total",favarites.size());
-        for (int i = 0; i < favarites.size(); i++) {
-            treeMap[i] = new HashMap();
-            favarite = favarites.get(i);
-            OsMenu osMenu = osMenuService.findOne(favarite.getMenuId());
-            treeMap[i].put("text", osMenu.getName());
-            treeMap[i].put("id", osMenu.getId());
-        }
-        jsonMap.put("rows",treeMap);
+        jsonMap.put("rows", CommonUtil.conversionByList(favarites));
         return jsonMap;
     }
 }

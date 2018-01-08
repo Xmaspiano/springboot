@@ -1,6 +1,7 @@
 package com.springboot.system.web;
 
 
+import com.springboot.common.util.CommonUtil;
 import com.springboot.system.entity.firstDsE.OsMenu;
 import com.springboot.system.entity.secondDsE.Hrmdepartment;
 import com.springboot.system.service.HrmdepartmentService;
@@ -35,24 +36,9 @@ public class HrmDepartmentController {
     @ResponseBody
     public Map getTreeGridData(){
         Map jsonMap = new HashMap();
-        List<Hrmdepartment> mList = hrmdepartmentService.findByYXDept();
+        List<Hrmdepartment> hrmdepartmentList = hrmdepartmentService.findByYXDept();
 
-        Map[] treeMap = new HashMap[mList.size()];
-        Hrmdepartment sonVO;
-        jsonMap.put("total",treeMap.length);
-        for (int i = 0; i < treeMap.length; i++) {
-            treeMap[i] = new HashMap();
-            sonVO = mList.get(i);
-            treeMap[i].put("id",sonVO.getId());
-            treeMap[i].put("departmentname",sonVO.getDepartmentname());
-            treeMap[i].put("canceled",sonVO.getCanceled());
-            treeMap[i].put("supdepid",sonVO.getSupdepid());
-            treeMap[i].put("subcompanyid1",sonVO.getSubcompanyid1());
-            if(sonVO.getSupdepid() != 1l) {
-                treeMap[i].put("_parentId", sonVO.getSupdepid());
-            }
-        }
-        jsonMap.put("rows",treeMap);
+        jsonMap.put("rows", CommonUtil.conversionByList(hrmdepartmentList));
         return jsonMap;
     }
 }

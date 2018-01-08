@@ -10,11 +10,6 @@
     <meta charset="UTF-8">
     <%@ include file="../layout_system.jsp"%>
 </head>
-<style>
-    .e-icon{
-        top: 6px;
-    }
-</style>
 <%-- 调用方法script --%>
 <script>
 
@@ -83,21 +78,21 @@
     //定义treegrid工具栏
     var toolbar = [{
         text:"<m:info name='添加'/>",
-        <shiro:lacksPermission name="role:save:add">disabled:true,</shiro:lacksPermission>
+        <%--<shiro:lacksPermission name="role:save:add">disabled:true,</shiro:lacksPermission>--%>
         iconCls: 'e-icon icon-plus',
         handler: function(){
             actionOver("add");
         }
     },{
         text:"<m:info name='修改'/>",
-        <shiro:lacksPermission name="role:save:edit">disabled:true,</shiro:lacksPermission>
+        <%--<shiro:lacksPermission name="role:save:edit">disabled:true,</shiro:lacksPermission>--%>
         iconCls: 'e-icon icon-pencil',
         handler: function(){
             actionOver("edit");
         }
     },{
         text:"<m:info name='删除'/>",
-        <shiro:lacksPermission name="role:delete">disabled:true,</shiro:lacksPermission>
+        <%--<shiro:lacksPermission name="role:delete">disabled:true,</shiro:lacksPermission>--%>
         iconCls: 'e-icon icon-remove',
         handler: function(){
             actionOver("delete");
@@ -130,14 +125,14 @@
                 $('#table-role').datagrid("reload");
                 break;
             case "add":
-                <shiro:hasPermission name="role:save:add">
+                <%--<shiro:hasPermission name="role:save:add">--%>
                 addChangeroleTree();
                 $('#dialog-role').dialog({title: "<m:info name='新增角色'/>"});
                 $('#dialog-role').dialog('open');
                 break;
-                </shiro:hasPermission>
+                <%--</shiro:hasPermission>--%>
             case "edit":
-                <shiro:hasPermission name="role:save:edit">
+                <%--<shiro:hasPermission name="role:save:edit">--%>
                 if(editChangeroleTree()) {
                     $('#dialog-role').dialog({title: "<m:info name='修改角色'/>"});
                     $('#dialog-role').dialog('open');
@@ -145,12 +140,12 @@
                     $.messager.alert('Warning',"<m:info name='请选择...'/>");
                 }
                 break;
-                </shiro:hasPermission>
+                <%--</shiro:hasPermission>--%>
             case "delete":
-                <shiro:hasPermission name="role:delete">
+                <%--<shiro:hasPermission name="role:delete">--%>
                 deleteRow();
                 break;
-                </shiro:hasPermission>
+                <%--</shiro:hasPermission>--%>
             default:
                 return;
         }

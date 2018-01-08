@@ -1,7 +1,7 @@
 package com.springboot.system.repository.firstDs;
 
 import com.springboot.system.entity.firstDsE.ShiroResources;
-import com.springboot.system.repository.CommonRepository;
+import com.springboot.common.repository.CommonRepository;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

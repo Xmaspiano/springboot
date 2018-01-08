@@ -1,14 +1,12 @@
 package com.springboot.system.service.impl;
 
 
+import com.springboot.common.service.impl.CommonServiceImpl;
 import com.springboot.system.entity.secondDsE.Hrmresource;
 import com.springboot.system.repository.secondDS.HrmresourceRepository;
 import com.springboot.system.service.HrmresourceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

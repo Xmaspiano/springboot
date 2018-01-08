@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 //@Component
 public class MsgUtilNative<C> implements MsgUtil<C> {
     private static final Logger LOGGER = LoggerFactory.getLogger(MsgUtilNative.class);
-    private Class aClass;
+    public Class aClass;
 
     public MsgUtilNative(Class<?> clazz){
         this.aClass = clazz;

@@ -2,7 +2,7 @@ package com.springboot.system.entity.secondDsE;
 
 
 
-import com.springboot.system.entity.base.IdEntity;
+import com.springboot.common.entity.IdEntity;
 import com.springboot.system.entity.firstDsE.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;

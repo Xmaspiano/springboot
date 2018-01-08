@@ -1,6 +1,7 @@
 package com.springboot.system.web;
 
 
+import com.springboot.common.util.CommonUtil;
 import com.springboot.system.entity.firstDsE.OsMenu;
 import com.springboot.system.service.OsMenuService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -73,24 +74,7 @@ public class MenuController {
         Map jsonMap = new HashMap();
         List<OsMenu> osmList = osMenuService.findAll();
 
-        Map[] treeMap = new HashMap[osmList.size()];
-        OsMenu sonVO;
-        jsonMap.put("total",treeMap.length);
-        for (int i = 0; i < treeMap.length; i++) {
-            treeMap[i] = new HashMap();
-            sonVO = osmList.get(i);
-            treeMap[i].put("id",sonVO.getId());
-            treeMap[i].put("appid",sonVO.getAppid());
-            treeMap[i].put("name",sonVO.getName());
-            treeMap[i].put("parentid",sonVO.getParentid());
-            treeMap[i].put("remark",sonVO.getRemark());
-            treeMap[i].put("life",sonVO.isLife());
-            treeMap[i].put("dateremark",sonVO.getDatemark());
-            if(sonVO.getParentid() != 1l) {
-                treeMap[i].put("_parentId", sonVO.getParentid());
-            }
-        }
-        jsonMap.put("rows",treeMap);
+        jsonMap.put("rows", CommonUtil.conversionByList(osmList));
         return jsonMap;
     }
 }

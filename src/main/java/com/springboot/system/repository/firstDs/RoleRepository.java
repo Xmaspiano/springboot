@@ -1,7 +1,7 @@
 package com.springboot.system.repository.firstDs;
 
 import com.springboot.system.entity.firstDsE.Role;
-import com.springboot.system.repository.CommonRepository;
+import com.springboot.common.repository.CommonRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

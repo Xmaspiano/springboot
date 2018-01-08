@@ -1,5 +1,6 @@
 package com.springboot.system.web;
 
+import com.springboot.common.util.CommonUtil;
 import com.springboot.system.entity.firstDsE.Role;
 import com.springboot.system.service.RoleService;
 import com.springboot.system.util.AjaxMsgUtil;
@@ -59,21 +60,9 @@ public class RoleController{
     @ResponseBody
     public Map getGridData(){
         Map jsonMap = new HashMap();
-        List<Role> osmList = roleService.findAll();
+        List<Role> roleList = roleService.findAll();
 
-        Map[] treeMap = new HashMap[osmList.size()];
-        Role sonVO;
-        jsonMap.put("total",treeMap.length);
-        for (int i = 0; i < treeMap.length; i++) {
-            treeMap[i] = new HashMap();
-            sonVO = osmList.get(i);
-            treeMap[i].put("id",sonVO.getId());
-            treeMap[i].put("role",sonVO.getRole());
-            treeMap[i].put("description",sonVO.getDescription());
-            treeMap[i].put("available",sonVO.getAvailable());
-//            treeMap[i].put("roleList",sonVO.getRelationshipUserRoleList());
-        }
-        jsonMap.put("rows",treeMap);
+        jsonMap.put("rows", CommonUtil.conversionByList(roleList));
         return jsonMap;
     }
 

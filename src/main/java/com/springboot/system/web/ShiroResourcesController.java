@@ -1,11 +1,11 @@
 package com.springboot.system.web;
 
+import com.springboot.common.util.CommonUtil;
 import com.springboot.system.entity.firstDsE.ShiroResources;
 import com.springboot.system.service.ShiroResourcesService;
 import com.springboot.system.util.AjaxMsgUtil;
 import com.springboot.system.util.MsgUtil;
 import com.springboot.system.util.MsgUtilNative;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,23 +53,9 @@ public class ShiroResourcesController{
     @ResponseBody
     public Map getGridData(){
         Map jsonMap = new HashMap();
-        List<ShiroResources> osmList = shiroResourcesService.findAll();
+        List<ShiroResources> shiroResourcesList = shiroResourcesService.findAll();
 
-        Map[] treeMap = new HashMap[osmList.size()];
-        ShiroResources sonVO;
-        jsonMap.put("total",treeMap.length);
-        for (int i = 0; i < treeMap.length; i++) {
-            treeMap[i] = new HashMap();
-            sonVO = osmList.get(i);
-            treeMap[i].put("id",sonVO.getId());
-            treeMap[i].put("realName",sonVO.getRealName());
-            treeMap[i].put("name",sonVO.getName());
-            treeMap[i].put("method",sonVO.getMethod());
-            treeMap[i].put("shiroAuth",sonVO.getShiroAuth());
-            treeMap[i].put("available",sonVO.isAvailable());
-//            treeMap[i].put("datetime",sonVO.getDatetime());
-        }
-        jsonMap.put("rows",treeMap);
+        jsonMap.put("rows", CommonUtil.conversionByList(shiroResourcesList));
         return jsonMap;
     }
 

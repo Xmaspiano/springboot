@@ -1,6 +1,6 @@
 package com.springboot.system.entity.firstDsE;
 
-import com.springboot.system.entity.base.IdEntityMYSQL;
+import com.springboot.common.entity.IdEntityMYSQL;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

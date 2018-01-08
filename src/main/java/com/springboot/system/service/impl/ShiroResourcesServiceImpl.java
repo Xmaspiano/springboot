@@ -1,5 +1,6 @@
 package com.springboot.system.service.impl;
 
+import com.springboot.common.service.impl.CommonServiceImpl;
 import com.springboot.system.entity.firstDsE.ShiroResources;
 import com.springboot.system.repository.firstDs.ShiroResourcesRepository;
 import com.springboot.system.service.ShiroResourcesService;

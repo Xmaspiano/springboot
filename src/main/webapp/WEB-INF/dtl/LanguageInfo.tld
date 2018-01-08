@@ -11,7 +11,7 @@
 
     <tag>
         <name>info</name>
-        <tag-class>com.springboot.system.util.LanguageInfoTag</tag-class>
+        <tag-class>com.springboot.common.util.LanguageInfoTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>name</name>

@@ -1,8 +1,8 @@
 package com.springboot.system.service;
 
 
+import com.springboot.common.service.CommonService;
 import com.springboot.system.entity.firstDsE.Favarite;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 

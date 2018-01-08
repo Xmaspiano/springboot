@@ -7,15 +7,13 @@ package com.springboot.system;
 
 import com.springboot.system.entity.firstDsE.ShiroResources;
 import com.springboot.system.service.ShiroResourcesService;
-import com.springboot.system.util.MD5Helper;
+import com.springboot.common.util.MD5Helper;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
