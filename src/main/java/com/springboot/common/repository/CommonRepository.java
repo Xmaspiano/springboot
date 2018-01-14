@@ -1,10 +1,9 @@
 package com.springboot.common.repository;
 
-        import org.springframework.context.annotation.Bean;
-        import org.springframework.data.jpa.repository.JpaRepository;
-        import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-        import org.springframework.data.repository.CrudRepository;
-        import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by AlbertXmas on 2017/1/13.
@@ -15,6 +14,7 @@ package com.springboot.common.repository;
  * @param <R> repository
  */
 @NoRepositoryBean
+//@Component
 public interface CommonRepository<E> extends JpaRepository<E, Long>,JpaSpecificationExecutor<E> {
 
 }

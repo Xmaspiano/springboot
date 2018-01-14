@@ -1,9 +1,9 @@
-package com.springboot.system.service.impl;
+package com.springboot.system.menu.service.impl;
 
 import com.springboot.common.service.impl.CommonServiceImpl;
-import com.springboot.system.entity.firstDsE.OsMenu;
-import com.springboot.system.repository.firstDs.OsMenuRepository;
-import com.springboot.system.service.OsMenuService;
+import com.springboot.system.menu.entity.firstDsE.OsMenu;
+import com.springboot.system.menu.repository.firstDs.OsMenuRepository;
+import com.springboot.system.menu.service.OsMenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

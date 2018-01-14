@@ -2,9 +2,9 @@ hookAjax({
     //hook callbacks
     onreadystatechange:function(xhr){
         if(xhr.readyState == 4 && xhr.status == 999){
-            if($("#dialog-login") && $('#username') && $("#dialog-login").parent().is(":hidden") ) {
-                $("#dialog-login").dialog('open');
-                $('#password').textbox('textbox').focus();
+            if(top.$("#dialog-login") && top.$('#username') && top.$("#dialog-login").parent().is(":hidden") ) {
+                top.$("#dialog-login").dialog('open');
+                top.$('#password').textbox('textbox').focus();
             }
             return false;
         }

@@ -1,10 +1,13 @@
-package com.springboot.system.web;
+package com.springboot.system.menu.web;
 
 
+import com.springboot.common.model.TreeModel;
 import com.springboot.common.util.CommonUtil;
-import com.springboot.system.entity.firstDsE.OsMenu;
-import com.springboot.system.service.OsMenuService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.springboot.system.menu.entity.firstDsE.OsMenu;
+import com.springboot.system.menu.service.OsMenuService;
+import com.springboot.system.util.AjaxMsgUtil;
+import com.springboot.system.util.MsgUtil;
+import com.springboot.system.util.MsgUtilNative;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +25,17 @@ import java.util.Map;
 @RequestMapping(value = {"/menu"})
 public class MenuController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MenuController.class);
+    private final MsgUtil msgUtil = new MsgUtilNative(MenuController.class);
 
     @Autowired
     private OsMenuService osMenuService;
 
+    @Autowired
+    private TreeModel PageMenu;
+
     @RequestMapping(method = RequestMethod.GET)
     public String index(){
-        return "systemLayout/menu/menu";
+        return "system/menu/menu";
     }
 
     @RequestMapping(value = "/save" )
@@ -38,14 +45,11 @@ public class MenuController {
         Map jsonMap = new HashMap();
         try {
             osMenuService.save(osMenu);
-            jsonMap.put("success", true);
-            jsonMap.put("message", "保存成功...");
+            return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("deleteInfo.success"));
         }catch(Exception e){
             e.printStackTrace();
-            jsonMap.put("success", false);
-            jsonMap.put("message", "保存失败..."+e.getMessage());
+            return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.ERROR, msgUtil.getMsg("deleteInfo.error"));
         }
-        return jsonMap;
     }
 
     @RequestMapping(value = "/delete" )
@@ -58,14 +62,11 @@ public class MenuController {
                 throw new Exception("包含子菜单");
             }
             osMenuService.delete(id);
-            jsonMap.put("success", true);
-            jsonMap.put("message", "删除成功...");
+            return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("deleteInfo.success"));
         }catch(Exception e){
             e.printStackTrace();
-            jsonMap.put("success", false);
-            jsonMap.put("message", "删除失败..."+e.getMessage());
+            return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.ERROR, msgUtil.getMsg("deleteInfo.error"));
         }
-        return jsonMap;
     }
 
     @RequestMapping(value = "/date_treegrid.json" )
@@ -73,8 +74,7 @@ public class MenuController {
     public Map getTreeGridData(){
         Map jsonMap = new HashMap();
         List<OsMenu> osmList = osMenuService.findAll();
-
-        jsonMap.put("rows", CommonUtil.conversionByList(osmList));
+        jsonMap.put("rows", CommonUtil.conversionByList(PageMenu.changeByEntitys(osmList)));
         return jsonMap;
     }
 }

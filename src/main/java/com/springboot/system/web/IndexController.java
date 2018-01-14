@@ -32,17 +32,18 @@ public class IndexController {
     HrmdepartmentService hrmdepartmentService;
 
     @RequestMapping
-    @ResponseBody
-    public Map index(){
-//        Hrmresource hrmresourceList = hrmresourceService.findByUser("13511");
-
-        msgUtil.getMsg("===controller....");
-        List hrmresourceList = hrmdepartmentService.findByYXDept();
-
-        Map map = new HashMap();
-        map.put("hrm",hrmresourceList);
-
-        return map;
+//    @ResponseBody
+    public String index(){
+////        Hrmresource hrmresourceList = hrmresourceService.findByUser("13511");
+//
+//        msgUtil.getMsg("===controller....");
+//        List hrmresourceList = hrmdepartmentService.findByYXDept();
+//
+//        Map map = new HashMap();
+//        map.put("hrm",hrmresourceList);
+//
+//        return map;
+        return "index";
     }
 
     @ModelAttribute

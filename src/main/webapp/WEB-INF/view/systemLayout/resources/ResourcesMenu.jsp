@@ -54,8 +54,7 @@
                 {field: 'available', title: "<m:info name='是否启用'/>", width: 60, hidden:true}
             ]],
             onDblClickRow:function(data){
-                alert(data.keyname);
-                actionOver("add_elecment")
+                actionOver("add_elecment");
             }
         });
 
@@ -74,6 +73,7 @@
             columns: [[
                 {field: 'ck2', checkbox:true},
                 {field: 'id', title: "<m:info name='主键'/>", width: 80, hidden:true},
+                {field: 'keyname', title: "<m:info name='keyname'/>", width: 80, hidden:true},
                 {field: 'realName', title: "<m:info name='文件路径'/>", width: 220},
                 {field: 'name', title: "<m:info name='名称'/>", width: 80},
                 {field: 'method', title: "<m:info name='方法'/>", width: 80},
@@ -109,6 +109,13 @@
         handler: function(){
             actionOver("add_elecment");
         }
+    },{
+        text:"<i class='icon-remove'/>&nbsp;<m:info name='同步全部'/>",
+        <%--<shiro:lacksPermission name="resources:synchronous">disabled:true,</shiro:lacksPermission>--%>
+//        iconCls: 'e-icon icon-remove',
+        handler: function(){
+            actionOver("synchronous");
+        }
     },'-'];
 
     //定义treegrid工具栏
@@ -118,6 +125,13 @@
 //        iconCls: 'e-icon icon-pencil',
         handler: function(){
             actionOver("save");
+        }
+    },{
+        text:"<i class='icon-pencil'/>&nbsp;<m:info name='移除'/>",
+        <%--<shiro:lacksPermission name="resources:save:edit">disabled:true,</shiro:lacksPermission>--%>
+//        iconCls: 'e-icon icon-pencil',
+        handler: function(){
+            actionOver("remove_elecment");
         }
     },'-'];
 
@@ -133,45 +147,91 @@
             case "add_elecment":
                 add_elecment();
                 break;
+            case "synchronous":
+            <%--<shiro:hasPermission name="resources:synchronous">--%>
+                synchronousRow();
+                break;
             default:
-                $.message.alert("未定义操作!!!");
+                $.messager.alert('信息提示','未定义操作...','info');
                 return;
         }
     }
 
     function save(){
-        alert($('#table-resourcesmenu').datagrid('getRows'));
-        $('#form1').form('submit', {
-            url:"resourcesmenu/save",
-            data:$('#form1').serialize(),
-            onSubmit: function(){
+        var effectRow = new Object();
+        effectRow["menuid"] = $('#menuid').val();
+        effectRow["inserted"] = jQuery('#table-resourcesmenu').datagrid('getChanges', 'inserted');
+        effectRow["deleted"] = jQuery('#table-resourcesmenu').datagrid('getChanges', 'deleted');
+        effectRow["updated"] = jQuery('#table-resourcesmenu').datagrid('getChanges', 'updated');
 
+//        $('#form1').form('submit', {
+        $.ajax({
+            url:"resourcesmenu/save",//+$('#form1').serialize(),
+            data:JSON.stringify(effectRow),
+            type: "POST",
+            dataType: "json",
+            contentType:"application/json",
+            onSubmit: function(){
+                console.log(JSON.stringify(effectRow));
             },
-            success:function(data){
-                var data = JSON.parse(data);
-                if(data.status) {
-//                    actionOver("reload");
-//                    actionOver("colse");
-                    $.messager.alert('Info',data.message);
-                }else{
-                    $.messager.alert('Warning',data.message);
+            success: function (data) {
+                if (data.status) {
+                    $.messager.alert('信息提示', "保存成功...", 'info');
+                } else {
+                    $.messager.alert('Warning', data.message);
                 }
             }
         });
     }
 
     function remove_elecment(){
-
+        var rows = $('#table-resourcesmenu').datagrid('getSelections');
+        //获取datagrid选中行
+        for (var i = 0; i < rows.length; i++) {
+            var index = $('#table-resourcesmenu').datagrid('getRowIndex',rows[i]);
+            $('#table-resourcesmenu').datagrid('deleteRow', index);
+        }
     }
 
     function add_elecment(){
+        if($("#menuid").val() == ""){
+            $.messager.alert('信息提示','请选择目录...','info');
+            return false;
+        }
+
         var rows = $('#table-resources-view').datagrid('getSelections');
         //获取datagrid选中行
         for (var i = 0; i < rows.length; i++) {
-            $('#table-resourcesmenu').datagrid('appendRow',rows[i]);
+            var index = $('#table-resourcesmenu').datagrid('getRowIndex',rows[i]);
+            if(index < 0 && avil(rows[i])) {
+                $('#table-resourcesmenu').datagrid('appendRow', rows[i]);
+            }
         }
+    }
 
-        getRows
+    //同步数据
+    function synchronousRow() {
+        $.ajax({
+            url: "resources/synchronous?id=-1&keyname=0",
+            type: "POST",
+            success: function (data) {
+                if (data.status) {
+                    $('#table-resources-view').datagrid("reload");
+                } else {
+                    $.messager.alert('Warning', data.message);
+                }
+            }
+        });
+    }
+
+    function avil(row_i){
+        var rows = $('#table-resourcesmenu').datagrid('getRows');
+        for (var i = 0; i < rows.length; i++) {
+            if(rows[i].keyname == row_i.keyname){
+                return false;
+            }
+        }
+        return true;
     }
 </script>
 </html>

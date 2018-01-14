@@ -1,4 +1,4 @@
-package com.springboot.system.entity.firstDsE;
+package com.springboot.system.menu.entity.firstDsE;
 
 
 import com.springboot.common.entity.IdEntityMYSQL;

@@ -4,6 +4,7 @@
 <head>
     <title>OA辅助管理系统</title>
     <%@include file="layout_system.jsp"%>
+
 </head>
 <style>
     .right-float {
@@ -88,60 +89,60 @@
     }
 </script>
 <body id="cc" class="easyui-layout">
-    <div data-options="region:'north',border:false" style="height:50px;padding:0px" >
-        <div id="numm" class="easyui-meun left-float" style="padding:5px;">
-            <img class="easyui-linkbutton" src="/init/yellowman.png" style="height: 40px">
-            <a href="#" class="easyui-linkbutton" data-options="plain:true" onclick="addTab('<m:info name='首页'/>','/index')"><m:info name='首页'/></a>
-            <a id="menuList" href="#" class="easyui-menubutton" data-options="menu:'#mm1'"><m:info name='菜单'/></a>
-            <a href="#" class="easyui-menubutton" data-options="menu:'#mm2'"><m:info name='收藏夹'/></a>
-            <a href="#" class="easyui-menubutton" data-options="menu:'#mm3'"><m:info name='关于'/></a>
-        </div>
+<div data-options="region:'north',border:false" style="height:50px;padding:0px" >
+    <div id="numm" class="easyui-meun left-float" style="padding:5px;">
+        <img class="easyui-linkbutton" src="/init/yellowman.png" style="height: 40px">
+        <a href="#" class="easyui-linkbutton" data-options="plain:true" onclick="addTabIndex()"><m:info name='首页'/></a>
+        <a id="menuList" href="#" class="easyui-menubutton" data-options="menu:'#mm1'"><m:info name='菜单'/></a>
+        <a href="#" class="easyui-menubutton" data-options="menu:'#mm2'"><m:info name='收藏夹'/></a>
+        <a href="#" class="easyui-menubutton" data-options="menu:'#mm3'"><m:info name='关于'/></a>
+    </div>
 
-        <div class="easyui-meun right-float" style="padding:5px;">
-            Hello, <span style="color: #00bbee">
+    <div class="easyui-meun right-float" style="padding:5px;">
+        Hello, <span style="color: #00bbee">
             <shiro:principal property="lastname" />&nbsp;
         </span>
-            <%--<a href="#" class="easyui-menubutton" data-options="menu:'#mm5'"><m:info name='系统</a>--%>
-            <a href="#" class="easyui-menubutton" data-options="menu:'#mm4'"><m:info name='设置'/></a>
-            <img class="easyui-linkbutton" src="/init/yellowman.png" style="height: 40px">
-        </div>
-
-        <div id="mm1" style="width:150px;">
-
-        </div>
-
-        <div id="mm2" style="width:100px;">
-
-        </div>
-
-        <div id="mm3" class="menu-content" style="background:#f0f0f0;padding:10px;text-align:left">
-            <p style="font-size:14px;color:#444;">Try jQuery EasyUI to build your modern, interactive, javascript applications.</p>
-        </div>
-
-        <div id="mm4" style="width:100px;">
-            <div onclick="window.location.href = '/logout' "><m:info name='退出'/></div>
-        </div>
-
-        <%--<div id="mm5" style="width:100px;">--%>
-        <%--<div onclick="addTab('<m:info name='组织机构管理'/>','/system/dept/dept')"><m:info name='收藏'/></div>--%>
-        <%--</div>--%>
+        <%--<a href="#" class="easyui-menubutton" data-options="menu:'#mm5'"><m:info name='系统</a>--%>
+        <a href="#" class="easyui-menubutton" data-options="menu:'#mm4'"><m:info name='设置'/></a>
+        <img class="easyui-linkbutton" src="/init/yellowman.png" style="height: 40px">
     </div>
-    <div class="hid-overflow" data-options="region:'west',split:true,collapsed:false,title:'<m:info name='菜单目录'/>'" style="width:200px;" >
-        <%@ include file="home/left.jsp"%>
-    </div >
-    <div data-options="region:'center',border:false" >
-        <div id="body" class="easyui-tabs" style="height:100%">
-            <%-- tab --%>
-            <div class="hid-overflow" title="<m:info name='首页'/>" closable="true">
-                <iframe scrolling="auto" frameborder="0"  src="/index" style="width:100%;height:100%;"></iframe>
-            </div>
 
-        </div>
+    <div id="mm1" style="width:150px;">
+
     </div>
-    <div id="SuperWin"></div>
-    <%--<div data-options="region:'south',border:false" style="height: 23px;">--%>
-    <%--<div id="div_json" class="footer" style="text-align-all: center">Copyright © RDIFramework.NET V2.9, All Rights Reserved</div>--%>
+
+    <div id="mm2" style="width:100px;">
+
+    </div>
+
+    <div id="mm3" class="menu-content" style="background:#f0f0f0;padding:10px;text-align:left">
+        <p style="font-size:14px;color:#444;">Try jQuery EasyUI to build your modern, interactive, javascript applications.</p>
+    </div>
+
+    <div id="mm4" style="width:100px;">
+        <div onclick="window.location.href = '/logout' "><m:info name='退出'/></div>
+    </div>
+
+    <%--<div id="mm5" style="width:100px;">--%>
+    <%--<div onclick="addTab('<m:info name='组织机构管理'/>','/system/dept/dept')"><m:info name='收藏'/></div>--%>
     <%--</div>--%>
+</div>
+<div class="hid-overflow" data-options="region:'west',split:true,collapsed:false,title:'<m:info name='菜单目录'/>'" style="width:200px;" >
+    <%@ include file="home/left.jsp"%>
+</div >
+<div data-options="region:'center',border:false" >
+    <div id="body" class="easyui-tabs" style="height:100%">
+        <%-- tab --%>
+        <div class="hid-overflow" title="<m:info name='首页'/>" closable="true">
+            <iframe scrolling="auto" frameborder="0"  src="/index" style="width:100%;height:100%;"></iframe>
+        </div>
+
+    </div>
+</div>
+<div id="SuperWin"></div>
+<%--<div data-options="region:'south',border:false" style="height: 23px;">--%>
+<%--<div id="div_json" class="footer" style="text-align-all: center">Copyright © RDIFramework.NET V2.9, All Rights Reserved</div>--%>
+<%--</div>--%>
 </body>
 <script type="text/javascript">
     $(function(){
@@ -158,9 +159,9 @@
             for(var i = 0; i<jsonObj.length; i++){
                 if(jsonObj[i] != null) {
                     if(i == 0) {
-                        addTabByClick(jsonObj[i].name, jsonObj[i].id, jsonObj[i].url, jsonObj[i].parentId, jsonObj[i].parentName);
+                        addTabByClick(jsonObj[i]);
                     }else if(jsonObj[i].name && jsonObj[i].url){
-                        addTab(jsonObj[i].name, jsonObj[i].url);
+                        addTab(jsonObj[i]);
                     }else{
                         alert(jsonObj[i].name +" && "+ jsonObj[i].url);//!!!!!!!!!!!!!!!!!!!!!!!!
                     }
@@ -202,6 +203,7 @@
         });
         if(jsonObj.length == 0) {
             show_menu_data(1);
+//            addTabIndex();
         }
         refush_favarite();
     });
@@ -228,6 +230,7 @@
                 $.each(data.rows, function(i, item) {
                     $('#mm2').menu('appendItem', {
                         text: item.text,
+                        id:item.id,
                         onclick: function(){
                             if(item.children == null){
                                 ajax_getTreeTagById(item.id);
@@ -265,21 +268,46 @@
             save_menu_list(jsonObj);
         }
     }
-    function addTabByClick(title, id, url, parentId, parentName){
+    function addTabByClick(jsonObj){
+        var title, id, url, parentId, parentName;
+        title = jsonObj.name == null?jsonObj.title:jsonObj.name;
+        id = jsonObj.id;
+        url = jsonObj.url;
+        parentId = jsonObj.parentId;
+        parentName = jsonObj.parentName;
+
         if(parentName == '首页'){
             $('#menuList').menubutton({text: '<m:info name='菜单'/>'});
         }else {
             $('#menuList').menubutton({text: parentName});
         }
-        var favariteFlag = $('#mm2').menu('findItem', title) != null;
+        jsonObj.favariteFlag = $('#mm2').menu('findItem', title) != null;
         show_menu_data(parentId);
-        set_menu_remenber(title, id, url, parentId, parentName, favariteFlag );
-        addTab(title, url);
-        if(favariteFlag){
-            change_favarite_icon(favariteFlag, title);
+        set_menu_remenber(jsonObj);
+        addTab(jsonObj);
+        if(jsonObj.favariteFlag){
+            change_favarite_icon(jsonObj.favariteFlag, title);
         }
     }
-    function addTab(title, url){
+
+    function addTabIndex(){
+        var jsonObj = new Object();
+        jsonObj.name = "首页";
+        jsonObj.url = "/index";
+        jsonObj.id = "1";
+        jsonObj.parentId = "";
+        jsonObj.parentName = "";
+        jsonObj.favariteFlag = "";
+        addTabByClick(jsonObj);
+    }
+
+
+    function addTab(jsonObj){
+        var title, url, id;
+        title = jsonObj.name;
+        url = jsonObj.url;
+        id = jsonObj.id;
+
 //        parentName = parentName==null?title:parentName;
         if ($('#body').tabs('exists', title)){
             $('#body').tabs('select', title);
@@ -288,6 +316,7 @@
             $('#body').tabs('add',{
                 title:title,
                 content:content,
+                id:id,
                 fit:true,
                 closable:true,
                 iconCls:'',
@@ -296,7 +325,16 @@
             $('#body').tabs('getTab', title).css('overflow', 'hidden');
         }
     }
-    function set_menu_remenber(menu_name, menu_id, menu_url, menu_parentId, menu_parentName, menu_favarite){
+    function set_menu_remenber(jsonObj){
+        var menu_name,menu_id,menu_url,menu_parentId,menu_parentName,menu_favarite
+
+        menu_name = jsonObj.title;
+        menu_id = jsonObj.id;
+        menu_url = jsonObj.url;
+        menu_parentId = jsonObj.parentId;
+        menu_parentName = jsonObj.parentName;
+        menu_favarite = jsonObj.favariteFlag;
+
         menu_favarite = menu_favarite==null?false:menu_favarite;
         if(getCookie("MENU_LIST") == null || getCookie("MENU_LIST") == ""){
             var jsonObj = [{name:menu_name, id:menu_id, url:menu_url, parentId:menu_parentId, parentName:menu_parentName, favarite:menu_favarite}];
@@ -397,6 +435,7 @@
             $('#mm1').menu('appendItem', {
                 parent:target,
                 text: item.text,
+                id:item.id,
                 onclick: function(){
                     if(item.children == null){
                         ajax_getTreeTagById(item.id);

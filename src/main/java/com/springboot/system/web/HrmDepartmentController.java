@@ -2,17 +2,14 @@ package com.springboot.system.web;
 
 
 import com.springboot.common.util.CommonUtil;
-import com.springboot.system.entity.firstDsE.OsMenu;
 import com.springboot.system.entity.secondDsE.Hrmdepartment;
 import com.springboot.system.service.HrmdepartmentService;
-import com.springboot.system.service.OsMenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;

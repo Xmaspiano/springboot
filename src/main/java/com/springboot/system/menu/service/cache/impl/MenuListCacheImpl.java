@@ -1,7 +1,7 @@
-package com.springboot.system.service.cache.impl;
+package com.springboot.system.menu.service.cache.impl;
 
+import com.springboot.system.menu.service.cache.MenuListCache;
 import com.springboot.system.model.MenuList;
-import com.springboot.system.service.cache.MenuListCache;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;

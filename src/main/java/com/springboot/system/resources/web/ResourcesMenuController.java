@@ -3,6 +3,7 @@ package com.springboot.system.resources.web;
 import com.springboot.common.util.CommonUtil;
 import com.springboot.system.resources.entity.firstDsE.Resources;
 import com.springboot.system.resources.entity.firstDsE.ResourcesMenu;
+import com.springboot.system.resources.model.effectRow;
 import com.springboot.system.resources.service.ResourcesMenuService;
 import com.springboot.system.resources.service.ResourcesService;
 import com.springboot.system.util.AjaxMsgUtil;
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,6 +39,7 @@ public class ResourcesMenuController {
     public Map getGridData(@RequestParam( value = "menuid", defaultValue = "0") long menuid){
         Map jsonMap = new HashMap();
         if(menuid == 0l){
+            jsonMap.put("rows",new ResourcesMenu());
             return jsonMap;
         }
 
@@ -52,18 +55,21 @@ public class ResourcesMenuController {
     @RequestMapping(value = "/save" )
     @ResponseBody
 //    @RequiresPermissions("resourcesmenu:save")
-    public Map saveInfo(@RequestParam(value = "menuid", required = false) long menuid,
-                        @RequestParam(value = "entityNames", required = false) String[] keynames){
+    public Map saveInfo(@RequestBody effectRow effectRow){
         List<ResourcesMenu> resourcesMenuList = new ArrayList<ResourcesMenu>();
         ResourcesMenu resourcesMenu = null;
-        for(String keyname:keynames){
+
+        for(Resources resources:effectRow.getInserted()){
             resourcesMenu = new ResourcesMenu();
-            resourcesMenu.setMenuid(menuid);
-            resourcesMenu.setKeyname(keyname);
+            resourcesMenu.setMenuid(effectRow.getMenuid());
+            resourcesMenu.setKeyname(resources.getKeyname());
             resourcesMenuList.add(resourcesMenu);
         }
-
         resourcesMenuService.save(resourcesMenuList);
+
+        for(Resources resources:effectRow.getDeleted()) {
+            resourcesMenuService.delete(resources.getId());
+        }
         return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("saveInfo.success"));
     }
 }

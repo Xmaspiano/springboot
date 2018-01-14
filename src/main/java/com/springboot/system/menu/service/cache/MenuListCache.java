@@ -1,4 +1,4 @@
-package com.springboot.system.service.cache;
+package com.springboot.system.menu.service.cache;
 
 import com.springboot.system.model.MenuList;
 

@@ -2,11 +2,9 @@ package com.springboot.system.web;
 
 import com.springboot.common.util.CommonUtil;
 import com.springboot.system.entity.firstDsE.Favarite;
-import com.springboot.system.entity.firstDsE.OsMenu;
 import com.springboot.system.entity.secondDsE.Hrmresource;
+import com.springboot.system.menu.service.OsMenuService;
 import com.springboot.system.service.FavariteService;
-import com.springboot.system.service.HrmresourceService;
-import com.springboot.system.service.OsMenuService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;

@@ -1,7 +1,7 @@
-package com.springboot.system.service;
+package com.springboot.system.menu.service;
 
 import com.springboot.common.service.CommonService;
-import com.springboot.system.entity.firstDsE.OsMenu;
+import com.springboot.system.menu.entity.firstDsE.OsMenu;
 
 import java.util.List;
 

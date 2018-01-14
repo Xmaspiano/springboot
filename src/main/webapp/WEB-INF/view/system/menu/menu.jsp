@@ -1,14 +1,10 @@
 <%@page contentType="text/html; charset=utf-8"
         pageEncoding="utf-8"%>
-
-<%--<%@ taglib uri="/MyTag" prefix="i"%>--%>
-<%--<%pageContext.setAttribute("AppId",request.getServletPath());%>--%>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <%@ include file="../layout_system.jsp"%>
+    <%@ include file="../../systemLayout/layout_system.jsp"%>
 </head>
 <%-- 调用方法script --%>
 <script>
@@ -175,12 +171,14 @@
 <script>
     //form1确认提交
     function submitApply(){
-        $('#form1').form('submit', {
+        $.ajax({
             url:"menu/save",
+            type: "POST",
+            data:$('#form1').serialize(),
             onSubmit: function(){
             },
             success:function(data){
-                var data = JSON.parse(data);
+//                var data = JSON.parse(data);
                 if(data.status) {
                     actionOver("reload");
                     actionOver("colse");
@@ -190,10 +188,19 @@
                     //收藏夹刷新
                     parent.refush_favarite();
                     if (parent.$('#body').tabs('exists', name)){
-                        menu_list = JSON.parse(parent.getCookie("MENU_LIST"));
-                        var jsonObj = parent.getJsonMenu(menu_list, name);
-                        parent.ajax_getTreeTagById(jsonObj.id);
-                        parent.$('#body').tabs('close', name);
+//                        menu_list = JSON.parse(parent.getCookie("MENU_LIST"));
+//                        var jsonObj = parent.getJsonMenu(menu_list, name);
+                        var tab = parent.$('#body').tabs('getTab', name);
+
+                        parent.$('#body').tabs('update', {
+                            tab: tab,
+                            options: {
+                                title: $("#name").val()
+                            }
+                        });
+                        var tab = parent.$('#body').tabs('getTab', $("#name").val());
+                        tab.panel('refresh');
+
                     }
                 }else{
                     $.messager.alert('Warning',data.message);

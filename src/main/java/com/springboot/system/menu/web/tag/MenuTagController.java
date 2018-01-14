@@ -1,7 +1,7 @@
-package com.springboot.system.web.tag;
+package com.springboot.system.menu.web.tag;
 
-import com.springboot.system.entity.firstDsE.OsMenu;
-import com.springboot.system.service.OsMenuService;
+import com.springboot.system.menu.entity.firstDsE.OsMenu;
+import com.springboot.system.menu.service.OsMenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
