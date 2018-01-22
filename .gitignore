@@ -17,6 +17,7 @@ target/
 *.msp
 *.log
 *.jpg
+*.iml
 
 # Windows shortcuts
 *.lnk
