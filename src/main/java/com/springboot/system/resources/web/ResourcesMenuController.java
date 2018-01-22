@@ -36,7 +36,7 @@ public class ResourcesMenuController {
 
     @RequestMapping(value = "/date_grid.json" )
     @ResponseBody
-    public Map getGridData(@RequestParam( value = "menuid", defaultValue = "0") long menuid){
+    public Map getGridData(@RequestParam( value = "menuid", defaultValue = "0") Long menuid){
         Map jsonMap = new HashMap();
         if(menuid == 0l){
             jsonMap.put("rows",new ResourcesMenu());
@@ -57,19 +57,19 @@ public class ResourcesMenuController {
 //    @RequiresPermissions("resourcesmenu:save")
     public Map saveInfo(@RequestBody effectRow effectRow){
         List<ResourcesMenu> resourcesMenuList = new ArrayList<ResourcesMenu>();
-        ResourcesMenu resourcesMenu = null;
 
-        for(Resources resources:effectRow.getInserted()){
-            resourcesMenu = new ResourcesMenu();
+        effectRow.getDeleted().forEach(resources ->{
+            resourcesMenuService.deleteByMenuidAndKeyname(effectRow.getMenuid(), resources.getKeyname());
+        });
+
+        effectRow.getInserted().forEach(resources ->{
+            ResourcesMenu resourcesMenu = new ResourcesMenu();
             resourcesMenu.setMenuid(effectRow.getMenuid());
             resourcesMenu.setKeyname(resources.getKeyname());
             resourcesMenuList.add(resourcesMenu);
-        }
+        });
         resourcesMenuService.save(resourcesMenuList);
 
-        for(Resources resources:effectRow.getDeleted()) {
-            resourcesMenuService.delete(resources.getId());
-        }
         return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("saveInfo.success"));
     }
 }

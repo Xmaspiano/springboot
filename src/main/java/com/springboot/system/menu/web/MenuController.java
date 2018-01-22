@@ -35,7 +35,7 @@ public class MenuController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String index(){
-        return "system/menu/menu";
+        return "system/menu/Menu";
     }
 
     @RequestMapping(value = "/save" )
@@ -55,7 +55,7 @@ public class MenuController {
     @RequestMapping(value = "/delete" )
     @ResponseBody
 //    @RequiresPermissions("menu:delete")
-    public Map deleteInfo(@RequestParam("id") long id){
+    public Map deleteInfo(@RequestParam("id") Long id){
         Map jsonMap = new HashMap();
         try {
             if(osMenuService.findAllBySuper(id).size() > 0){
@@ -74,6 +74,10 @@ public class MenuController {
     public Map getTreeGridData(){
         Map jsonMap = new HashMap();
         List<OsMenu> osmList = osMenuService.findAll();
+        osmList.stream().forEach(osMenu -> osMenu.getOsMenuList().clear());
+
+//        jsonMap.put("rows", CommonUtil.conversionByList(osmList));
+        jsonMap.put("total",osmList.size());
         jsonMap.put("rows", CommonUtil.conversionByList(PageMenu.changeByEntitys(osmList)));
         return jsonMap;
     }

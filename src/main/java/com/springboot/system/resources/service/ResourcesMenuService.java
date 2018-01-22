@@ -10,5 +10,7 @@ import java.util.List;
  */
 public interface ResourcesMenuService extends CommonService<ResourcesMenu> {
 
-    public List<ResourcesMenu> findByMenuid(long menuid);
+    public List<ResourcesMenu> findByMenuid(Long menuid);
+
+    public void deleteByMenuidAndKeyname(Long menuid, String keyname);
 }

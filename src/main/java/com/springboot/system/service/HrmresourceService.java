@@ -34,4 +34,6 @@ public interface HrmresourceService extends CommonService<Hrmresource>
     public Iterable<Hrmresource> save(Iterable<Hrmresource> entities);
 
     public void delete(Long id);
+
+    public List<Hrmresource> findByDepartmentid(Long departmentid);
 }

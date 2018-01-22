@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface OsMenuRepository extends JpaRepository<OsMenu,Long>, CommonRepository<OsMenu> {
 
-    List<OsMenu> findByParentid(long parentid);
+    List<OsMenu> findByParentid(Long parentid);
 
     List<OsMenu> findAllByLife(Boolean life);
 }

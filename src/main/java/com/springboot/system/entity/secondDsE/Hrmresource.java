@@ -29,8 +29,8 @@ public class Hrmresource extends IdEntity<Hrmresource> {
     private String password;
     private String lastname;
     private char sex;
-    private int departmentid;
-    private int subcompanyid1;
+    private Long departmentid;
+    private Long subcompanyid1;
     private String pinyinlastname;
 
     @Transient

@@ -1,6 +1,7 @@
-package com.springboot.system.auth.entity;
+package com.springboot.system.auth.entity.firstDsE;
 
 import com.springboot.common.entity.IdEntityMYSQL;
+import com.springboot.system.auth.entity.AuthType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,13 +38,11 @@ import java.util.Set;
  */
 
 @Entity
-@Table(name = "sys_auth")
-//@EnableQueryCache
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicUpdate
+@Table(name = "sys_auth")
 public class Auth extends IdEntityMYSQL {
     /**
      * 组织机构
@@ -69,11 +68,11 @@ public class Auth extends IdEntityMYSQL {
     @Column(name = "group_id")
     private Long groupId = 0L;
 
-    @Type(type = "SetToStringUserType")
-    @Column(name = "role_ids")
-    private Set<Long> roleIds;
+    private Long menuid = 0L;
+    private String keyname = "";
 
     @Enumerated(EnumType.STRING)
+    @Transient
     private AuthType type;
 
 }

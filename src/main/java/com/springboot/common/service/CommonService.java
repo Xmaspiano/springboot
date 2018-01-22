@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @param <E> entity
  */
-public interface CommonService<E> {
+public interface CommonService<E>{
 
     public E findOne(Long id);
 
@@ -29,4 +29,6 @@ public interface CommonService<E> {
     public Iterable<E> save(Iterable<E> entities);
 
     public void delete(Long id);
+
+    public void delete(Iterable<E> entities);
 }

@@ -30,7 +30,7 @@ public class ResourcesServiceImpl
     ShiroResourcesService shiroResourcesService;
 
     @Override
-    public List<Resources> synchronous(long[] id, String[] KeyName) {
+    public List<Resources> synchronous(Long[] id, String[] KeyName) {
 //        resources resources = null;
 //        ShiroResources shiroResources = null;
 

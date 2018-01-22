@@ -80,6 +80,7 @@
             success: function(result) {
                 $("#password").val("");
                 if(result.status){
+                    $("#error").html("");
                     $("#dialog-login").dialog('close');
                 }else{
                     $("#error").html(result.error);
@@ -160,12 +161,12 @@
                 if(jsonObj[i] != null) {
                     if(i == 0) {
                         addTabByClick(jsonObj[i]);
-                    }else if(jsonObj[i].name && jsonObj[i].url){
+                    }else if(jsonObj[i].title && jsonObj[i].url){
                         addTab(jsonObj[i]);
                     }else{
-                        alert(jsonObj[i].name +" && "+ jsonObj[i].url);//!!!!!!!!!!!!!!!!!!!!!!!!
+                        alert(jsonObj[i].title +" && "+ jsonObj[i].url);//!!!!!!!!!!!!!!!!!!!!!!!!
                     }
-                    change_favarite_icon(jsonObj[i].favarite, jsonObj[i].name);
+                    change_favarite_icon(jsonObj[i].favarite, jsonObj[i].title);
                 }
             }
         }
@@ -253,7 +254,7 @@
         if(menu_list != null && menu_list != ""){
             var jsonObj = JSON.parse(menu_list);
             for(var i = 0; i<jsonObj.length; i++){
-                if(jsonObj[i] != null && jsonObj[i].name == title) {
+                if(jsonObj[i] != null && jsonObj[i].title == title) {
                     jsonObj[i].favarite = flag;
                     $.ajax({
                         url: "/favarite/check",
@@ -270,7 +271,7 @@
     }
     function addTabByClick(jsonObj){
         var title, id, url, parentId, parentName;
-        title = jsonObj.name == null?jsonObj.title:jsonObj.name;
+        title = jsonObj.title == null?jsonObj.title:jsonObj.title;
         id = jsonObj.id;
         url = jsonObj.url;
         parentId = jsonObj.parentId;
@@ -292,7 +293,7 @@
 
     function addTabIndex(){
         var jsonObj = new Object();
-        jsonObj.name = "首页";
+        jsonObj.title = "首页";
         jsonObj.url = "/index";
         jsonObj.id = "1";
         jsonObj.parentId = "";
@@ -304,7 +305,7 @@
 
     function addTab(jsonObj){
         var title, url, id;
-        title = jsonObj.name;
+        title = jsonObj.title;
         url = jsonObj.url;
         id = jsonObj.id;
 
@@ -337,12 +338,12 @@
 
         menu_favarite = menu_favarite==null?false:menu_favarite;
         if(getCookie("MENU_LIST") == null || getCookie("MENU_LIST") == ""){
-            var jsonObj = [{name:menu_name, id:menu_id, url:menu_url, parentId:menu_parentId, parentName:menu_parentName, favarite:menu_favarite}];
+            var jsonObj = [{title:menu_name, id:menu_id, url:menu_url, parentId:menu_parentId, parentName:menu_parentName, favarite:menu_favarite}];
         }else{
             var jsonObj = JSON.parse(getCookie("MENU_LIST"));
             if(getJsonMenu(jsonObj, menu_name) == null && menu_name !=""){
                 jsonObj[jsonObj.length] = {
-                    name:menu_name,
+                    title:menu_name,
                     id:menu_id,
                     url:menu_url,
                     parentId:menu_parentId,
@@ -382,18 +383,18 @@
 //            }
 //        });
     }
-    function getJsonMenu(jsonObj,name){
+    function getJsonMenu(jsonObj,title){
         for(var i = 0; i<jsonObj.length; i++){
-            if(jsonObj[i] != null &&jsonObj[i].name == name){
+            if(jsonObj[i] != null &&jsonObj[i].title == title){
                 return jsonObj[i];
             }
         }
         return null;
     }
-    function removeJsonMenu(jsonObj,name){
+    function removeJsonMenu(jsonObj,title){
 //        var index = -1;
         for(var i = 0; i<jsonObj.length; i++){
-            if(jsonObj[i] != null && jsonObj[i].name == name){
+            if(jsonObj[i] != null && jsonObj[i].title == title){
                 jsonObj.splice(i,1);
                 return;
 //                delete jsonObj[i];

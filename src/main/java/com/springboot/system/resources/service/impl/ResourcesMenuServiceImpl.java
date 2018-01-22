@@ -24,7 +24,12 @@ public class ResourcesMenuServiceImpl
 
 
     @Override
-    public List<ResourcesMenu> findByMenuid(long menuid) {
+    public List<ResourcesMenu> findByMenuid(Long menuid) {
         return this.getRepository().findByMenuid(menuid);
+    }
+
+    @Override
+    public void deleteByMenuidAndKeyname(Long menuid, String keyname) {
+        getRepository().deleteByMenuidAndKeyname(menuid, keyname);
     }
 }

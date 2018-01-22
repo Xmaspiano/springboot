@@ -76,7 +76,9 @@
             url: "/menu/tag/menu_tree_url.json?id="+id,
             type:"POST",
             success: function(data, status, xhr){
-                addTabByClick(data);
+                if(data.url) {
+                    addTabByClick(data);
+                }
             }
         });
     }

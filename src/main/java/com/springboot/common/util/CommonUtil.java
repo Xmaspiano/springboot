@@ -1,5 +1,7 @@
 package com.springboot.common.util;
 
+import com.springboot.common.model.BaseModel;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +43,8 @@ public class CommonUtil<E> {
     private static Map<String, Object> findFieldAndSup(Object obj, Class clazz) {
         Map<String, Object> reMap = new HashMap<String, Object>();
 
-        if(clazz.getSuperclass() != Object.class){
+
+        if(!clazz.getSuperclass().isAssignableFrom(BaseModel.class) && !clazz.getSuperclass().isAssignableFrom(Object.class)){
             reMap.putAll(findFieldAndSup(obj, clazz.getSuperclass()));
         }
             Field[] fields = clazz.getDeclaredFields();
@@ -50,8 +53,10 @@ public class CommonUtil<E> {
                         Field f = clazz.getDeclaredField(
                                 fields[i].getName());
                         f.setAccessible(true);
-                        Object o = f.get(obj);
-                        reMap.put(fields[i].getName(), o);
+                        Object val = f.get(obj);
+                        if(val != null) {
+                            reMap.put(fields[i].getName(), val);
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

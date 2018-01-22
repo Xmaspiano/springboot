@@ -1,0 +1,49 @@
+package com.springboot.system.auth.model;
+
+import com.springboot.common.model.CheckboxModel;
+import com.springboot.system.resources.entity.firstDsE.Resources;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Component("PageAuth")
+public class PageAuth extends CheckboxModel<PageAuth, Resources> {
+    String id;
+    String keyname;
+    String realName;
+    String name;
+    String method;
+    String shiroAuth;
+    String available;
+
+    /**
+     * 组织机构
+     */
+    private Long organizationId = 0L;
+
+    /**
+     * 工作职务
+     */
+    private Long jobId = 0L;
+
+    /**
+     * 用户
+     */
+    private Long userId = 0L;
+
+    /**
+     * 组
+     */
+    private Long groupId = 0L;
+
+    @Override
+    public void setChecked(Object obj) {
+
+    }
+}

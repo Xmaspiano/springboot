@@ -5,9 +5,9 @@ import com.springboot.system.model.MenuList;
 import java.util.List;
 
 public interface MenuListCache {
-    public List<MenuList> getMenuListByUser(long loginid);
+    public List<MenuList> getMenuListByUser(Long loginid);
 
-    public List<MenuList> setMenuListByUser(long loginid, List<MenuList> menuLists);
+    public List<MenuList> setMenuListByUser(Long loginid, List<MenuList> menuLists);
 
-    public List<MenuList> removeMenuListElementByUser(long loginid, List<MenuList> removeLists);
+    public List<MenuList> removeMenuListElementByUser(Long loginid, List<MenuList> removeLists);
 }

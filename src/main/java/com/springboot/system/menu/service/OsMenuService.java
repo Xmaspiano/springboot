@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface OsMenuService extends CommonService<OsMenu> {
 
-    public List<OsMenu> findAllBySuper(long id);
+    public List<OsMenu> findAllBySuper(Long id);
 
     public List<OsMenu> findAllRealLife();
 

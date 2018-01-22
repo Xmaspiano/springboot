@@ -38,7 +38,7 @@ public class HrmdepartmentServiceImpl
     }
 
     @Cacheable(value = "DEPT_YX_ALL",key = "#root.methodName")
-    public List<Hrmdepartment> findAllBySuper(long id){
+    public List<Hrmdepartment> findAllBySuper(Long id){
         return getRepository().findBySupdepid(id);
     }
 }

@@ -19,4 +19,6 @@ public interface HrmresourceRepository extends JpaRepository<Hrmresource,Long>,C
             "  where a.departmentid in (select b.id from hrmdepartment b where b.id = '2305' or b.supdepid = '2305') and a.loginid is not null order by b.ans desc nulls last,a.lastname")
 //    @Query(nativeQuery = true, value = "select * from hrmresource")
     public List<Hrmresource> findByDDC();
+
+    public List<Hrmresource> findByDepartmentidAndLoginidNotNull(Long departmentid);
 }

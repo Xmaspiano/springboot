@@ -176,6 +176,7 @@
             },
             success: function (data) {
                 if (data.status) {
+                    $('#table-resourcesmenu').datagrid('reload',{menuid: $("#menuid").val()});
                     $.messager.alert('信息提示', "保存成功...", 'info');
                 } else {
                     $.messager.alert('Warning', data.message);

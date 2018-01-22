@@ -64,7 +64,7 @@
                 {field: 'parentid', title: "<m:info name='父菜单ID'/>", width: 80},
                 {field: 'remark', title: "<m:info name='备注'/>", width: 80},
                 {field: 'life', title: "<m:info name='是否启用'/>", width: 60, align: 'right'},
-                {field: 'dateremark', title: "<m:info name='操作时间'/>", width: 80}
+                {field: 'datemark', title: "<m:info name='操作时间'/>", width: 80}
             ]],
             onDblClickRow:function(){
                 actionOver("edit")

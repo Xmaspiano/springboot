@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface ResourcesService extends CommonService<Resources> {
 
-    public List<Resources> synchronous(long[] id,String[] KeyName);
+    public List<Resources> synchronous(Long[] id,String[] KeyName);
 
     public Resources findByKeyname(String keyname);
 }

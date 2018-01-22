@@ -30,6 +30,11 @@ public class HrmresourceServiceImpl
     }
 
     @Override
+    public List<Hrmresource> findByDepartmentid(Long departmentid) {
+        return getRepository().findByDepartmentidAndLoginidNotNull(departmentid);
+    }
+
+    @Override
 //    @CachePut(value = "hrmresourceRetryCache", key = "#loginid")//数据放入缓存
     public Hrmresource findByLoginid(String loginid) {
         return getRepository().findByLoginid(loginid);

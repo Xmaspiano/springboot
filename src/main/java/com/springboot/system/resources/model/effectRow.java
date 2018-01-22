@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class effectRow {
-    long menuid = 0L;
+    Long menuid = 0L;
     List<Resources> inserted;
     List<Resources> deleted;
     List<Resources> updated;

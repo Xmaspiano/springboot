@@ -13,19 +13,19 @@ import java.util.List;
 public class MenuListCacheImpl implements MenuListCache {
     @Override
     @Cacheable(value = "MENU_LIST", key = "#ploginid")
-    public List<MenuList> getMenuListByUser(long loginid) {
+    public List<MenuList> getMenuListByUser(Long loginid) {
         return null;
     }
 
     @Override
     @CachePut(value = "MENU_LIST", key = "#loginid")
-    public List<MenuList> setMenuListByUser(long loginid, List<MenuList> menuLists) {
+    public List<MenuList> setMenuListByUser(Long loginid, List<MenuList> menuLists) {
         return null;
     }
 
     @Override
     @CacheEvict(value = "MENU_LIST",  key = "#loginid")
-    public List<MenuList> removeMenuListElementByUser(long loginid, List<MenuList> removeLists) {
+    public List<MenuList> removeMenuListElementByUser(Long loginid, List<MenuList> removeLists) {
         return null;
     }
 }

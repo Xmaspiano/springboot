@@ -51,7 +51,7 @@ public class RoleController{
     @RequestMapping(value = "/delete" )
     @ResponseBody
     @RequiresPermissions("role:delete")
-    public Map deleteInfo(@RequestParam("id") long id){
+    public Map deleteInfo(@RequestParam("id") Long id){
         roleService.delete(id);
         return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("deleteInfo.success"));
     }

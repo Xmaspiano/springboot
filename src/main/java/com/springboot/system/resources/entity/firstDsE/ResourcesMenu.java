@@ -17,7 +17,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @DynamicUpdate
 public class ResourcesMenu extends IdEntityMYSQL {
-    private long menuid;
+    private Long menuid;
     private String keyname;
     /**
      * 是否显示 也表示是否可用 为了统一 都使用这个

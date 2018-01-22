@@ -44,7 +44,7 @@ public class ShiroResourcesController{
     @RequestMapping(value = "/delete" )
     @ResponseBody
 //    @RequiresPermissions("resources:delete")
-    public Map deleteInfo(@RequestParam("id") long id){
+    public Map deleteInfo(@RequestParam("id") Long id){
         shiroResourcesService.delete(id);
         return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("deleteInfo.success"));
     }

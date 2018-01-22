@@ -13,5 +13,5 @@ package com.springboot.system.service;
 public interface HrmdepartmentService extends CommonService<Hrmdepartment> {
     public List<Hrmdepartment> findByYXDept();
 
-    public List<Hrmdepartment> findAllBySuper(long id);
+    public List<Hrmdepartment> findAllBySuper(Long id);
 }

@@ -11,5 +11,7 @@ package com.springboot.system.resources.repository.firstDs;
  */
 public interface ResourcesMenuRepository
         extends CrudRepository<ResourcesMenu, Long>,CommonRepository<ResourcesMenu> {
-    public List<ResourcesMenu> findByMenuid(long menuid);
+    public List<ResourcesMenu> findByMenuid(Long menuid);
+
+    void deleteByMenuidAndKeyname(Long menuid, String keyname);
 }

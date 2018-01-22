@@ -22,8 +22,8 @@ import java.util.List;
 @DynamicUpdate
 public class Hrmdepartment extends IdEntity<Hrmdepartment> {
     private String departmentname;
-    private long subcompanyid1;
-    private long supdepid;
+    private Long subcompanyid1;
+    private Long supdepid;
     private String canceled;
     private String tlevel;
 

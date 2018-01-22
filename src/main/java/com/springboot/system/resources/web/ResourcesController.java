@@ -47,7 +47,7 @@ public class ResourcesController {
     @RequestMapping(value = "/delete" )
     @ResponseBody
     @RequiresPermissions("resources:delete")
-    public Map deleteInfo(@RequestParam("id") long id){
+    public Map deleteInfo(@RequestParam("id") Long id){
         ResourcesService.delete(id);
         return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("deleteInfo.success"));
     }
@@ -65,7 +65,7 @@ public class ResourcesController {
     @RequestMapping(value = "/synchronous" )
     @ResponseBody
 //    @RequiresPermissions("resources:synchronous")
-    public Map synchronous(@RequestParam long[] id, @RequestParam String[] keyname){
+    public Map synchronous(@RequestParam Long[] id, @RequestParam String[] keyname){
         ResourcesService.synchronous(id,keyname);
         return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("synchronous.success"));
     }

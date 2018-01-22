@@ -37,7 +37,7 @@ public class OsMenuServiceImpl
         super.delete(id);
     }
 
-    public List<OsMenu> findAllBySuper(long id){
+    public List<OsMenu> findAllBySuper(Long id){
         return getRepository().findByParentid(id);
     }
 
