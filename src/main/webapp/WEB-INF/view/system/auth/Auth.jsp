@@ -69,7 +69,9 @@
                 {field: 'checked', title: "<m:info name='是否授权'/>", width: 60, align:'center',align:'center'}
             ]],
             onCheck:onCheck,
-            onUncheck:onUncheck
+            onUncheck:onUncheck,
+            onSelectAll:onSelectAll,
+            onUnselectAll:onUnselectAll
         });
 
         $('#menu_tree').tree({
@@ -181,5 +183,20 @@
         $('#table-resourcesmenu').datagrid('endEdit', index);
         $('#table-resourcesmenu').datagrid('refreshRow',index);
     }
+
+    function onSelectAll(){
+        var rows = $('#table-resourcesmenu').datagrid('getRows');
+        $.each(rows, function(i) {
+            onCheck(i);
+        });
+    }
+
+    function onUnselectAll(){
+        var rows = $('#table-resourcesmenu').datagrid('getRows');
+        $.each(rows, function(i) {
+            onUncheck(i);
+        });
+    }
+
 </script>
 </html>

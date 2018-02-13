@@ -23,7 +23,7 @@
     <div data-options="region:'center',title:'<m:info name='权限编辑' />',collapsible:false">
         <form id="form1" method="post">
             <input type="hidden" id="menuid" name="menuid" value=""/>
-        <table data-options="fix:true,border:false" id="table-resourcesmenu" ></table>
+        <table data-options="border:false" id="table-resourcesmenu" ></table>
         </form>
     </div>
     <div data-options="region:'east',split:true,collapsible:false" title="<m:info name='权限路径' />" style="width:230px;">

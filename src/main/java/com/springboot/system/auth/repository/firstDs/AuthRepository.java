@@ -5,6 +5,7 @@ import com.springboot.system.auth.entity.firstDsE.Auth;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by AlbertXmas on 17/8/29.
@@ -14,7 +15,11 @@ public interface AuthRepository
 
     public List<Auth> findByMenuidAndOrganizationId(Long menuid, Long organizationId);
 
+    public List<Auth> findByMenuidAndUserId(Long menuid, Long userId);
+
     public List<Auth> findByUserId(Long userid);
+
+    public Set<String> fingKeyNameByUser(Long userid, Set<Long> groupid, Set<Long> deptid, Set<Long> jobid);
 //
 //    public Resources findByKeyname(String keyname);
 //

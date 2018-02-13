@@ -107,6 +107,9 @@ public class AuthController {
         auth.setMenuid(authRow.getMenuid());
         if(auth.getType() == AuthType.user){
             auth.setUserId(authRow.getUserid());
+            authService.delete(
+                    authService.findByMenuidAndUserId(authRow.getMenuid(), authRow.getUserid())
+            );
         }else if(auth.getType() == AuthType.user_group){
             auth.setGroupId(authRow.getGroupid());
         }else if(auth.getType() == AuthType.organization_job){
@@ -114,6 +117,9 @@ public class AuthController {
             auth.setJobId(authRow.getRoleid());
         }else if(auth.getType() == AuthType.organization_group){
             auth.setGroupId(authRow.getGroupid());
+            authService.delete(
+                    authService.findByMenuidAndOrganizationId(authRow.getMenuid(),authRow.getDeptid())
+            );
         }
 
         List<Auth> saveList = new ArrayList();
@@ -127,8 +133,6 @@ public class AuthController {
                 e.printStackTrace();
             }
         });
-
-        authService.delete(authService.findByMenuidAndOrganizationId(authRow.getMenuid(),authRow.getDeptid()));
         authService.save(saveList);
         return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("saveInfo.success"));
     }

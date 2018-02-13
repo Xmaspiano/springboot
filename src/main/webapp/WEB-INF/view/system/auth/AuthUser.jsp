@@ -15,8 +15,8 @@
         </div>
     </div>
     <div data-options="region:'center',title:'<m:info name='角色编辑' />',collapsible:false">
-        <table id="table-user" style="width:100%;height:400px"></table>
-        <div id="dialog-role" title="" class="easyui-dialog" style="width:500px;height:400px;"
+        <table id="table-authuser" style="width:100%;height:400px"></table>
+        <div id="dialog-authuser" title="" class="easyui-dialog" style="width:500px;height:400px;"
              data-options="left:260,top:70,closed:true,resizable:false,modal:true,buttons:button_dialog">
             <form id="form1" method="post">
                 <input type="hidden" id="deptid" name="deptid" value=""/>
@@ -90,7 +90,7 @@
 
     function ajax_getDeptTagById(id){
         $("#deptid").val(id);
-        $('#table-user').datagrid('reload',{deptid: id});
+        $('#table-authuser').datagrid('reload',{deptid: id});
 //        setAuthType("dept");
     }
 
@@ -100,12 +100,13 @@
     $(function() {
         _left_getDeptDate();
         //初始化treegrid数据
-        $('#table-user').datagrid({
+        $('#table-authuser').datagrid({
             <%--title:'<m:info name='角色编辑' />',--%>
             url: '/auth/user/date_grid.json',
             loadMsg:"<m:info name='数据加载中...'/>",
             fitColumns:true,
             border:false,
+            fix:true,
 //            striped:true,
             rownumbers:true,
             singleSelect:true,
@@ -182,23 +183,23 @@
     function actionOver(code){
         switch(code){
             case "colse":
-                $('#dialog-role').dialog('close');
+                $('#dialog-authuser').dialog('close');
                 break;
             case "reload":
-                $('#table-user').datagrid('reload');
+                $('#table-authuser').datagrid('reload');
                 break;
             case "add":
             <%--<shiro:hasPermission name="role:save:add">--%>
                 addChangeroleTree();
-                $('#dialog-role').dialog({title: "<m:info name='新增角色'/>"});
-                $('#dialog-role').dialog('open');
+                $('#dialog-authuser').dialog({title: "<m:info name='新增角色'/>"});
+                $('#dialog-authuser').dialog('open');
                 break;
             <%--</shiro:hasPermission>--%>
             case "edit":
             <%--<shiro:hasPermission name="role:save:edit">--%>
                 if(editChangeroleTree()) {
-                    $('#dialog-role').dialog({title: "<m:info name='修改角色'/>"});
-                    $('#dialog-role').dialog('open');
+                    $('#dialog-authuser').dialog({title: "<m:info name='修改角色'/>"});
+                    $('#dialog-authuser').dialog('open');
                 }else{
                     $.messager.alert('<m:info name='请选择...'/>','warning');
                 }
@@ -250,7 +251,7 @@
     }
 
     function ChangeroleTree(idFlag){
-        var row = $('#table-user').datagrid('getSelected');
+        var row = $('#table-authuser').datagrid('getSelected');
         if(row != null) {//有选择资料,将资料值初始化到表单
             if(idFlag){//新增时id制空
                 row.id = "";
@@ -264,7 +265,7 @@
     }
     //删除treegrid数据
     function deleteRow() {
-        var row = $('#table-user').treegrid('getSelected');
+        var row = $('#table-authuser').treegrid('getSelected');
         if (row != null) {
             $.ajax({
                 url: "roledept/delete?id=" + row.id,
@@ -285,7 +286,7 @@
 
     //代开权限设定窗口
     function setAuth() {
-        var row = $('#table-user').datagrid('getSelected');
+        var row = $('#table-authuser').datagrid('getSelected');
         if(row == null){
             $.messager.alert("提示信息","<m:info name='请选择人员...'/>","info");
             return false;

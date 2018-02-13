@@ -1,6 +1,14 @@
 package com.springboot.common.util;
 
+import com.springboot.common.config.shiro.AuthRealm;
 import com.springboot.common.model.BaseModel;
+import com.springboot.system.entity.secondDsE.Hrmresource;
+import com.springboot.system.service.HrmresourceService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.mgt.RealmSecurityManager;
+import org.apache.shiro.subject.SimplePrincipalCollection;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

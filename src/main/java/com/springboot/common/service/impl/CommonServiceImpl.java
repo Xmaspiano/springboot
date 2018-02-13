@@ -57,6 +57,7 @@ public abstract class CommonServiceImpl<E, R> implements CommonService<E>{
         commonRepository.delete(commonRepository.findOne(id));
     }
 
+    @Override
     public void delete(Iterable<E> entities) {
         commonRepository.delete(entities);
     }

@@ -8,6 +8,7 @@ import com.springboot.system.menu.service.OsMenuService;
 import com.springboot.system.util.AjaxMsgUtil;
 import com.springboot.system.util.MsgUtil;
 import com.springboot.system.util.MsgUtilNative;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class MenuController {
 
     @RequestMapping(value = "/save" )
     @ResponseBody
-//    @RequiresPermissions("menu:save:add,edit")
+    @RequiresPermissions("menu:save")
     public Map saveInfo(OsMenu osMenu){
         Map jsonMap = new HashMap();
         try {
@@ -54,7 +55,7 @@ public class MenuController {
 
     @RequestMapping(value = "/delete" )
     @ResponseBody
-//    @RequiresPermissions("menu:delete")
+    @RequiresPermissions("menu:delete")
     public Map deleteInfo(@RequestParam("id") Long id){
         Map jsonMap = new HashMap();
         try {
@@ -71,6 +72,7 @@ public class MenuController {
 
     @RequestMapping(value = "/date_treegrid.json" )
     @ResponseBody
+    @RequiresPermissions("menu:view")
     public Map getTreeGridData(){
         Map jsonMap = new HashMap();
         List<OsMenu> osmList = osMenuService.findAll();

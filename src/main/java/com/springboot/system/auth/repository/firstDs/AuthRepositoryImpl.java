@@ -1,0 +1,63 @@
+package com.springboot.system.auth.repository.firstDs;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+/**
+ * Created by AlbertXmas on 17/8/29.
+ */
+public class AuthRepositoryImpl {
+
+    @PersistenceContext
+    private EntityManager em;
+
+    public Set<String> fingKeyNameByUser(Long userid, Set<Long> groupid, Set<Long> deptid, Set<Long> jobid){
+        boolean hasGroupid = groupid.size() > 0;
+        boolean hasDeptid = groupid.size() > 0;
+        boolean hasJobid = groupid.size() > 0;
+
+        StringBuilder hql = new StringBuilder("select keyname From Auth where ");
+        hql.append(" (user_id=:userid) ");
+
+        if(hasGroupid){
+            hql.append(" or ");
+            hql.append(" (group_id=:groupid) ");
+        }
+
+        if(hasDeptid){
+            hql.append(" or ");
+            hql.append(" (organization_id=:deptid) ");
+        }
+
+        if(hasJobid){
+            hql.append(" or ");
+            hql.append(" (job_id=:jobid) ");
+        }
+
+        Query q = em.createQuery(hql.toString());
+
+        q.setParameter("userid",userid);
+
+        if(hasGroupid){
+            q.setParameter("groupid",groupid);
+        }
+
+        if(hasGroupid){
+            q.setParameter("deptid",deptid);
+        }
+
+        if(hasGroupid){
+            q.setParameter("jobid",jobid);
+        }
+
+        List<String> keyNames = q.getResultList();
+
+        Set<String> rtnSet = new HashSet();
+        keyNames.forEach(set -> rtnSet.add(set));
+        return rtnSet;
+    }
+}

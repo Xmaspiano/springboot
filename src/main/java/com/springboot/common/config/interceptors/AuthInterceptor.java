@@ -15,7 +15,6 @@ public class AuthInterceptor implements HandlerInterceptor {
     private List<String> excludeUrls;// 不需要拦截的资源
 
     public AuthInterceptor(){
-        System.out.println("!!@###@@!!");
         msgUtil = new MsgUtilNative(AuthInterceptor.class);
     }
 

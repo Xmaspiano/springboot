@@ -94,21 +94,21 @@
     //定义treegrid工具栏
     var toolbar = [{
         text:"<i class='icon-plus'/>&nbsp;<m:info name='新增'/>",
-        <%--<shiro:lacksPermission name="menu:save:add">disabled:true,</shiro:lacksPermission>--%>
+        <shiro:lacksPermission name="menu:save">disabled:true,</shiro:lacksPermission>
 //        iconCls: 'e-icon icon-plus',
         handler: function(){
             actionOver("add");
         }
     },{
         text:"<i class='icon-pencil'/>&nbsp;<m:info name='修改'/>",
-        <%--<shiro:lacksPermission name="menu:save:add">disabled:true,</shiro:lacksPermission>--%>
+        <shiro:lacksPermission name="menu:save">disabled:true,</shiro:lacksPermission>
 //        iconCls: 'e-icon icon-pencil',
         handler: function(){
             actionOver("edit");
         }
     },{
         text:"<i class='icon-remove'/>&nbsp;<m:info name='删除'/>",
-        <%--<shiro:lacksPermission name="menu:save:add">disabled:true,</shiro:lacksPermission>--%>
+        <shiro:lacksPermission name="menu:delete">disabled:true,</shiro:lacksPermission>
 //        iconCls: 'e-icon icon-remove',
         handler: function(){
             actionOver("delete");
@@ -142,14 +142,14 @@
                 refush_menu();
                 break;
             case "add":
-            <%--<shiro:hasPermission name="menu:save:add">--%>
+            <shiro:hasPermission name="menu:save">
                 addChangeMenuTree();
                 $('#dialog-menu').dialog({title: "<m:info name='新增菜单'/>"});
                 $('#dialog-menu').dialog('open');
                 break;
-            <%--</shiro:hasPermission>--%>
+            </shiro:hasPermission>
             case "edit":
-            <%--<shiro:hasPermission name="menu:save:edit">--%>
+            <shiro:hasPermission name="menu:save">
                 if(editChangeMenuTree()) {
                     $('#dialog-menu').dialog({title: "<m:info name='资源编辑'/>"});
                     $('#dialog-menu').dialog('open');
@@ -157,12 +157,12 @@
                     $.messager.alert('Warning',"<m:info name='请选择...'/>");
                 }
                 break;
-            <%--</shiro:hasPermission>--%>
+            </shiro:hasPermission>
             case "delete":
-            <%--<shiro:hasPermission name="menu:save:delete">--%>
+            <shiro:hasPermission name="menu:delete">
                 deleteRow();
                 break;
-            <%--</shiro:hasPermission>--%>
+            </shiro:hasPermission>
             default:
                 return;
         }
@@ -203,7 +203,7 @@
 
                     }
                 }else{
-                    $.messager.alert('Warning',data.message);
+                    $.messager.alert('提示信息',data.message, 'Warning');
                 }
             }
         });
@@ -256,7 +256,7 @@
                             parent.$('#body').tabs('close', row.name);
                         }
                     } else {
-                        $.messager.alert('Warning', data.message);
+                        $.messager.alert('提示信息', data.message, 'Warning');
                     }
                 }
             });

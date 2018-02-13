@@ -1,10 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:score="http://www.w3.org/1999/xhtml"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro" >
 <head>
     <title>OA辅助管理系统</title>
-    <%@include file="layout_system.jsp"%>
-
+    <div th:replace="systemLayout/layout_system"/>
 </head>
 <style>
     .right-float {
@@ -21,33 +22,7 @@
         color: red;
     }
 </style>
-<%@ include file="loading_system.jsp"%>
-<div id="dialog-login" title="登陆" class="easyui-dialog" style="width:330px;height:220px;padding:5px;"
-     data-options="modal:true,closed:true,resizable:false,buttons:button_dialog,draggable:false,closable:false">
-    <div id="error" class="error" style="height:15px;">${error}</div>
-    <form id="form1" action="/login" method="post">
-        <table style="width: 100%">
-            <tr>
-                <td rowspan="2">
-                    <img class="easyui-linkbutton" src="/init/yellowman.png" style="height: 80px">
-                </td>
-                <td></td>
-                <td><input class="easyui-textbox" type="text" id="username" name="username"
-                           data-options="prompt:'用户名',iconCls:'icon-man',required:false" value="<shiro:principal property="loginid" />"/></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><input class="easyui-textbox" type="password" id="password" name="password"
-                           data-options="prompt:'******',iconCls:'icon-lock',required:false" value=""/></td>
-            </tr>
-            <tr>
-                <td colspan="2">自动登录：</td>
-                <td><input type="checkbox" id="rememberMe" name="rememberMe" value="true"></td>
-            </tr>
-        </table>
-    </form>
-</div>
-</body>
+<!--<div th:include="systemLayout/loading_system"/>-->
 <script>
     $(window).keyup(function(event){
         if( !$("#dialog-login").parent().is(":hidden")) {
@@ -90,21 +65,54 @@
     }
 </script>
 <body id="cc" class="easyui-layout">
+<div id="dialog-login" title="登陆" class="easyui-dialog" style="width:330px;height:220px;padding:5px;"
+     data-options="modal:true,closed:true,resizable:false,buttons:button_dialog,draggable:false,closable:false">
+    <!--/*@thymesVar id="error" type="java.lang.String"*/-->
+    <div id="error" class="error" style="height:15px;" th:text="${error}"></div>
+    <form id="form1" action="/login" method="post">
+        <table style="width: 100%">
+            <tr>
+                <td rowspan="2">
+                    <img class="easyui-linkbutton" src="/init/yellowman.png" style="height: 80px">
+                </td>
+                <td></td>
+                <td>
+                <input class="easyui-textbox" type="text" id="username" name="username"
+                           data-options="prompt:'#{${用户名}(${session.user.name})}',iconCls:'icon-man',required:false"
+                           value="" /></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input class="easyui-textbox" type="password" id="password" name="password"
+                           data-options="prompt:'******',iconCls:'icon-lock',required:false" value=""/></td>
+            </tr>
+            <tr>
+                <td colspan="2">自动登录：</td>
+                <td><input type="checkbox" id="rememberMe" name="rememberMe" value="true"></td>
+            </tr>
+        </table>
+    </form>
+</div>
 <div data-options="region:'north',border:false" style="height:50px;padding:0px" >
     <div id="numm" class="easyui-meun left-float" style="padding:5px;">
         <img class="easyui-linkbutton" src="/init/yellowman.png" style="height: 40px">
-        <a href="#" class="easyui-linkbutton" data-options="plain:true" onclick="addTabIndex()"><m:info name='首页'/></a>
-        <a id="menuList" href="#" class="easyui-menubutton" data-options="menu:'#mm1'"><m:info name='菜单'/></a>
-        <a href="#" class="easyui-menubutton" data-options="menu:'#mm2'"><m:info name='收藏夹'/></a>
-        <a href="#" class="easyui-menubutton" data-options="menu:'#mm3'"><m:info name='关于'/></a>
+        <a href="#" class="easyui-linkbutton" data-options="plain:true" onclick="addTabIndex()"
+           th:text="#{首页}"></a>
+        <a id="menuList" href="#" class="easyui-menubutton" data-options="menu:'#mm1'"
+           th:text="#{菜单}"></a>
+        <a href="#" class="easyui-menubutton" data-options="menu:'#mm2'"
+           th:text="#{收藏夹}"></a>
+        <a href="#" class="easyui-menubutton" data-options="menu:'#mm3'"
+           th:text="#{关于}"></a>
     </div>
 
     <div class="easyui-meun right-float" style="padding:5px;">
         Hello, <span style="color: #00bbee">
             <shiro:principal property="lastname" />&nbsp;
         </span>
-        <%--<a href="#" class="easyui-menubutton" data-options="menu:'#mm5'"><m:info name='系统</a>--%>
-        <a href="#" class="easyui-menubutton" data-options="menu:'#mm4'"><m:info name='设置'/></a>
+        <!--<a href="#" class="easyui-menubutton" data-options="menu:'#mm5'"><score:info name='系统</a>-->
+        <a href="#" class="easyui-menubutton" data-options="menu:'#mm4'"
+           th:text="#{关于}"></a>
         <img class="easyui-linkbutton" src="/init/yellowman.png" style="height: 40px">
     </div>
 
@@ -121,39 +129,39 @@
     </div>
 
     <div id="mm4" style="width:100px;">
-        <div onclick="window.location.href = '/logout' "><m:info name='退出'/></div>
+        <div onclick="window.location.href = '/logout' " th:text="#{退出}"></div>
     </div>
 
-    <%--<div id="mm5" style="width:100px;">--%>
-    <%--<div onclick="addTab('<m:info name='组织机构管理'/>','/system/dept/dept')"><m:info name='收藏'/></div>--%>
-    <%--</div>--%>
+    <!--<div id="mm5" style="width:100px;">-->
+    <!--<div onclick="addTab('<score:info name='组织机构管理'/>','/system/dept/dept')"><score:info name='收藏'/></div>-->
+    <!--</div>-->
 </div>
-<div class="hid-overflow" data-options="region:'west',split:true,collapsed:false,title:'<m:info name='菜单目录'/>'" style="width:200px;" >
-    <%@ include file="home/left.jsp"%>
-</div >
+<div class="hid-overflow" th:include="system/home/left"
+     data-options="region:'west',split:true,collapsed:false,title:'菜单目录'" style="width:200px;" >
+    <!--<%@ include file="home/left.jsp"&ndash;&gt;-->
+</div>
 <div data-options="region:'center',border:false" >
     <div id="body" class="easyui-tabs" style="height:100%">
-        <%-- tab --%>
-        <div class="hid-overflow" title="<m:info name='首页'/>" closable="false">
+        <!-- tab ---->
+        <div class="hid-overflow" title="<score:info name='首页'/>" closable="false">
             <iframe scrolling="auto" frameborder="0"  src="/index" style="width:100%;height:100%;"></iframe>
         </div>
 
     </div>
 </div>
 <div id="SuperWin"></div>
-<%--<div data-options="region:'south',border:false" style="height: 23px;">--%>
-<%--<div id="div_json" class="footer" style="text-align-all: center">Copyright © RDIFramework.NET V2.9, All Rights Reserved</div>--%>
-<%--</div>--%>
 </body>
 <script type="text/javascript">
     $(function(){
-        $(document).bind('contextmenu',function(e){
-            e.preventDefault();
-            $('#mm').menu('show', {
-                left: e.pageX,
-                top: e.pageY
-            });
-        });
+//        $(document).bind('contextmenu',function(e){
+//            e.preventDefault();
+//            $('#mm').menu('show', {
+//                left: e.pageX,
+//                top: e.pageY
+//            });
+//
+//
+//        });
 
         var menu_list = getCookie("MENU_LIST");
         if(menu_list != null && menu_list != ""){
@@ -195,7 +203,7 @@
                 removeJsonMenu(jsonObj, title);
                 save_menu_list(jsonObj);
                 if(jsonObj == ''){
-                    $('#menuList').menubutton({text: '<m:info name='菜单'/>'});
+                    $('#menuList').menubutton({text: "<score:info name='菜单'/>"});
                     show_menu_data(1);
                 }
             },
@@ -216,7 +224,7 @@
     var isFirst = true;
     //页面渲染完成
     $.parser.onComplete = function(){
-        loading_close(1000);
+//        loading_close(1000);
 
         if(isFirst){
 
@@ -296,7 +304,7 @@
         parentName = jsonObj.parentName;
 
         if(parentName == '首页'){
-            $('#menuList').menubutton({text: '<m:info name='菜单'/>'});
+            $('#menuList').menubutton({text: "<score:info name='菜单'/>"});
         }else {
             $('#menuList').menubutton({text: parentName});
         }

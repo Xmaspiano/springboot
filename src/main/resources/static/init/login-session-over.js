@@ -8,6 +8,13 @@ hookAjax({
             }
             return false;
         }
+
+        if(xhr.readyState == 4 && xhr.status == 500){
+            // console.log(xhr.responseText);
+            var data = $.parseJSON(xhr.responseText);
+            $.messager.alert("error",data.message,"error");
+            return false;
+        }
     },
     onload:function(xhr){
         // console.log("onload called: %O",xhr)
