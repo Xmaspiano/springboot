@@ -3,12 +3,12 @@ package com.springboot.system.resources.web;
 import com.springboot.common.util.CommonUtil;
 import com.springboot.system.resources.entity.firstDsE.Resources;
 import com.springboot.system.resources.entity.firstDsE.ResourcesMenu;
-import com.springboot.system.resources.model.effectRow;
+import com.springboot.system.resources.model.EffectRow;
 import com.springboot.system.resources.service.ResourcesMenuService;
 import com.springboot.system.resources.service.ResourcesService;
 import com.springboot.system.util.AjaxMsgUtil;
-import com.springboot.system.util.MsgUtil;
-import com.springboot.system.util.MsgUtilNative;
+import com.springboot.common.util.MsgUtil;
+import com.springboot.common.util.MsgUtilNative;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +23,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *
+ *
+ * @author XmasPiano
+ * @date 2018/3/1 上午10:26
+ * @param
+ * @return
+ */
 @Controller
 @RequestMapping(value = {"/resourcesmenu"})
 public class ResourcesMenuController {
@@ -37,7 +45,7 @@ public class ResourcesMenuController {
     @RequestMapping(value = "/date_grid.json" )
     @ResponseBody
     public Map getGridData(@RequestParam( value = "menuid", defaultValue = "0") Long menuid){
-        Map jsonMap = new HashMap();
+        Map jsonMap = new HashMap(16);
         if(menuid == 0L){
             jsonMap.put("rows",new ResourcesMenu());
             return jsonMap;
@@ -55,7 +63,7 @@ public class ResourcesMenuController {
     @RequestMapping(value = "/save" )
     @ResponseBody
 //    @RequiresPermissions("resourcesmenu:save")
-    public Map saveInfo(@RequestBody effectRow effectRow){
+    public Map saveInfo(@RequestBody EffectRow effectRow){
         List<ResourcesMenu> resourcesMenuList = new ArrayList<ResourcesMenu>();
 
         effectRow.getDeleted().forEach(resources ->{
@@ -70,6 +78,6 @@ public class ResourcesMenuController {
         });
         resourcesMenuService.save(resourcesMenuList);
 
-        return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("saveInfo.success"));
+        return AjaxMsgUtil.ajaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("saveInfo.success"));
     }
 }

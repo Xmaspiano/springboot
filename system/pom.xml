@@ -62,4 +62,17 @@
             </resource>
         </resources>
     </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>asiagroup</groupId>
+            <artifactId>OAHelper-architecture</artifactId>
+            <version>1.0-DEV-SHAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>asiagroup</groupId>
+            <artifactId>OAHelper-common</artifactId>
+            <version>1.0-DEV-SHAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

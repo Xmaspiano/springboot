@@ -1,6 +1,6 @@
 package com.springboot.system.auth.entity.firstDsE;
 
-import com.springboot.common.entity.BaseIdEntityMYSQL;
+import com.springboot.common.entity.BaseIdEntityMysql;
 import com.springboot.system.auth.entity.AuthType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,18 +28,18 @@ import javax.persistence.*;
  * <p/>
  * 3、如果另一方是可选的（如只选组织机构 或 只选工作职务） 那么默认0 使用0的目的是为了也让走索引
  * <p/>
- * <p>User: Zhang Kaitao
- * <p>Date: 13-4-24 下午2:14
- * <p>Version: 1.0
+ * @author XmasPiano
+ * @date 2018/3/1 上午10:22
+ * @param
+ * @return
  */
-
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicUpdate
 @Table(name = "sys_auth")
-public class Auth extends BaseIdEntityMYSQL {
+public class Auth extends BaseIdEntityMysql {
     /**
      * 组织机构
      */

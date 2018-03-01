@@ -6,15 +6,20 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-/**
- * Created by AlbertXmas on 17/8/29.
- */
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:28
+ * @param   
+ * @return   
+ */  
 public interface ShiroResourcesRepository
         extends CrudRepository<ShiroResources, Long>,CommonRepository<ShiroResources> {
 
-    public List<ShiroResources> findByRealNameAndMethod(String RealName, String method);
+    public List<ShiroResources> findByRealNameAndMethod(String realName, String method);
 
-    public List<ShiroResources> findOneByRealNameAndMethodAndShiroAuth(String RealName, String method, String ShiroAuth);
+    public List<ShiroResources> findOneByRealNameAndMethodAndShiroAuth(String realName, String method, String shiroAuth);
 
     public ShiroResources findOneByKeyname(String keyname);
 

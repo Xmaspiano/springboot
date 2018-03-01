@@ -2,6 +2,8 @@ package com.springboot.system.auth.web;
 
 import com.springboot.common.model.BaseCheckboxModel;
 import com.springboot.common.util.CommonUtil;
+import com.springboot.common.util.MsgUtil;
+import com.springboot.common.util.MsgUtilNative;
 import com.springboot.system.auth.entity.AuthType;
 import com.springboot.system.auth.entity.firstDsE.Auth;
 import com.springboot.system.auth.model.AuthRow;
@@ -12,8 +14,6 @@ import com.springboot.system.resources.entity.firstDsE.ResourcesMenu;
 import com.springboot.system.resources.repository.firstDs.ResourcesMenuRepository;
 import com.springboot.system.resources.repository.firstDs.ResourcesRepository;
 import com.springboot.system.util.AjaxMsgUtil;
-import com.springboot.system.util.MsgUtil;
-import com.springboot.system.util.MsgUtilNative;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +26,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:22
+ * @param   
+ * @return   
+ */  
 @Controller
 @RequestMapping(value = {"/auth"})
 public class AuthController {
@@ -39,24 +47,24 @@ public class AuthController {
     private ResourcesRepository resourcesService;
 
     @Autowired
-    private BaseCheckboxModel PageAuth;
+    private BaseCheckboxModel pageAuth;
 
     @Autowired
     private AuthService authService;
 
     @RequestMapping(method = RequestMethod.GET)
     public String index(
-            @RequestParam(value = "deptid", defaultValue = "") Long organization_id,
-            @RequestParam(value = "roleid", defaultValue = "") Long job_id,
-            @RequestParam(value = "userid", defaultValue = "") Long user_id,
-            @RequestParam(value = "groupid", defaultValue = "") Long group_id,
+            @RequestParam(value = "deptid", defaultValue = "") Long organizationId,
+            @RequestParam(value = "roleid", defaultValue = "") Long jobId,
+            @RequestParam(value = "userid", defaultValue = "") Long userId,
+            @RequestParam(value = "groupid", defaultValue = "") Long groupId,
             @RequestParam("typeAuth") String typeAuth,
             Model model
     ){
-        model.addAttribute("deptid", organization_id);
-        model.addAttribute("roleid", job_id);
-        model.addAttribute("userid", user_id);
-        model.addAttribute("groupid", group_id);
+        model.addAttribute("deptid", organizationId);
+        model.addAttribute("roleid", jobId);
+        model.addAttribute("userid", userId);
+        model.addAttribute("groupid", groupId);
         model.addAttribute("typeAuth", typeAuth);
         return "system/auth/Auth";
     }
@@ -65,13 +73,13 @@ public class AuthController {
     @ResponseBody
     public Map getGridData(
             @RequestParam( value = "menuid", defaultValue = "0") Long menuid,
-            @RequestParam(value = "deptid", defaultValue = "") Long organization_id,
-            @RequestParam(value = "roleid", defaultValue = "") Long job_id,
-            @RequestParam(value = "userid", defaultValue = "") Long user_id,
-            @RequestParam(value = "groupid", defaultValue = "") Long group_id,
+            @RequestParam(value = "deptid", defaultValue = "") Long organizationId,
+            @RequestParam(value = "roleid", defaultValue = "") Long jobId,
+            @RequestParam(value = "userid", defaultValue = "") Long userId,
+            @RequestParam(value = "groupid", defaultValue = "") Long groupId,
             @RequestParam("typeAuth") String typeAuth
     ){
-        Map jsonMap = new HashMap();
+        Map jsonMap = new HashMap(16);
         if(menuid == 0L){
             jsonMap.put("rows",new ResourcesMenu());
             return jsonMap;
@@ -82,14 +90,14 @@ public class AuthController {
                 resourcesService.findByKeyname(resourcesMenu.getKeyname())
         ));
 
-        List<PageAuth> pageAuthList = PageAuth.changeByEntitys(resourcesList);
+        List<PageAuth> pageAuthList = pageAuth.changeByEntitys(resourcesList);
 
         pageAuthList.forEach(pageAuth -> {
             if(AuthType.getKeyString(AuthType.organization_job).equals(typeAuth)){
-                authService.findByMenuidAndOrganizationId(menuid, organization_id)
+                authService.findByMenuidAndOrganizationId(menuid, organizationId)
                         .forEach(auth -> compare(menuid,pageAuth,auth));
             }else if(AuthType.getKeyString(AuthType.user).equals(typeAuth)){
-                authService.findByUserId(user_id)
+                authService.findByUserId(userId)
                         .forEach(auth -> compare(menuid,pageAuth,auth));
             }
         });
@@ -134,7 +142,7 @@ public class AuthController {
             }
         });
         authService.save(saveList);
-        return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("saveInfo.success"));
+        return AjaxMsgUtil.ajaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("saveInfo.success"));
     }
 
     private boolean compare(Long menuid, PageAuth pageAuth, Auth auth){

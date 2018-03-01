@@ -7,9 +7,14 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-/**
- * Created by AlbertXmas on 2017/1/13.
- */
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:30
+ * @param   
+ * @return   
+ */  
 public interface HrmresourceRepository extends JpaRepository<Hrmresource,Long>,CommonRepository<Hrmresource> {
 
     public Hrmresource findByLoginid(String loginid);

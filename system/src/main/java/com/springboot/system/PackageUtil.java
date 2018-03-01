@@ -1,11 +1,6 @@
 package com.springboot.system;
 
-/**
- * Created by AlbertXmas on 17/8/29.
- */
-
-
-import com.springboot.common.util.MD5Helper;
+import com.springboot.common.util.Md5Helper;
 import com.springboot.system.entity.firstDsE.ShiroResources;
 import com.springboot.system.service.ShiroResourcesService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -24,6 +19,15 @@ import java.net.URLDecoder;
 import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+
+/**
+ *
+ *
+ * @author XmasPiano
+ * @date 2018/3/1 上午10:21
+ * @param
+ * @return
+ */
 @Component
 public class PackageUtil implements ApplicationListener<ContextRefreshedEvent> {
     private final String colon = ":";
@@ -215,7 +219,7 @@ public class PackageUtil implements ApplicationListener<ContextRefreshedEvent> {
 //                    if(tempShiroResources == null){
 //                        list.add(temp);
 //                    }
-                    temp.setKeyname(MD5Helper.getMD5(temp.getName()+temp.getMethod()+temp.getShiroAuth()));
+                    temp.setKeyname(Md5Helper.getMD5(temp.getName()+temp.getMethod()+temp.getShiroAuth()));
                     list.add(temp);
                 }
                 shiroResourcesService.clearSave(list);

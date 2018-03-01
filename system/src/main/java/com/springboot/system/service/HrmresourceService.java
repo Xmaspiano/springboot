@@ -10,9 +10,14 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
-/**
- * Created by AlbertXmas on 2017/1/13.
- */
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:25
+ * @param   
+ * @return   
+ */  
 
 public interface HrmresourceService extends CommonService<Hrmresource>
 {
@@ -32,7 +37,7 @@ public interface HrmresourceService extends CommonService<Hrmresource>
     public Page<Hrmresource> findAll(Specification<Hrmresource> spec, Pageable pageable);
 
     @Override
-    public Hrmresource save(Hrmresource Hrmresource);
+    public Hrmresource save(Hrmresource hrmresource);
 
     @Override
     public Iterable<Hrmresource> save(Iterable<Hrmresource> entities);

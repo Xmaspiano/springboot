@@ -1,6 +1,5 @@
 package com.springboot.system.web;
 
-
 import com.springboot.common.util.CommonUtil;
 import com.springboot.system.entity.secondDsE.Hrmdepartment;
 import com.springboot.system.service.HrmdepartmentService;
@@ -16,6 +15,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:21
+ * @param   
+ * @return   
+ */  
 @Controller
 @RequestMapping(value = {"/hrmdepartment"})
 public class HrmDepartmentController {
@@ -32,7 +39,7 @@ public class HrmDepartmentController {
     @RequestMapping(value = "/date_treegrid.json" )
     @ResponseBody
     public Map getTreeGridData(){
-        Map jsonMap = new HashMap();
+        Map jsonMap = new HashMap(16);
         List<Hrmdepartment> hrmdepartmentList = hrmdepartmentService.findByYXDept();
 
         jsonMap.put("rows", CommonUtil.conversionByList(hrmdepartmentList));

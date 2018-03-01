@@ -5,9 +5,14 @@ import com.springboot.system.entity.firstDsE.ShiroResources;
 
 import java.util.List;
 
-/**
- * Created by AlbertXmas on 17/8/29.
- */
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:26
+ * @param   
+ * @return   
+ */  
 public interface ShiroResourcesService extends CommonService<ShiroResources> {
 
     public List<ShiroResources> findOneBy(ShiroResources shiroResources);

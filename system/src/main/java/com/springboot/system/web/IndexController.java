@@ -2,14 +2,22 @@ package com.springboot.system.web;
 
 import com.springboot.system.service.HrmdepartmentService;
 import com.springboot.system.service.HrmresourceService;
-import com.springboot.system.util.MsgUtil;
-import com.springboot.system.util.MsgUtilNative;
+import com.springboot.common.util.MsgUtil;
+import com.springboot.common.util.MsgUtilNative;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:21
+ * @param   
+ * @return   
+ */  
 @RestController
 @RequestMapping(value = {"/index"})
 public class IndexController {

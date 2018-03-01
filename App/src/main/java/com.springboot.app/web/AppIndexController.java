@@ -2,18 +2,26 @@ package com.springboot.app.web;
 
 import com.springboot.system.service.HrmdepartmentService;
 import com.springboot.system.service.HrmresourceService;
-import com.springboot.system.util.MsgUtil;
-import com.springboot.system.util.MsgUtilNative;
+import com.springboot.common.util.MsgUtil;
+import com.springboot.common.util.MsgUtilNative;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:31
+ * @param   
+ * @return   
+ */  
 @RestController
 @RequestMapping(value = {"/app"})
 public class AppIndexController {

@@ -6,8 +6,8 @@ import com.springboot.common.util.CommonUtil;
 import com.springboot.system.menu.entity.firstDsE.OsMenu;
 import com.springboot.system.menu.service.OsMenuService;
 import com.springboot.system.util.AjaxMsgUtil;
-import com.springboot.system.util.MsgUtil;
-import com.springboot.system.util.MsgUtilNative;
+import com.springboot.common.util.MsgUtil;
+import com.springboot.common.util.MsgUtilNative;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +22,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:23
+ * @param   
+ * @return   
+ */  
 @Controller
 @RequestMapping(value = {"/menu"})
 public class MenuController {
@@ -32,7 +40,7 @@ public class MenuController {
     private OsMenuService osMenuService;
 
     @Autowired
-    private BaseTreeModel PageMenu;
+    private BaseTreeModel pageMenu;
 
     @RequestMapping(method = RequestMethod.GET)
     public String index(){
@@ -43,13 +51,13 @@ public class MenuController {
     @ResponseBody
     @RequiresPermissions("menu:save")
     public Map saveInfo(OsMenu osMenu){
-        Map jsonMap = new HashMap();
+        Map jsonMap = new HashMap(16);
         try {
             osMenuService.save(osMenu);
-            return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("deleteInfo.success"));
+            return AjaxMsgUtil.ajaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("deleteInfo.success"));
         }catch(Exception e){
             e.printStackTrace();
-            return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.ERROR, msgUtil.getMsg("deleteInfo.error"));
+            return AjaxMsgUtil.ajaxMsg(AjaxMsgUtil.ERROR, msgUtil.getMsg("deleteInfo.error"));
         }
     }
 
@@ -57,16 +65,16 @@ public class MenuController {
     @ResponseBody
     @RequiresPermissions("menu:delete")
     public Map deleteInfo(@RequestParam("id") Long id){
-        Map jsonMap = new HashMap();
+        Map jsonMap = new HashMap(16);
         try {
             if(osMenuService.findAllBySuper(id).size() > 0){
                 throw new Exception("包含子菜单");
             }
             osMenuService.delete(id);
-            return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("deleteInfo.success"));
+            return AjaxMsgUtil.ajaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("deleteInfo.success"));
         }catch(Exception e){
             e.printStackTrace();
-            return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.ERROR, msgUtil.getMsg("deleteInfo.error"));
+            return AjaxMsgUtil.ajaxMsg(AjaxMsgUtil.ERROR, msgUtil.getMsg("deleteInfo.error"));
         }
     }
 
@@ -74,13 +82,13 @@ public class MenuController {
     @ResponseBody
     @RequiresPermissions("menu:view")
     public Map getTreeGridData(){
-        Map jsonMap = new HashMap();
+        Map jsonMap = new HashMap(16);
         List<OsMenu> osmList = osMenuService.findAll();
         osmList.stream().forEach(osMenu -> osMenu.getOsMenuList().clear());
 
 //        jsonMap.put("rows", CommonUtil.conversionByList(osmList));
         jsonMap.put("total",osmList.size());
-        jsonMap.put("rows", CommonUtil.conversionByList(PageMenu.changeByEntitys(osmList)));
+        jsonMap.put("rows", CommonUtil.conversionByList(pageMenu.changeByEntitys(osmList)));
         return jsonMap;
     }
 }

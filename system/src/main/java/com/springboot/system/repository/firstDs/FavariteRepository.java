@@ -6,6 +6,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:29
+ * @param   
+ * @return   
+ */  
 public interface FavariteRepository
         extends JpaRepository<Favarite, Long>,CommonRepository<Favarite> {
 

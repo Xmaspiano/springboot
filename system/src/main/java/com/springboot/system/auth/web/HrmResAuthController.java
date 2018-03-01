@@ -11,6 +11,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:22
+ * @param   
+ * @return   
+ */  
 @Controller
 @RequestMapping(value = {"/auth/user"})
 public class HrmResAuthController {
@@ -25,7 +33,7 @@ public class HrmResAuthController {
     @RequestMapping("/date_grid.json")
     @ResponseBody
     public Map query(@RequestParam( value = "deptid", defaultValue = "0") Long deptid){
-        Map jsonMap = new HashMap();
+        Map jsonMap = new HashMap(16);
         if(deptid == 0L){
             jsonMap.put("rows",new Hrmresource());
             return jsonMap;

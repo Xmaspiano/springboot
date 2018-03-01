@@ -4,8 +4,8 @@ import com.springboot.common.util.CommonUtil;
 import com.springboot.system.entity.firstDsE.Role;
 import com.springboot.system.service.RoleService;
 import com.springboot.system.util.AjaxMsgUtil;
-import com.springboot.system.util.MsgUtil;
-import com.springboot.system.util.MsgUtilNative;
+import com.springboot.common.util.MsgUtil;
+import com.springboot.common.util.MsgUtilNative;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +20,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:21
+ * @param   
+ * @return   
+ */  
 
 @Controller
 @RequestMapping(value = {"/role"})
@@ -45,7 +53,7 @@ public class RoleController{
     @RequiresPermissions("role:save:add,edit")
     public Map saveInfo(Role role){
         roleService.save(role);
-        return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("saveInfo.success"));
+        return AjaxMsgUtil.ajaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("saveInfo.success"));
     }
 
     @RequestMapping(value = "/delete" )
@@ -53,13 +61,13 @@ public class RoleController{
     @RequiresPermissions("role:delete")
     public Map deleteInfo(@RequestParam("id") Long id){
         roleService.delete(id);
-        return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("deleteInfo.success"));
+        return AjaxMsgUtil.ajaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("deleteInfo.success"));
     }
 
     @RequestMapping(value = "/date_grid.json" )
     @ResponseBody
     public Map getGridData(){
-        Map jsonMap = new HashMap();
+        Map jsonMap = new HashMap(16);
         List<Role> roleList = roleService.findAll();
 
         jsonMap.put("rows", CommonUtil.conversionByList(roleList));

@@ -1,9 +1,9 @@
 package com.springboot.system.web;
 
+import com.springboot.common.util.MsgUtil;
+import com.springboot.common.util.MsgUtilNative;
 import com.springboot.system.entity.secondDsE.Hrmresource;
 import com.springboot.system.util.AjaxMsgUtil;
-import com.springboot.system.util.MsgUtil;
-import com.springboot.system.util.MsgUtilNative;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
@@ -19,6 +19,14 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:21
+ * @param   
+ * @return   
+ */  
 @Controller
 public class LoginController {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
@@ -35,7 +43,7 @@ public class LoginController {
     public Map loginUserAjax(HttpServletRequest request, String username, String password, HttpSession session) {
         UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(username,password);
         Subject subject = SecurityUtils.getSubject();
-        Map model = new HashMap();
+        Map model = new HashMap(16);
         String error = "";
         try {
             if(request.getParameter(RememberMe)!=null){
@@ -49,7 +57,7 @@ public class LoginController {
             model.put("forword", "/");
 
             //此处将被shiro拦截至successUrl
-            return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.SUCCESS, model);
+            return AjaxMsgUtil.ajaxMsg(AjaxMsgUtil.SUCCESS, model);
         } catch (UnknownAccountException uae) {
             error = msgUtil.getMsg("用户不存在,请申请用户!!!");
         } catch (IncorrectCredentialsException ice) {
@@ -64,15 +72,15 @@ public class LoginController {
         }
         LOGGER.info(error);
         model.put("error", error);
-        return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.ERROR, model);
+        return AjaxMsgUtil.ajaxMsg(AjaxMsgUtil.ERROR, model);
     }
 
     @RequestMapping(value = "/loginSuccess")
     @ResponseBody
     public Map loginSuccess() {
-        Map model = new HashMap();
+        Map model = new HashMap(16);
         model.put("forword", "/");
-        return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.SUCCESS, model);
+        return AjaxMsgUtil.ajaxMsg(AjaxMsgUtil.SUCCESS, model);
     }
 
 }

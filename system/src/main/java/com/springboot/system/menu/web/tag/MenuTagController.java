@@ -12,7 +12,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:23
+ * @param   
+ * @return   
+ */  
 @Controller
 @RequestMapping(value = {"/menu/tag"})
 public class MenuTagController {
@@ -32,7 +39,7 @@ public class MenuTagController {
         //二级菜单
         List<OsMenu> osMenuList = osMenuService.findAllBySuper(getLevelTwoMenu(id).getId());
 
-        Map jsonMap = new HashMap();
+        Map jsonMap = new HashMap(16);
         jsonMap.put("total",osMenuList.size());
         jsonMap.put("rows",this.buildTreeMenu(osMenuList));
         return jsonMap;
@@ -41,7 +48,7 @@ public class MenuTagController {
     @RequestMapping(value = "/menu_tree_url.json" )
     @ResponseBody
     public Map getTreeDataUrl(@RequestParam(defaultValue = "0",value = "id") Long id){
-        Map jsonMap = new HashMap();
+        Map jsonMap = new HashMap(16);
         jsonMap.put("success", true);
 
         OsMenu osMenu = osMenuService.findOne(id);
@@ -83,7 +90,7 @@ public class MenuTagController {
         OsMenu osMenu;
         for (int i = 0; i < jsonMap.length; i++) {
             osMenu = osMenuList.get(i);
-            jsonMap[i] = new HashMap();
+            jsonMap[i] = new HashMap(16);
 
             jsonMap[i].put("id",osMenu.getId());
             jsonMap[i].put("text",osMenu.getName());

@@ -3,6 +3,14 @@ package com.springboot.system.web;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:21
+ * @param   
+ * @return   
+ */  
 @RestController
 @RequestMapping(value = {"/error"})
 public class ErrorController {

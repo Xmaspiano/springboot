@@ -21,6 +21,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:23
+ * @param   
+ * @return   
+ */  
 @Service
 @Transactional
 public class AuthServiceImpl

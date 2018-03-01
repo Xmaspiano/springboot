@@ -5,9 +5,14 @@ import com.springboot.common.service.CommonService;
 
 import java.util.List;
 
-/**
- * Created by AlbertXmas on 17/8/29.
- */
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:27
+ * @param   
+ * @return   
+ */  
 public interface ResourcesMenuService extends CommonService<ResourcesMenu> {
 
     public List<ResourcesMenu> findByMenuid(Long menuid);

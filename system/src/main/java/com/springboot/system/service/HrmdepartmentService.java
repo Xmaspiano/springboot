@@ -1,14 +1,19 @@
 package com.springboot.system.service;
 
 
-        import com.springboot.common.service.CommonService;
-        import com.springboot.system.entity.secondDsE.Hrmdepartment;
+import com.springboot.common.service.CommonService;
+import com.springboot.system.entity.secondDsE.Hrmdepartment;
 
-        import java.util.List;
+import java.util.List;
 
-/**
- * Created by AlbertXmas on 2017/1/13.
- */
+/**  
+ *    
+ *   
+ * @author XmasPiano
+ * @date 2018/3/1 上午10:26
+ * @param   
+ * @return   
+ */  
 
 public interface HrmdepartmentService extends CommonService<Hrmdepartment> {
     public List<Hrmdepartment> findByYXDept();

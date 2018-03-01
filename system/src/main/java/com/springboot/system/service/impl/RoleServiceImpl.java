@@ -9,6 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:26
+ * @param   
+ * @return   
+ */  
 @Service
 public class RoleServiceImpl
         extends BaseCommonServiceImpl<Role, RoleRepository>

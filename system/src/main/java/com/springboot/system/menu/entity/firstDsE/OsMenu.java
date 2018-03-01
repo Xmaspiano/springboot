@@ -1,7 +1,7 @@
 package com.springboot.system.menu.entity.firstDsE;
 
 
-import com.springboot.common.entity.BaseIdEntityMYSQL;
+import com.springboot.common.entity.BaseIdEntityMysql;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,15 +12,20 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by AlbertXmas on 17/8/8.
- */
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:24
+ * @param   
+ * @return   
+ */  
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicUpdate
-public class OsMenu extends BaseIdEntityMYSQL {
+public class OsMenu extends BaseIdEntityMysql {
     private String appid;
     private String name;
     private Long parentid;

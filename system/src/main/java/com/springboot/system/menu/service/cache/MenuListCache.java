@@ -4,6 +4,14 @@ import com.springboot.system.model.MenuList;
 
 import java.util.List;
 
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:24
+ * @param   
+ * @return   
+ */  
 public interface MenuListCache {
     public List<MenuList> getMenuListByUser(Long loginid);
 

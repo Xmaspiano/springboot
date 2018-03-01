@@ -7,9 +7,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created by AlbertXmas on 17/8/29.
- */
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:23
+ * @param   
+ * @return   
+ */  
 public class AuthRepositoryImpl {
 
     @PersistenceContext

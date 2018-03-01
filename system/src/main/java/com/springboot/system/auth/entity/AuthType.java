@@ -1,5 +1,13 @@
 package com.springboot.system.auth.entity;
 
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:23
+ * @param   
+ * @return   
+ */  
 public enum AuthType {
     /* 用户 */
     user("用户"),
@@ -10,10 +18,10 @@ public enum AuthType {
     /* 组织机构组 */
     organization_group("组织机构组");
 
-    private static final String UserId = "UserId";
-    private static final String GroupId = "GroupId";
-    private static final String DeptId = "DeptId";
-    private static final String RoleId = "RoleId";
+    private static final String USER_ID = "USER_ID";
+    private static final String GROUP_ID = "GROUP_ID";
+    private static final String DEPT_ID = "DEPT_ID";
+    private static final String ROLE_ID = "ROLE_ID";
     private final String info;
 
     AuthType(String info) {
@@ -26,25 +34,25 @@ public enum AuthType {
 
     public static String getKeyString(AuthType type){
         if(type == AuthType.user){
-            return UserId;
+            return USER_ID;
         }else if(type == AuthType.user_group){
-            return GroupId;
+            return GROUP_ID;
         }else if(type == AuthType.organization_group){
-            return DeptId;
+            return DEPT_ID;
         }else if(type == AuthType.organization_job){
-            return RoleId;
+            return ROLE_ID;
         }
         return "";
     }
 
     public static AuthType getKeyEnum(String type){
-        if(UserId.equals(type)){
+        if(USER_ID.equals(type)){
             return AuthType.user;
-        }else if(GroupId.equals(type)){
+        }else if(GROUP_ID.equals(type)){
             return AuthType.user_group;
-        }else if(DeptId.equals(type)){
+        }else if(DEPT_ID.equals(type)){
             return AuthType.organization_group;
-        }else if(RoleId.equals(type)){
+        }else if(ROLE_ID.equals(type)){
             return AuthType.organization_job;
         }
         return null;

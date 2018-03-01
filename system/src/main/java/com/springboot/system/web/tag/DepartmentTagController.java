@@ -15,7 +15,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ *
+ *
+ * @author XmasPiano
+ * @date 2018/3/1 上午10:22
+ * @param
+ * @return
+ */
 @Controller
 @RequestMapping(value = {"/dept/tag"})
 public class DepartmentTagController {
@@ -45,7 +52,7 @@ public class DepartmentTagController {
             //二级菜单
             departmentService.findAllBySuper(getLevelTwodept(id).getId());
         }
-        Map jsonMap = new HashMap();
+        Map jsonMap = new HashMap(16);
         jsonMap.put("total",departmentList.size());
         jsonMap.put("rows",this.test(departmentList));
         return jsonMap;
@@ -54,13 +61,14 @@ public class DepartmentTagController {
     @RequestMapping(value = "/dept_tree_url.json" )
     @ResponseBody
     public Map getTreeDataUrl(@RequestParam(defaultValue = "1",value = "id") Long id){
-        Map jsonMap = new HashMap();
+        Map jsonMap = new HashMap(16);
         jsonMap.put("success", true);
 
         Hrmdepartment department = departmentService.findOne(id);
         Hrmdepartment osPartdept = getLevelTwodept(department.getSupdepid());
 
-        if(id == 0L){//默认
+        //默认
+        if(id == 0L){
             jsonMap.put("title", "首页");
             jsonMap.put("id", 0);
             jsonMap.put("url", "/index");
@@ -95,7 +103,7 @@ public class DepartmentTagController {
         Hrmdepartment department;
         for (int i = 0; i < jsonMap.length; i++) {
             department = departmentList.get(i);
-            jsonMap[i] = new HashMap();
+            jsonMap[i] = new HashMap(16);
 
             jsonMap[i].put("id",department.getId());
             jsonMap[i].put("text",department.getDepartmentname());

@@ -19,7 +19,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:21
+ * @param   
+ * @return   
+ */  
 @Controller
 @RequestMapping(value = {"/favarite"})
 public class FavariteController {
@@ -37,7 +44,7 @@ public class FavariteController {
             @RequestParam(defaultValue = "false",value = "flag") boolean flag,
             @RequestParam(defaultValue = "false",value = "menuid") Long menuId
     ){
-        Map jsonMap = new HashMap();
+        Map jsonMap = new HashMap(16);
         Favarite favarite = new Favarite();
         try {
 
@@ -68,7 +75,7 @@ public class FavariteController {
     @RequestMapping(value = "/menu_favarite_url.json" )
     @ResponseBody
     public Map getFavariteDataUrl(){
-        Map jsonMap = new HashMap();
+        Map jsonMap = new HashMap(16);
         jsonMap.put("success", true);
         Subject subject = SecurityUtils.getSubject();
         Hrmresource hrmresource=(Hrmresource) subject.getPrincipal();

@@ -15,9 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by AlbertXmas on 17/8/29.
- */
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:27
+ * @param   
+ * @return   
+ */  
 @Service
 @Transactional
 public class ResourcesServiceImpl
@@ -30,7 +35,7 @@ public class ResourcesServiceImpl
     ShiroResourcesService shiroResourcesService;
 
     @Override
-    public List<Resources> synchronous(Long[] id, String[] KeyName) {
+    public List<Resources> synchronous(Long[] id, String[] keyName) {
 //        resources resources = null;
 //        ShiroResources shiroResources = null;
 

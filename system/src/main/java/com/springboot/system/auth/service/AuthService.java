@@ -12,6 +12,14 @@ import com.springboot.system.resources.entity.firstDsE.Resources;
 
 import java.util.List;
 
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:23
+ * @param   
+ * @return   
+ */  
 public interface AuthService extends CommonService<Auth> {
 
     public List<Auth> findByMenuidAndOrganizationId(Long menuid, Long organizationId);

@@ -4,9 +4,14 @@ import com.springboot.system.resources.entity.firstDsE.Resources;
 import com.springboot.common.repository.CommonRepository;
 import org.springframework.data.repository.CrudRepository;
 
-/**
- * Created by AlbertXmas on 17/8/29.
- */
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:28
+ * @param   
+ * @return   
+ */  
 public interface ResourcesRepository
         extends CrudRepository<Resources, Long>,CommonRepository<Resources> {
 

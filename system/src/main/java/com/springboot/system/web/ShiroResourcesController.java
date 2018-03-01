@@ -4,8 +4,8 @@ import com.springboot.common.util.CommonUtil;
 import com.springboot.system.entity.firstDsE.ShiroResources;
 import com.springboot.system.service.ShiroResourcesService;
 import com.springboot.system.util.AjaxMsgUtil;
-import com.springboot.system.util.MsgUtil;
-import com.springboot.system.util.MsgUtilNative;
+import com.springboot.common.util.MsgUtil;
+import com.springboot.common.util.MsgUtilNative;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:21
+ * @param   
+ * @return   
+ */  
 @Controller
 @RequestMapping(value = {"/shiroResources"})
 public class ShiroResourcesController{
@@ -38,7 +45,7 @@ public class ShiroResourcesController{
 //    @RequiresPermissions("resources:save:add,edit")
     public Map saveInfo(ShiroResources shiroResources){
         shiroResourcesService.save(shiroResources);
-        return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("saveInfo.success"));
+        return AjaxMsgUtil.ajaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("saveInfo.success"));
     }
 
     @RequestMapping(value = "/delete" )
@@ -46,13 +53,13 @@ public class ShiroResourcesController{
 //    @RequiresPermissions("resources:delete")
     public Map deleteInfo(@RequestParam("id") Long id){
         shiroResourcesService.delete(id);
-        return AjaxMsgUtil.AjaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("deleteInfo.success"));
+        return AjaxMsgUtil.ajaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("deleteInfo.success"));
     }
 
     @RequestMapping(value = "/date_grid.json" )
     @ResponseBody
     public Map getGridData(){
-        Map jsonMap = new HashMap();
+        Map jsonMap = new HashMap(16);
         List<ShiroResources> shiroResourcesList = shiroResourcesService.findAll();
 
         jsonMap.put("rows", CommonUtil.conversionByList(shiroResourcesList));

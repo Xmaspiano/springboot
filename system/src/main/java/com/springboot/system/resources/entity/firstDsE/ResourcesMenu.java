@@ -1,6 +1,6 @@
 package com.springboot.system.resources.entity.firstDsE;
 
-import com.springboot.common.entity.BaseIdEntityMYSQL;
+import com.springboot.common.entity.BaseIdEntityMysql;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,15 +8,20 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 
-/**
- * Created by AlbertXmas on 17/8/29.
- */
+/**  
+ *    
+ *   
+ * @author XmasPiano  
+ * @date 2018/3/1 上午10:27
+ * @param   
+ * @return   
+ */  
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicUpdate
-public class ResourcesMenu extends BaseIdEntityMYSQL {
+public class ResourcesMenu extends BaseIdEntityMysql {
     private Long menuid;
     private String keyname;
     /**
