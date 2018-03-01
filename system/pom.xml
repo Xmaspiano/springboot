@@ -15,9 +15,9 @@
     <version>1.0-DEV-SHAPSHOT</version>
     <name>system</name>
 
-    <properties>
-        <main.basedir>${basedir}/../..</main.basedir>
-    </properties>
+    <!--<properties>-->
+        <!--<main.basedir>${basedir}/../..</main.basedir>-->
+    <!--</properties>-->
 
     <!-- Package as an executable JAR -->
     <build>

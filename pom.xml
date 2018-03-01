@@ -280,6 +280,24 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <profiles.activation>dev</profiles.activation>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <profiles.activation>test</profiles.activation>
+            </properties>
+        </profile>
+    </profiles>
+
     <!-- Allow access to Spring milestones and snapshots -->
     <!-- (you don't need this if you are using anything after 0.5.0.RELEASE) -->
     <!--<repositories>-->
