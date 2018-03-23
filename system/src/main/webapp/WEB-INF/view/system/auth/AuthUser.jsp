@@ -10,7 +10,8 @@
 <body>
 <div id="authuser" class="easyui-layout" style="width:100%;height:500px;">
     <div data-options="region:'west',split:true,title:'<m:info name='组织机构' />',collapsible:false" style="width:200px;">
-        <div id="dept-accordion-authuser" class="easyui-accordion" data-options="multiple:false,border:false,selected:false" style="width:100%;height:auto;">
+        <div id="dept-accordion-authuser" class="easyui-accordion"
+             data-options="multiple:false,border:false,selected:false,fit:true" >
         </div>
     </div>
     <div data-options="region:'center',title:'<m:info name='角色编辑' />',collapsible:false">
