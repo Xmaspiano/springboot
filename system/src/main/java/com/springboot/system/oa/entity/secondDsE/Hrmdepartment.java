@@ -1,4 +1,4 @@
-package com.springboot.system.entity.secondDsE;
+package com.springboot.system.oa.entity.secondDsE;
 
 
 import com.springboot.common.entity.BaseIdEntity;
@@ -29,9 +29,10 @@ public class Hrmdepartment extends BaseIdEntity<Hrmdepartment> {
     private Long subcompanyid1;
     private Long supdepid;
     private String canceled;
-    private String tlevel;
-
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "supdepid", updatable = false)
+    private Long tlevel;
+//
+//    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+//    @JoinColumn(name = "supdepid", updatable = false)
+    @Transient
     private List<Hrmdepartment> hrmDepartmentList = new ArrayList<Hrmdepartment>();
 }

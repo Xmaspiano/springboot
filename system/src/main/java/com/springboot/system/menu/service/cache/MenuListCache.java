@@ -1,6 +1,7 @@
 package com.springboot.system.menu.service.cache;
 
-import com.springboot.system.model.MenuList;
+
+import com.springboot.system.menu.entity.firstDsE.OsMenu;
 
 import java.util.List;
 
@@ -13,9 +14,9 @@ import java.util.List;
  * @return   
  */  
 public interface MenuListCache {
-    public List<MenuList> getMenuListByUser(Long loginid);
+    public List<OsMenu> getMenuListByUser(Long loginid);
 
-    public List<MenuList> setMenuListByUser(Long loginid, List<MenuList> menuLists);
+    public List<OsMenu> setMenuListByUser(Long loginid, List<OsMenu> menuLists);
 
-    public List<MenuList> removeMenuListElementByUser(Long loginid, List<MenuList> removeLists);
+    public List<OsMenu> removeMenuListElementByUser(Long loginid, List<OsMenu> removeLists);
 }

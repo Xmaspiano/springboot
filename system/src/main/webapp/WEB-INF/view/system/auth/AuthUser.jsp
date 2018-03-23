@@ -5,20 +5,19 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <%@ include file="../../systemLayout/layout_system.jsp"%>
+    <%@ include file="/WEB-INF/view/systemLayout/layout_system_iframe.jsp"%>
 </head>
 <body>
-
-<div id="cc" class="easyui-layout" style="width:100%;height:500px;">
+<div id="authuser" class="easyui-layout" style="width:100%;height:500px;">
     <div data-options="region:'west',split:true,title:'<m:info name='组织机构' />',collapsible:false" style="width:200px;">
-        <div id="dept-accordion" class="easyui-accordion" data-options="multiple:false,border:false,selected:false" style="width:100%;height:auto;">
+        <div id="dept-accordion-authuser" class="easyui-accordion" data-options="multiple:false,border:false,selected:false" style="width:100%;height:auto;">
         </div>
     </div>
     <div data-options="region:'center',title:'<m:info name='角色编辑' />',collapsible:false">
         <table id="table-authuser" style="width:100%;height:400px"></table>
         <div id="dialog-authuser" title="" class="easyui-dialog" style="width:500px;height:400px;"
              data-options="left:260,top:70,closed:true,resizable:false,modal:true,buttons:button_dialog">
-            <form id="form1" method="post">
+            <form id="form1-authuser" method="post">
                 <input type="hidden" id="deptid" name="deptid" value=""/>
                 <input type="hidden" id="userid" name="userid" value=""/>
                 <input type="hidden" id="typeAuth" name="typeAuth" value="<%= AuthType.getKeyString(AuthType.user)%>"/>
@@ -46,24 +45,24 @@
         </div>
     </div>
 </div>
-<div id="roledept_win">
+<div id="win-authuser">
 </div>
 </body>
 <script>
     function _left_getDeptDate(){
-        var tempMenuVo = $('#dept-accordion').accordion('panels');
+        var tempMenuVo = $('#dept-accordion-authuser').accordion('panels');
         var length_menu = tempMenuVo.length;
         $.ajax({
-            url: "/dept/tag/dept_tree.json",
+            url: "/common/tag/dept/dept_tree.json",
             type:"POST",
             success: function(data){
                 //清理空目录表单
                 for(var i =0; i<length_menu; i++){
-                    $('#dept-accordion').accordion('remove', tempMenuVo[0].panel("options").title);
+                    $('#dept-accordion-authuser').accordion('remove', tempMenuVo[0].panel("options").title);
                 }
 
                 $.each(data.rows, function(i, item) {
-                    $('#dept-accordion').accordion('add', {
+                    $('#dept-accordion-authuser').accordion('add', {
                         title: item.text,
                         content: "<ul id=\""+item.id+"_menu\">",
                         style:"overflow:auto;padding:10px;",
@@ -223,7 +222,7 @@
 <script>
     //form1确认提交
     function submitApply(){
-        $('#form1').form('submit', {
+        $('#form1-authuser').form('submit', {
             url:"roledept/save",
             onSubmit: function(){
 
@@ -292,11 +291,11 @@
             return false;
         }
 
-        var srcUrl = "/auth?"+$("#form1").serialize();
+        var srcUrl = "/auth?"+$("#form1-authuser").serialize();
         var content = '<iframe id="_auth_Iframe" scrolling="no" frameborder="0" src="'+srcUrl+'" style="width:100%;height:98%;"></iframe>';
 //        var content = '这里设定权限功能...';
 
-        $('#roledept_win').dialog({
+        $('#win-authuser').dialog({
             title: "<i class='icon-share-alt'/>&nbsp;<m:info name='授权'/>",
             left:230,
             top:50,
@@ -339,7 +338,7 @@
     //表单赋值
     function setFormRow(data){
         if(data == null){
-            $('#form1').form('load',{
+            $('#form1-authuser').form('load',{
                 id:'',
                 deptid:$("#deptid").val(),
                 roleid:'',
@@ -349,7 +348,7 @@
 
             changeLife(0);
         }else{
-            $('#form1').form('load',{
+            $('#form1-authuser').form('load',{
                 id:data.id,
                 deptid:data.deptid,
                 roleid:data.roleid,

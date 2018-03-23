@@ -2,8 +2,9 @@ package com.springboot.system.web;
 
 import com.springboot.common.util.CommonUtil;
 import com.springboot.system.entity.firstDsE.Favarite;
-import com.springboot.system.entity.secondDsE.Hrmresource;
+import com.springboot.system.oa.entity.secondDsE.Hrmresource;
 import com.springboot.system.menu.service.OsMenuService;
+import com.springboot.system.model.FavariteMenu;
 import com.springboot.system.service.FavariteService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +59,6 @@ public class FavariteController {
                 favarite.setSort("A");
                 favariteService.save(favarite);
             }else{
-
                 favariteService.deleteByUserIdAndMenuId(hrmresource.getId(), menuId);
             }
 
@@ -81,7 +82,19 @@ public class FavariteController {
         Hrmresource hrmresource=(Hrmresource) subject.getPrincipal();
         List<Favarite> favarites = favariteService.findByUserId(hrmresource.getId());
 
-        jsonMap.put("rows", CommonUtil.conversionByList(favarites));
+        List<FavariteMenu> favariteList = new ArrayList<>();
+        FavariteMenu favariteMenu = null;
+        for(Favarite favarite:favarites){
+            favariteMenu = new FavariteMenu();
+            favariteMenu.setId(favarite.getId());
+            favariteMenu.setMenuId(favarite.getMenuId());
+            favariteMenu.setSort(favarite.getSort());
+            favariteMenu.setText(osMenuService.findOne(favarite.getMenuId()).getName());
+
+            favariteList.add(favariteMenu);
+        }
+
+        jsonMap.put("rows", CommonUtil.conversionByList(favariteList));
         return jsonMap;
     }
 }

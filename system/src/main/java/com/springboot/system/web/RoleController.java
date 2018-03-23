@@ -48,9 +48,9 @@ public class RoleController{
         return "systemLayout/role/roledept";
     }
 
-    @RequestMapping(value = "/save" )
+    @RequestMapping(value = "/save")
     @ResponseBody
-    @RequiresPermissions("role:save:add,edit")
+    @RequiresPermissions("role:edit")
     public Map saveInfo(Role role){
         roleService.save(role);
         return AjaxMsgUtil.ajaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("saveInfo.success"));
@@ -66,6 +66,7 @@ public class RoleController{
 
     @RequestMapping(value = "/date_grid.json" )
     @ResponseBody
+    @RequiresPermissions("role:view")
     public Map getGridData(){
         Map jsonMap = new HashMap(16);
         List<Role> roleList = roleService.findAll();

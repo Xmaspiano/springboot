@@ -18,12 +18,22 @@
     <dependencies>
         <dependency>
             <groupId>asiagroup</groupId>
-            <artifactId>OAHelper-app</artifactId>
+            <artifactId>OAHelper-architecture</artifactId>
+            <version>1.0-DEV-SHAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>asiagroup</groupId>
+            <artifactId>OAHelper-common</artifactId>
             <version>1.0-DEV-SHAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>asiagroup</groupId>
             <artifactId>OAHelper-system</artifactId>
+            <version>1.0-DEV-SHAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>asiagroup</groupId>
+            <artifactId>OAHelper-App</artifactId>
             <version>1.0-DEV-SHAPSHOT</version>
         </dependency>
     </dependencies>

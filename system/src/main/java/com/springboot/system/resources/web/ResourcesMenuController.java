@@ -9,6 +9,7 @@ import com.springboot.system.resources.service.ResourcesService;
 import com.springboot.system.util.AjaxMsgUtil;
 import com.springboot.common.util.MsgUtil;
 import com.springboot.common.util.MsgUtilNative;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,8 @@ public class ResourcesMenuController {
 
     @RequestMapping(value = "/date_grid.json" )
     @ResponseBody
+    @RequiresPermissions("resourcesmenu:view")
+
     public Map getGridData(@RequestParam( value = "menuid", defaultValue = "0") Long menuid){
         Map jsonMap = new HashMap(16);
         if(menuid == 0L){
@@ -62,7 +65,7 @@ public class ResourcesMenuController {
 
     @RequestMapping(value = "/save" )
     @ResponseBody
-//    @RequiresPermissions("resourcesmenu:save")
+    @RequiresPermissions("resourcesmenu:save")
     public Map saveInfo(@RequestBody EffectRow effectRow){
         List<ResourcesMenu> resourcesMenuList = new ArrayList<ResourcesMenu>();
 

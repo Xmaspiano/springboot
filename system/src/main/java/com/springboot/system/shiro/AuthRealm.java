@@ -1,9 +1,10 @@
 package com.springboot.system.shiro;
 
 import com.springboot.system.auth.service.AuthService;
-import com.springboot.system.entity.secondDsE.Hrmresource;
+import com.springboot.system.oa.entity.secondDsE.Hrmresource;
 import com.springboot.system.resources.entity.firstDsE.Resources;
-import com.springboot.system.service.HrmresourceService;
+import com.springboot.system.oa.service.HrmresourceService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -11,6 +12,7 @@ import org.apache.shiro.cache.CacheManagerAware;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,15 @@ public class AuthRealm extends AuthorizingRealm implements CacheManagerAware {
     @Autowired
     private AuthService authService;
 
+    @Value("${admin.loginid}")
+    private String adminName;
+
+    @Value("${admin.password}")
+    private String password;
+
+    @Value("${admin.lastname}")
+    private String lastname;
+
     /**
      * 认证.登录
      * @param token
@@ -43,10 +54,14 @@ public class AuthRealm extends AuthorizingRealm implements CacheManagerAware {
         String username = utoken.getUsername();
 //        User user = userService.findByLoginid(username);
         Hrmresource hrmresource = hrmresourceService.findByLoginid(username);
-        if(hrmresource == null){
-            throw new UnknownAccountException();
+        if(hrmresource == null && adminName.equals(username)){
+            hrmresource = new Hrmresource();
+            hrmresource.setLoginid(adminName);
+            hrmresource.setPassword(password);
+            hrmresource.setLastname(lastname);
+        } else if( hrmresource == null ) {
+            throw new UnknownAccountException("用户名密码不存在");
         }
-
         //放入shiro.调用CredentialsMatcher检验密码
         return new SimpleAuthenticationInfo(hrmresource, hrmresource.getPassword(),this.getClass().getName());
     }
@@ -60,17 +75,26 @@ public class AuthRealm extends AuthorizingRealm implements CacheManagerAware {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principal) {
         //获取session中的用户
         Hrmresource hrmresource=(Hrmresource) principal.fromRealm(this.getClass().getName()).iterator().next();
-        List<String> permissions=new ArrayList();
-        List<Resources> resources = authService.findAllResByUser(hrmresource);
-        if(resources.size()>0) {
-            resources.forEach(resource -> permissions.add(resource.getShiroAuth()));
-        }
         SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
-        //将权限放入shiro中.
-        info.addStringPermissions(permissions);
+
+        if(adminName.equals(hrmresource.getLoginid())){
+            info.addStringPermission("*");
+        }else {
+            List<String> permissions = new ArrayList();
+            List<Resources> resources = authService.findAllResByUser(hrmresource);
+            if (resources.size() > 0) {
+                resources.forEach(resource -> permissions.add(resource.getShiroAuth()));
+            }
+
+            //将权限放入shiro中.
+            info.addStringPermissions(permissions);
+        }
         return info;
     }
 
-
+    public void clearCached() {
+        PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();
+        super.clearCache(principals);
+    }
 
 }

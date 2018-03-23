@@ -23,5 +23,11 @@
 <link rel="stylesheet" type="text/css" href="/init/jquery-easyui-1.5.3/themes/color.css">
 <link rel="stylesheet" type="text/css" href="/init/font-awesome-4.7.0/css/font-awesome.min.css">
 <style>
-    a:focus{outline:none;}
+    a:focus{
+        outline:none;
+    }
+
+    /*body.easyui-layout{*/
+        /*margin: 8px;*/
+    /*}*/
 </style>

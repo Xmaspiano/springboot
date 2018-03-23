@@ -1,8 +1,9 @@
 package com.springboot.system.auth.web;
 
 import com.springboot.common.util.CommonUtil;
-import com.springboot.system.entity.secondDsE.Hrmresource;
-import com.springboot.system.service.HrmresourceService;
+import com.springboot.system.oa.entity.secondDsE.Hrmresource;
+import com.springboot.system.oa.service.HrmresourceService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,7 @@ public class HrmResAuthController {
 
     @RequestMapping("/date_grid.json")
     @ResponseBody
+    @RequiresPermissions("auth.user:view")
     public Map query(@RequestParam( value = "deptid", defaultValue = "0") Long deptid){
         Map jsonMap = new HashMap(16);
         if(deptid == 0L){

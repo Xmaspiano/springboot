@@ -41,7 +41,7 @@ public class ResourcesController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String index(){
-        return "systemLayout/resources/ResourcesMenu";
+        return "systemLayout/resources/Resources";
     }
 
     @RequestMapping(value = "/save" )
@@ -62,6 +62,7 @@ public class ResourcesController {
 
     @RequestMapping(value = "/date_grid.json" )
     @ResponseBody
+    @RequiresPermissions("resources:view")
     public Map getGridData(){
         Map jsonMap = new HashMap(16);
         List<Resources> osmList = resourcesService.findAll();
@@ -72,7 +73,7 @@ public class ResourcesController {
 
     @RequestMapping(value = "/synchronous" )
     @ResponseBody
-//    @RequiresPermissions("resources:synchronous")
+    @RequiresPermissions("resources:synchronous")
     public Map synchronous(@RequestParam Long[] id, @RequestParam String[] keyname){
         resourcesService.synchronous(id,keyname);
         return AjaxMsgUtil.ajaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("synchronous.success"));

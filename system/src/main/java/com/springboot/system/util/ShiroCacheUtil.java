@@ -2,7 +2,7 @@ package com.springboot.system.util;
 
 import com.springboot.system.shiro.AuthRealm;
 import com.springboot.system.auth.entity.firstDsE.Auth;
-import com.springboot.system.service.HrmresourceService;
+import com.springboot.system.oa.service.HrmresourceService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.subject.SimplePrincipalCollection;

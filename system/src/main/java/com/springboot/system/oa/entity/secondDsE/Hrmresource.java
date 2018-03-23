@@ -1,4 +1,4 @@
-package com.springboot.system.entity.secondDsE;
+package com.springboot.system.oa.entity.secondDsE;
 
 
 import com.springboot.common.entity.BaseIdEntity;

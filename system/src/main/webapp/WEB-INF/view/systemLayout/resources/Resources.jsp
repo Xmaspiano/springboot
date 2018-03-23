@@ -1,77 +1,77 @@
+<%@ page import="org.slf4j.Logger" %>
+<%@ page import="org.slf4j.LoggerFactory" %>
 <%@page contentType="text/html; charset=utf-8"
         pageEncoding="utf-8"%>
+<%
+    Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    String APPID = this.getClass().getName();
+    LOGGER.info(APPID);
+%>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <%@ include file="../layout_system.jsp"%>
+    <%@ include file="/WEB-INF/view/systemLayout/layout_system_iframe.jsp"%>
 </head>
-<style>
-    .e-icon{
-        top: 6px;
-    }
-</style>
-<%-- 调用方法script --%>
-<script>
-
-</script>
 <body>
-<table id="table-resources" title="<i class='icon-save'/>&nbsp;<m:info name='资源编辑'/>" style="width:100%;height:400px"></table>
-<div id="dialog-resources" title="" class="easyui-dialog" style="width:500px;height:400px;"
-     data-options="left:360,top:70,closed:true,resizable:false,modal:true,buttons:button_dialog">
-    <form id="form1" method="post">
-        <input type="hidden" id="id" name="id" value=""/>
-        <input type="hidden" id="available" name="available" value="0"/>
-        <%--<input type="hidden" id="resourcesId" name="resourcesId" value="1"/>--%>
-        <table style="width: 100%;height:70px;">
-            <tr>
-                <td><m:info name='资源路径'/></td>
-                <td><input class="easyui-textbox" type="text" id="realName" name="realName" data-options="required:true"/></td>
-                <td><m:info name='资源名称'/></td>
-                <td><input class="easyui-textbox" id="name" name="name" data-options="required:true"/></td>
-            </tr>
-            <tr>
-                <td><m:info name='方法名称'/></td>
-                <td><input class="easyui-textbox" type="text" id="method" name="method" data-options="required:true"/></td>
-                <td><m:info name='shiro权限名称'/></td>
-                <td><input class="easyui-textbox" id="shiroAuth" name="shiroAuth" data-options="required:true"/></td>
-            </tr>
-            <tr>
-                <td><m:info name='是否锁定'/></td>
-                <td>
-                    <a id="btn" href="#" class="easyui-linkbutton"
-                       data-options="toggle:true,selected:false" onclick="clickLife()">
-                        <m:info name='未锁定'/>
-                    </a>
-                </td>
-            </tr>
-        </table>
-        <div style="margin:10px 0 10px 0;"/>
-    </form>
-    <%-- 表单选择插件 --%>
-    <%--<div class="easyui-panel" title="角色选择" style="height:236px;"  data-options="border:false">--%>
-    <%--<ul id="resources_tree"></ul>--%>
-    <%--</div>--%>
+<div id="mainLayout" class="easyui-layout">
+    <div data-options="region:'west',split:true,title:'<m:info name='权限路径' />',collapsible:false" style="width:200px;">
+        <div class="easyui-panel" data-options="border:false,fit:true" >
+            <ul id="menu_tree"></ul>
+        </div>
+    </div>
+    <div data-options="region:'center',title:'<m:info name='权限编辑' />',collapsible:false">
+            <input type="hidden" id="menuid" name="menuid" value=""/>
+            <table data-options="border:false,fit:true" id="table-resourcesmenu" ></table>
+    </div>
+    <div data-options="region:'east',split:true,collapsible:false" title="<m:info name='权限路径' />" style="width:230px;">
+        <table data-options="border:false,fit:true" id="table-resources-view" ></table>
+    </div>
 </div>
 </body>
-<%--初始化Html Script--%>
 <script>
     $(function() {
         //初始化treegrid数据
-        $('#table-resources').datagrid({
-            title:"<i class='icon-save'/>&nbsp;<m:info name='资源编辑'/>",
+        $('#table-resources-view').datagrid({
             url: '/resources/date_grid.json',
             loadMsg:"<m:info name='数据加载中...'/>",
             fitColumns:true,
-//            resizable:true,
-//            fixed:true,
-//            striped:true,
             rownumbers:true,
-            singleSelect:true,
-
-            toolbar:toolbar,
+//            singleSelect:true,
+            checkOnSelect:true,
+            selectOnCheck:true,
+            toolbar:toolbar_view,
             columns: [[
+                {field: 'ck1', checkbox:true},
                 {field: 'id', title: "<m:info name='主键'/>", width: 80, hidden:true},
+                {field: 'keyname', title: "<m:info name='keyname'/>", width: 80, hidden:true},
+                {field: 'realName', title: "<m:info name='文件路径'/>", width: 220, hidden:true},
+                {field: 'name', title: "<m:info name='名称'/>", width: 80, hidden:true},
+                {field: 'method', title: "<m:info name='方法'/>", width: 80, hidden:true},
+                {field: 'shiroAuth', title: "<m:info name='授权标识'/>", width: 80},
+                {field: 'available', title: "<m:info name='是否启用'/>", width: 60, hidden:true}
+            ]],
+            onDblClickRow:function(data){
+                actionOver("add_elecment");
+            }
+        });
+
+        $('#table-resourcesmenu').datagrid({
+            url: '/resourcesmenu/date_grid.json',
+            loadMsg:"<m:info name='数据加载中...'/>",
+            fitColumns:true,
+            rownumbers:true,
+//            singleSelect:true,
+            checkOnSelect:true,
+            selectOnCheck:true,
+            toolbar:toolbar,
+            queryParams: {
+                menuid: $("menuid").val()
+            },
+            columns: [[
+                {field: 'ck2', checkbox:true},
+                {field: 'id', title: "<m:info name='主键'/>", width: 80, hidden:true},
+                {field: 'keyname', title: "<m:info name='keyname'/>", width: 80, hidden:true},
                 {field: 'realName', title: "<m:info name='文件路径'/>", width: 220},
                 {field: 'name', title: "<m:info name='名称'/>", width: 80},
                 {field: 'method', title: "<m:info name='方法'/>", width: 80},
@@ -79,35 +79,33 @@
                 {field: 'available', title: "<m:info name='是否启用'/>", width: 60}
             ]],
             onDblClickRow:function(data){
-                actionOver("edit")
+                actionOver("remove_elecment")
             }
         });
 
-        //初始化选择插件
-
+        $('#menu_tree').tree({
+            url:"/menu/tag/menu_tree.json?parentid=-1",
+            type:"POST",
+            lines:true,
+            loadFilter: function(data){
+                if (data.rows){
+                    return data.rows;
+                } else {
+                    return data;
+                }
+            },
+            onClick:function(data){//tree菜单点击事件
+                $("#menuid").val(data.id);
+                $('#table-resourcesmenu').datagrid('reload',{menuid: data.id});
+            }
+        });
     });
-
     //定义treegrid工具栏
-    var toolbar = [{
-        text:"<i class='icon-plus'/>&nbsp;<m:info name='新增'/>",
-        <shiro:lacksPermission name="resources:save">disabled:true,</shiro:lacksPermission>
-//        iconCls: 'e-icon icon-plus',
+    var toolbar_view = [{
+        text:"<i class='fa fa-plus'/>&nbsp;<m:info name='添加'/>",
+        <%--<shiro:lacksPermission name="resources:save:edit">disabled:true,</shiro:lacksPermission>--%>
         handler: function(){
-            actionOver("add");
-        }
-    },{
-        text:"<i class='icon-pencil'/>&nbsp;<m:info name='修改'/>",
-        <shiro:lacksPermission name="resources:save:edit">disabled:true,</shiro:lacksPermission>
-//        iconCls: 'e-icon icon-pencil',
-        handler: function(){
-            actionOver("edit");
-        }
-    },{
-        text:"<i class='icon-remove'/>&nbsp;<m:info name='删除'/>",
-        <shiro:lacksPermission name="resources:delete">disabled:true,</shiro:lacksPermission>
-//        iconCls: 'e-icon icon-remove',
-        handler: function(){
-            actionOver("delete");
+            actionOver("add_elecment");
         }
     },{
         text:"<i class='icon-remove'/>&nbsp;<m:info name='同步全部'/>",
@@ -118,185 +116,121 @@
         }
     },'-'];
 
-    //定义dialog对话框按钮
-    var button_dialog = [{
-        text:"<i class='icon-ok'/>&nbsp;<m:info name='确认'/>",
-//        iconCls: 'e-icon icon-ok',
+    //定义treegrid工具栏
+    var toolbar = [{
+        text:"<i class='icon-pencil'/>&nbsp;<m:info name='保存'/>",
+        <%--<shiro:lacksPermission name="resources:save:edit">disabled:true,</shiro:lacksPermission>--%>
+//        iconCls: 'e-icon icon-pencil',
         handler: function(){
-            submitApply();
-            parent._left_TreeReload();
+            actionOver("save");
         }
     },{
-        text:"<i class='icon-remove'/>&nbsp;<m:info name='取消'/>",
-//        iconCls: 'e-icon icon-remove',
-        handler:function(){
-            actionOver("colse");
+        text:"<i class='icon-pencil'/>&nbsp;<m:info name='移除'/>",
+        <%--<shiro:lacksPermission name="resources:save:edit">disabled:true,</shiro:lacksPermission>--%>
+//        iconCls: 'e-icon icon-pencil',
+        handler: function(){
+            actionOver("remove_elecment");
         }
-    }];
+    },'-'];
 
     //定义页面操作集合
-    function actionOver(code){
-        switch(code){
-            case "colse":
-                $('#dialog-resources').dialog('close');
+    function actionOver(code) {
+        switch (code) {
+            case "save":
+                save()
                 break;
-            case "reload":
-                $('#table-resources').datagrid("reload");
+            case "remove_elecment":
+                remove_elecment()
                 break;
-            case "add":
-            <shiro:hasPermission name="resources:save">
-                addChangeresourcesTree();
-                $('#dialog-resources').dialog({title: "<m:info name='新增资源'/>"});
-                $('#dialog-resources').dialog('open');
+            case "add_elecment":
+                add_elecment();
                 break;
-                </shiro:hasPermission>
-            case "edit":
-            <shiro:hasPermission name="resources:save:edit">
-                if(editChangeresourcesTree()) {
-                    $('#dialog-resources').dialog({title: "<m:info name='修改资源'/>"});
-                    $('#dialog-resources').dialog('open');
-                }else{
-                    $.messager.alert('Warning',"<m:info name='请选择...'/>");
-                }
-                break;
-                </shiro:hasPermission>
-            case "delete":
-            <shiro:hasPermission name="resources:delete">
-                deleteRow();
-                break;
-                </shiro:hasPermission>
             case "synchronous":
             <%--<shiro:hasPermission name="resources:synchronous">--%>
                 synchronousRow();
                 break;
-            <%--</shiro:hasPermission>--%>
             default:
+                $.messager.alert('信息提示','未定义操作...','info');
                 return;
         }
     }
-</script>
-<script>
-    //form1确认提交
-    function submitApply(){
-        $('#form1').form('submit', {
-            url:"resources/save",
-            onSubmit: function(){
 
+    function save(){
+        var effectRow = new Object();
+        effectRow["menuid"] = $('#menuid').val();
+        effectRow["inserted"] = jQuery('#table-resourcesmenu').datagrid('getChanges', 'inserted');
+        effectRow["deleted"] = jQuery('#table-resourcesmenu').datagrid('getChanges', 'deleted');
+        effectRow["updated"] = jQuery('#table-resourcesmenu').datagrid('getChanges', 'updated');
+
+//        $('#form1').form('submit', {
+        $.ajax({
+            url:"resourcesmenu/save",//+$('#form1').serialize(),
+            data:JSON.stringify(effectRow),
+            type: "POST",
+            dataType: "json",
+            contentType:"application/json",
+            onSubmit: function(){
+                console.log(JSON.stringify(effectRow));
             },
-            success:function(data){
-                var data = JSON.parse(data);
-                if(data.status) {
-                    actionOver("reload");
-                    actionOver("colse");
-                }else{
-                    $.messager.alert('Warning',data.message);
+            success: function (data) {
+                if (data.status) {
+                    $('#table-resourcesmenu').datagrid('reload',{menuid: $("#menuid").val()});
+                    $.messager.alert('信息提示', "保存成功...", 'info');
+                } else {
+                    $.messager.alert('Warning', data.message);
                 }
             }
         });
     }
 
-    //修改treegrid数据
-    function editChangeresourcesTree(){
-        return ChangeresourcesTree(false);
-    }
-
-    function addChangeresourcesTree(){
-        ChangeresourcesTree(true);
-    }
-
-    function ChangeresourcesTree(idFlag){
-        var row = $('#table-resources').datagrid('getSelected');
-        if(row != null) {//有选择资料,将资料值初始化到表单
-            if(idFlag){//新增时id制空
-                row.id = "";
-            }
-            setFormRow(row);
-            return true;
-        }else{//未选择资料,默认初始化值
-            setFormRow();
-            return false;
+    function remove_elecment(){
+        var rows = $('#table-resourcesmenu').datagrid('getSelections');
+        //获取datagrid选中行
+        for (var i = 0; i < rows.length; i++) {
+            var index = $('#table-resourcesmenu').datagrid('getRowIndex',rows[i]);
+            $('#table-resourcesmenu').datagrid('deleteRow', index);
         }
     }
-    //删除treegrid数据
-    function deleteRow() {
-        var row = $('#table-resources').treegrid('getSelected');
-        if (row != null) {
-            $.ajax({
-                url: "resources/delete?id=" + row.id,
-                type: "POST",
-                success: function (data) {
-                    if (data.status) {
-                        actionOver("reload");
-                        actionOver("colse");
-                    } else {
-                        $.messager.alert('Warning', data.message);
-                    }
-                }
-            });
-        } else {
-            $.messager.alert('Warning', "<m:info name='请选择...'/>");
+
+    function add_elecment(){
+        if($("#menuid").val() == ""){
+            $.messager.alert('信息提示','请选择目录...','info');
+            return false;
+        }
+
+        var rows = $('#table-resources-view').datagrid('getSelections');
+        //获取datagrid选中行
+        for (var i = 0; i < rows.length; i++) {
+            var index = $('#table-resourcesmenu').datagrid('getRowIndex',rows[i]);
+            if(index < 0 && avil(rows[i])) {
+                $('#table-resourcesmenu').datagrid('appendRow', rows[i]);
+            }
         }
     }
 
     //同步数据
     function synchronousRow() {
-            $.ajax({
-                url: "resources/synchronous?id=-1&keyname=0",
-                type: "POST",
-                success: function (data) {
-                    if (data.status) {
-                        actionOver("reload");
-                        actionOver("colse");
-                    } else {
-                        $.messager.alert('Warning', data.message);
-                    }
+        $.ajax({
+            url: "resources/synchronous?id=-1&keyname=0",
+            type: "POST",
+            success: function (data) {
+                if (data.status) {
+                    $('#table-resources-view').datagrid("reload");
+                } else {
+                    $.messager.alert('Warning', data.message);
                 }
-            });
+            }
+        });
     }
 
-    //开关按钮点击切换
-    function clickLife(){
-        if($("#btn").linkbutton("options").selected){
-            changeLife(0);
-        }else{
-            changeLife(1);
+    function avil(row_i){
+        var rows = $('#table-resourcesmenu').datagrid('getRows');
+        for (var i = 0; i < rows.length; i++) {
+            if(rows[i].keyname == row_i.keyname){
+                return false;
+            }
         }
-    }
-    //开关按钮赋值
-    function changeLife(val){
-        if(val){
-            $("#btn").linkbutton({
-                selected:true,
-                text:"<i class='icon-ban-circle'/>&nbsp;<m:info name='已锁定'/>"
-//                iconCls:'e-icon icon-ban-circle'
-            });
-            $("#available").val(1);
-        }else{
-            $("#btn").linkbutton({
-                selected:false,
-                text:"<i class='icon-ok'/>&nbsp;<m:info name='未锁定'/>"
-//                iconCls:'e-icon icon-ok'
-            });
-            $("#available").val(0);
-        }
-    }
-    //表单赋值
-    function setFormRow(data){
-        if(data == null){
-            $("#id").val("");
-            $("#realName").textbox("setValue","");
-            $("#name").textbox("setValue","");
-            $("#method").textbox("setValue","");
-            $("#shiroAuth").textbox("setValue","");
-            changeLife(0);
-        }else{
-            $("#id").val(data.id);
-            $("#realName").textbox("setValue",data.realName);
-            $("#name").textbox("setValue",data.name);
-            $("#method").textbox("setValue",data.method);
-            $("#shiroAuth").textbox("setValue",data.shiroAuth);
-            changeLife(data.available);
-        }
+        return true;
     }
 </script>
 </html>

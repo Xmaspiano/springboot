@@ -1,21 +1,32 @@
 package com.springboot.architecture;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import org.hibernate.jpa.internal.EntityManagerImpl;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.hibernate4.support.OpenSessionInViewFilter;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.sql.SQLException;
-/**  
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
  *    
  *   
  * @author XmasPiano  
@@ -25,7 +36,9 @@ import java.sql.SQLException;
  */   
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "com.springboot.**.repository.secondDS",entityManagerFactoryRef = "secondEntityManagerFactory",transactionManagerRef="secondTransactionManager")
+
+@EnableJpaRepositories(basePackages = "com.springboot.**.repository.secondDs",
+        entityManagerFactoryRef = "secondEntityManagerFactory",transactionManagerRef="secondTransactionManager")
 public class SecondDruidDbConfig {
 
     @Value("${second.datasource.url}")
@@ -108,6 +121,7 @@ public class SecondDruidDbConfig {
         datasource.setTestOnReturn(testOnReturn);
         datasource.setPoolPreparedStatements(poolPreparedStatements);
         datasource.setMaxPoolPreparedStatementPerConnectionSize(maxPoolPreparedStatementPerConnectionSize);
+
         try {
             datasource.setFilters(filters);
         } catch (SQLException e) {
@@ -126,10 +140,15 @@ public class SecondDruidDbConfig {
     @Bean(name = "secondEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean secondEntityManagerFactory(
             EntityManagerFactoryBuilder builder) {
+//        Map properties = new HashMap(16);
+//        properties.put("spring.jpa.open-in-view","true");
+
         return builder
                 .dataSource(secondDataSource())
                 .packages("com.springboot.**.entity.secondDsE")
+
                 .persistenceUnit("secondDBSource")
+//                .properties(properties)
                 .build();
     }
 
@@ -138,9 +157,19 @@ public class SecondDruidDbConfig {
      * @return
      */
     @Bean(name = "secondTransactionManager")
-    public PlatformTransactionManager transactionManager(@Qualifier("secondEntityManagerFactory") EntityManagerFactory secondEntityManagerFactory){
-        JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(secondEntityManagerFactory);
-        return transactionManager;
+    public PlatformTransactionManager transactionManager(EntityManagerFactoryBuilder builder){
+//        JpaBaseConfiguration
+        return new JpaTransactionManager(secondEntityManagerFactory(builder).getObject());
     }
+
+//    /**
+//     * 实体管理对象
+//     * @param builder
+//     * @return
+//     */
+//    @Bean(name = "entityManagerSecondary")
+//    public EntityManager entityManager(EntityManagerFactoryBuilder builder) {
+//        EntityManagerImpl entityManager = secondEntityManagerFactory(builder).getObject().createEntityManager();
+//        return entityManager;
+//    }
 }

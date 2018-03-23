@@ -20,16 +20,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import javax.servlet.Filter;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-/**  
- *    
- *   
- * @author XmasPiano  
+/**
+ *
+ *
+ * @author XmasPiano
  * @date 2018/3/1 上午10:16
- * @param   
- * @return   
- */  
+ * @param
+ * @return
+ */
 @Configuration
 public class ShiroConfiguration {
     private static final Logger LOGGER = LoggerFactory.getLogger(ShiroConfiguration.class);
@@ -64,7 +65,7 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/druid/*","anon");
         //<!-- 过滤链定义，从上向下顺序执行，一般将/**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
-        filterChainDefinitionMap.put("/**", "ajaxLogin,authc");
+        filterChainDefinitionMap.put("/**", "ajaxLogin, authc");
 
         bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return bean;
@@ -83,6 +84,7 @@ public class ShiroConfiguration {
         DefaultWebSecurityManager manager=new DefaultWebSecurityManager();
 //启用缓存，默认false；
         authRealm.setCachingEnabled(true);
+
         //启用身份验证缓存，即缓存AuthenticationInfo信息，默认false；
         authRealm.setAuthenticationCachingEnabled(true);
         //缓存AuthenticationInfo信息的缓存名称；
@@ -95,6 +97,7 @@ public class ShiroConfiguration {
         manager.setRememberMeManager(rememberMeManager());
 
         manager.setRealm(authRealm);
+        manager.setSessionManager(new MySessionManager());
         manager.setCacheManager(ehCacheManagerShiro);
         return manager;
     }

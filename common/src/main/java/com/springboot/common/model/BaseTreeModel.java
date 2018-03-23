@@ -1,5 +1,6 @@
 package com.springboot.common.model;
 
+import com.springboot.common.util.NullIgnore;
 import lombok.Data;
 
 import java.lang.reflect.Field;
@@ -13,7 +14,9 @@ import java.lang.reflect.Field;
  */  
 @Data
 public abstract class BaseTreeModel<M extends BaseTreeModel,E> extends BaseModel<M,E> {
-    public String localParentId = null;
+//    public String localParentId = null;
+    @NullIgnore
+    public Integer _parentId = null;
 
     protected String nullToString(Object obj){
         if(obj == null){
@@ -35,9 +38,15 @@ public abstract class BaseTreeModel<M extends BaseTreeModel,E> extends BaseModel
             if(parentId != null){
                 try {
                     field.setAccessible(true);
-                    String val = "-1".equals(field.get(m).toString())?null: field.get(m).toString();
-                    m.setLocalParentId(val);
-
+                    String val = field.get(m) == null?null: field.get(m).toString();
+                    //根节点
+                    if("-1".equals(val) || "0".equals(val)) {
+                        m.set_parentId(null);
+                    }else {
+                        m.set_parentId(Integer.valueOf(val));
+                    }
+//                    m.setLocalParentId(val);
+//                    m.set_parentId(val);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }

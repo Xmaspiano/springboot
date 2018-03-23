@@ -1,7 +1,7 @@
-package com.springboot.system.repository.secondDS;
+package com.springboot.system.oa.repository.secondDs;
 
 import com.springboot.common.repository.CommonRepository;
-import com.springboot.system.entity.secondDsE.Hrmresource;
+import com.springboot.system.oa.entity.secondDsE.Hrmresource;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

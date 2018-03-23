@@ -4,6 +4,7 @@ package com.springboot.system.menu.web;
 import com.springboot.common.model.BaseTreeModel;
 import com.springboot.common.util.CommonUtil;
 import com.springboot.system.menu.entity.firstDsE.OsMenu;
+import com.springboot.system.menu.model.PageMenu;
 import com.springboot.system.menu.service.OsMenuService;
 import com.springboot.system.util.AjaxMsgUtil;
 import com.springboot.common.util.MsgUtil;
@@ -40,7 +41,7 @@ public class MenuController {
     private OsMenuService osMenuService;
 
     @Autowired
-    private BaseTreeModel pageMenu;
+    private PageMenu pageMenu;
 
     @RequestMapping(method = RequestMethod.GET)
     public String index(){

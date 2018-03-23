@@ -11,13 +11,13 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <%@ include file="../../systemLayout/layout_system.jsp"%>
+    <%@ include file="/WEB-INF/view/systemLayout/layout_system_iframe.jsp"%>
 </head>
 <body style="width:100%;height:100%">
-<div id="mainLayout" class="easyui-layout" style="width:98%;height:380px;" >
+<div id="mainLayout-auth" class="easyui-layout" style="width:98%;height:380px;" >
     <div data-options="region:'west',split:true,title:'<m:info name='权限路径' />',collapsible:false" style="width:200px;">
         <div class="easyui-panel" data-options="fix:true,border:false">
-            <ul id="menu_tree"></ul>
+            <ul id="menu_tree-auth"></ul>
         </div>
     </div>
     <div data-options="region:'center',title:'<m:info name='权限编辑' />',collapsible:false">
@@ -29,7 +29,7 @@
             <input type="hidden" id="userid" name="userid" value="${userid}"/>
             <input type="hidden" id="groupid" name="groupid" value="${groupid}"/>
             <input type="hidden" id="typeAuth" name="typeAuth" value="${typeAuth}"/>
-            <table data-options="fix:true,border:false" id="table-resourcesmenu" ></table>
+            <table data-options="fix:true,border:false" id="table-auth" ></table>
         </form>
     </div>
 </div>
@@ -39,9 +39,9 @@
 
     $(function() {
         var hei = $('#_auth_Iframe', parent.document).height() - 10;
-        $('#mainLayout').layout("resize",{height:hei});
+        $('#mainLayout-auth').layout("resize",{height:hei});
 
-        $('#table-resourcesmenu').datagrid({
+        $('#table-auth').datagrid({
             url: '/auth/date_grid.json',
             loadMsg:"<m:info name='数据加载中...'/>",
             fitColumns:true,
@@ -74,7 +74,7 @@
             onUnselectAll:onUnselectAll
         });
 
-        $('#menu_tree').tree({
+        $('#menu_tree-auth').tree({
             url:"/menu/tag/menu_tree.json?parentid=-1",
             type:"POST",
             lines:true,
@@ -87,7 +87,7 @@
             },
             onClick:function(data){//tree菜单点击事件
                 $("#menuid").val(data.id);
-                $('#table-resourcesmenu').datagrid('reload',{
+                $('#table-auth').datagrid('reload',{
                     menuid: data.id,
                     deptid: $("#deptid").val(),
                     roleid: $("#roleid").val(),
@@ -131,7 +131,7 @@
         effectRow["groupid"] = $('#groupid').val();
         effectRow["typeAuth"] = $('#typeAuth').val();
 
-        var rows = $('#table-resourcesmenu').datagrid('getRows');
+        var rows = $('#table-auth').datagrid('getRows');
         var checked = [];
         $.each(rows, function(i, item) {
             if(item['checked']){
@@ -161,8 +161,8 @@
 
     function endEditing(){
         if (editIndex == undefined){return true}
-        if ($('#table-resourcesmenu').datagrid('validateRow', editIndex)){
-            $('#table-resourcesmenu').datagrid('endEdit', editIndex);
+        if ($('#table-auth').datagrid('validateRow', editIndex)){
+            $('#table-auth').datagrid('endEdit', editIndex);
             editIndex = undefined;
             return true;
         } else {
@@ -170,29 +170,29 @@
         }
     }
     function onCheck(index){
-        $('#table-resourcesmenu').datagrid('beginEdit', index);
-        $('#table-resourcesmenu').datagrid('getRows')[index]['checked'] = true;
-        $('#table-resourcesmenu').datagrid('endEdit', index);
-        $('#table-resourcesmenu').datagrid('refreshRow',index);
+        $('#table-auth').datagrid('beginEdit', index);
+        $('#table-auth').datagrid('getRows')[index]['checked'] = true;
+        $('#table-auth').datagrid('endEdit', index);
+        $('#table-auth').datagrid('refreshRow',index);
 
     }
 
     function onUncheck(index){
-        $('#table-resourcesmenu').datagrid('beginEdit', index);
-        $('#table-resourcesmenu').datagrid('getRows')[index]['checked'] = false;
-        $('#table-resourcesmenu').datagrid('endEdit', index);
-        $('#table-resourcesmenu').datagrid('refreshRow',index);
+        $('#table-auth').datagrid('beginEdit', index);
+        $('#table-auth').datagrid('getRows')[index]['checked'] = false;
+        $('#table-auth').datagrid('endEdit', index);
+        $('#table-auth').datagrid('refreshRow',index);
     }
 
     function onSelectAll(){
-        var rows = $('#table-resourcesmenu').datagrid('getRows');
+        var rows = $('#table-auth').datagrid('getRows');
         $.each(rows, function(i) {
             onCheck(i);
         });
     }
 
     function onUnselectAll(){
-        var rows = $('#table-resourcesmenu').datagrid('getRows');
+        var rows = $('#table-auth').datagrid('getRows');
         $.each(rows, function(i) {
             onUncheck(i);
         });

@@ -1,19 +1,19 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
-<div id="menu-accordion" class="easyui-accordion" data-options="multiple:true,border:false,selected:true" style="width:100%;height:auto;">
+<div id="menu-accordion-left" class="easyui-accordion" data-options="multiple:true,border:false,selected:true" style="width:100%;height:auto;">
 </div>
 <script>
     $(function(){
         _left_getMenuDate();
     });
     function _left_getMenuDate(){
-        var tempMenuVo = $('#menu-accordion').accordion('panels');
+        var tempMenuVo = $('#menu-accordion-left').accordion('panels');
         var length_menu = tempMenuVo.length;
 //        this.selectsed;
         $.ajax({
             url: "/menu/tag/menu_tree.json",
             type:"POST",
             success: function(data){
-                var firstSelected = $("#menu-accordion").accordion('getSelections');
+                var firstSelected = $("#menu-accordion-left").accordion('getSelections');
                 if(firstSelected) {
                     var selectedID = new Array(firstSelected.length);
                     var selectedTree = new Array();
@@ -30,7 +30,7 @@
                 }
                 //清理空目录表单
                 for(var i =0; i<length_menu; i++){
-                    $('#menu-accordion').accordion('remove', tempMenuVo[0].panel("options").title);
+                    $('#menu-accordion-left').accordion('remove', tempMenuVo[0].panel("options").title);
                 }
 
                 $.each(data.rows, function(i, item) {
@@ -43,7 +43,7 @@
                         }
                     }
 
-                    $('#menu-accordion').accordion('add', {
+                    $('#menu-accordion-left').accordion('add', {
                         title: item.text,
                         id:item.id,
                         content: "<ul id=\""+item.id+"_menu\">",
@@ -84,6 +84,6 @@
     }
     function _left_TreeReload(){
         _left_getMenuDate();
-//        $('#menu-accordion').accordion('reload');
+//        $('#menu-accordion-left').accordion('reload');
     }
 </script>

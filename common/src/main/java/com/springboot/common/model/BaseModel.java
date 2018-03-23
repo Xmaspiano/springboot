@@ -37,6 +37,11 @@ public abstract class BaseModel<M,E>  {
         return fields;
     }
 
+    /**
+     * 将entity对象封装成<M>model返回给view
+     * @param obj
+     * @return M model实体
+     */
     public M changeByEntity(E obj){
         try {
             M m = entityClass.newInstance();
@@ -51,7 +56,7 @@ public abstract class BaseModel<M,E>  {
 
                         Object val = fieldE.get(obj);
                         if(fieldM.getType().isAssignableFrom(String.class) ) {
-                            fieldM.set(m, val == null?"":val.toString());
+                            fieldM.set(m, val == null?null:val.toString());
                         }else{
                             fieldM.set(m, val);
                         }
@@ -68,10 +73,15 @@ public abstract class BaseModel<M,E>  {
         return null;
     }
 
+    /**
+     * 将entity列表封装成<M>model返回view
+     * @param objList
+     * @return List<M> model实体List
+     */
     public List<M> changeByEntitys(List<E> objList){
         List<M> mList = new ArrayList<>();
         for(E e:objList){
-            mList.add(changeByEntity(e));
+            mList.add(this.changeByEntity(e));
         }
         return mList;
     }

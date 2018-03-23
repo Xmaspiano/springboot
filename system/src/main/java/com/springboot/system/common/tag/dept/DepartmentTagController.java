@@ -1,7 +1,8 @@
-package com.springboot.system.web.tag;
+package com.springboot.system.common.tag.dept;
 
-import com.springboot.system.entity.secondDsE.Hrmdepartment;
-import com.springboot.system.service.HrmdepartmentService;
+import com.springboot.system.common.tag.BaseTagController;
+import com.springboot.system.oa.entity.secondDsE.Hrmdepartment;
+import com.springboot.system.oa.service.HrmdepartmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,11 @@ import java.util.Map;
  * @date 2018/3/1 上午10:22
  * @param
  * @return
+ * Created by IntelliJ IDEA.
  */
 @Controller
-@RequestMapping(value = {"/dept/tag"})
-public class DepartmentTagController {
+@RequestMapping(value = {"/common/tag/dept/"})
+public class DepartmentTagController extends BaseTagController {
     private static final Logger LOGGER = LoggerFactory.getLogger(DepartmentTagController.class);
 
     @Autowired
@@ -44,8 +46,8 @@ public class DepartmentTagController {
     @RequestMapping(value = "/dept_tree.json" )//获取部门树
     @ResponseBody
     public Map getTreeData(@RequestParam(defaultValue = "1",value = "parentid") Long id){
-        List<Hrmdepartment> departmentList = null;
-        //亚心根目录,其他集团暂不开放
+        Map[] departmentList = null;
+
         if(id == 1L) {
             departmentList = departmentService.findByYXDept();
         }else{
@@ -53,8 +55,8 @@ public class DepartmentTagController {
             departmentService.findAllBySuper(getLevelTwodept(id).getId());
         }
         Map jsonMap = new HashMap(16);
-        jsonMap.put("total",departmentList.size());
-        jsonMap.put("rows",this.test(departmentList));
+        jsonMap.put("total",departmentList.length);
+        jsonMap.put("rows",departmentList);
         return jsonMap;
     }
 
@@ -96,21 +98,5 @@ public class DepartmentTagController {
             osPartdept.setId(id);
         }
         return osPartdept;
-    }
-
-    public Map[] test(List<Hrmdepartment> departmentList){
-        Map[] jsonMap = new HashMap[departmentList.size()];
-        Hrmdepartment department;
-        for (int i = 0; i < jsonMap.length; i++) {
-            department = departmentList.get(i);
-            jsonMap[i] = new HashMap(16);
-
-            jsonMap[i].put("id",department.getId());
-            jsonMap[i].put("text",department.getDepartmentname());
-            if(department.getHrmDepartmentList().size() > 0){
-                jsonMap[i].put("children",this.test(department.getHrmDepartmentList()));
-            }
-        }
-        return jsonMap;
     }
 }

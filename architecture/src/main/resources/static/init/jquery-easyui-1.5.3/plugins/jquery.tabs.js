@@ -76,6 +76,7 @@ _10.children("div.tabs-tool").remove();
 }
 };
 function _13(_14,_15){
+    console.log("22");
 var _16=$.data(_14,"tabs");
 var _17=_16.options;
 var cc=$(_14);
@@ -137,11 +138,12 @@ var _1f=_1f?_1f:(parseInt(_20.tabWidth||_17.tabWidth||undefined));
 if(_1f){
 p_t._outerWidth(_1f);
 }else{
-p_t.css("width","");
+// p_t.css("width","");
 }
 p_t._outerHeight(_17.tabHeight);
 p_t.css("lineHeight",p_t.height()+"px");
 p_t.find(".easyui-fluid:visible").triggerHandler("_resize");
+console.log("11");
 };
 };
 function _21(_22){

@@ -1,7 +1,7 @@
 package com.springboot.app.web;
 
-import com.springboot.system.service.HrmdepartmentService;
-import com.springboot.system.service.HrmresourceService;
+import com.springboot.system.oa.service.HrmdepartmentService;
+import com.springboot.system.oa.service.HrmresourceService;
 import com.springboot.common.util.MsgUtil;
 import com.springboot.common.util.MsgUtilNative;
 import org.slf4j.Logger;
@@ -36,7 +36,7 @@ public class AppIndexController {
 
     @RequestMapping
     public String index(){
-        return "appIndex";
+        return "appIndex ssdd 是大咖高大上";
     }
 
     @ModelAttribute

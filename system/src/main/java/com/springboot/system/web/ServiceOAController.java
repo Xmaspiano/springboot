@@ -1,6 +1,6 @@
 package com.springboot.system.web;
 
-import com.springboot.system.entity.secondDsE.Hrmresource;
+import com.springboot.system.oa.entity.secondDsE.Hrmresource;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;

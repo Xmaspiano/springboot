@@ -6,6 +6,7 @@ import com.springboot.system.service.ShiroResourcesService;
 import com.springboot.system.util.AjaxMsgUtil;
 import com.springboot.common.util.MsgUtil;
 import com.springboot.common.util.MsgUtilNative;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class ShiroResourcesController{
 
     @RequestMapping(value = "/save" )
     @ResponseBody
-//    @RequiresPermissions("resources:save:add,edit")
+    @RequiresPermissions("shiroResources:edit")
     public Map saveInfo(ShiroResources shiroResources){
         shiroResourcesService.save(shiroResources);
         return AjaxMsgUtil.ajaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("saveInfo.success"));
@@ -50,7 +51,7 @@ public class ShiroResourcesController{
 
     @RequestMapping(value = "/delete" )
     @ResponseBody
-//    @RequiresPermissions("resources:delete")
+    @RequiresPermissions("shiroResources:delete")
     public Map deleteInfo(@RequestParam("id") Long id){
         shiroResourcesService.delete(id);
         return AjaxMsgUtil.ajaxMsg(AjaxMsgUtil.SUCCESS, msgUtil.getMsg("deleteInfo.success"));
@@ -58,6 +59,7 @@ public class ShiroResourcesController{
 
     @RequestMapping(value = "/date_grid.json" )
     @ResponseBody
+    @RequiresPermissions("shiroResources:delete")
     public Map getGridData(){
         Map jsonMap = new HashMap(16);
         List<ShiroResources> shiroResourcesList = shiroResourcesService.findAll();

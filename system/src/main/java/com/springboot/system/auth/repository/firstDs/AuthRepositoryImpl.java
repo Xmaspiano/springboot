@@ -22,8 +22,8 @@ public class AuthRepositoryImpl {
 
     public Set<String> fingKeyNameByUser(Long userid, Set<Long> groupid, Set<Long> deptid, Set<Long> jobid){
         boolean hasGroupid = groupid.size() > 0;
-        boolean hasDeptid = groupid.size() > 0;
-        boolean hasJobid = groupid.size() > 0;
+        boolean hasDeptid = deptid.size() > 0;
+        boolean hasJobid = jobid.size() > 0;
 
         StringBuilder hql = new StringBuilder("select keyname From Auth where ");
         hql.append(" (user_id=:userid) ");
@@ -51,11 +51,11 @@ public class AuthRepositoryImpl {
             q.setParameter("groupid",groupid);
         }
 
-        if(hasGroupid){
+        if(hasDeptid){
             q.setParameter("deptid",deptid);
         }
 
-        if(hasGroupid){
+        if(hasJobid){
             q.setParameter("jobid",jobid);
         }
 

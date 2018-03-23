@@ -6,6 +6,9 @@ import com.springboot.system.menu.repository.firstDs.OsMenuRepository;
 import com.springboot.system.menu.service.OsMenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,21 +32,21 @@ public class OsMenuServiceImpl
 
     @Override
     //先从缓存中读取，如果没有再调用方法获取数据，然后把数据添加到缓存中
-//    @Cacheable(value = "meun_data", key = "#id")
+    @Cacheable(value = "MENU_LIST", key = "#id")
     public OsMenu findOne(Long id) {
         return super.findOne(id);
     }
 
     @Override
     //数据放入缓存
-//    @CachePut(value = "meun_data", key = "#osMenu.id")
+    @CachePut(value = "MENU_LIST", key = "#osMenu.id")
     public OsMenu save(OsMenu osMenu) {
         return super.save(osMenu);
     }
 
     @Override
     //移除指定key的数据
-//    @CacheEvict(value = "meun_data", key = "#id")
+    @CacheEvict(value = "MENU_LIST", key = "#id")
     public void delete(Long id) {
         super.delete(id);
     }

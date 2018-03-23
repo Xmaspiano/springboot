@@ -1,7 +1,7 @@
 package com.springboot.system.web;
 
-import com.springboot.system.service.HrmdepartmentService;
-import com.springboot.system.service.HrmresourceService;
+import com.springboot.system.oa.service.HrmdepartmentService;
+import com.springboot.system.oa.service.HrmresourceService;
 import com.springboot.common.util.MsgUtil;
 import com.springboot.common.util.MsgUtilNative;
 import org.slf4j.Logger;

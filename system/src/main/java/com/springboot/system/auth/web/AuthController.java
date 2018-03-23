@@ -14,6 +14,7 @@ import com.springboot.system.resources.entity.firstDsE.ResourcesMenu;
 import com.springboot.system.resources.repository.firstDs.ResourcesMenuRepository;
 import com.springboot.system.resources.repository.firstDs.ResourcesRepository;
 import com.springboot.system.util.AjaxMsgUtil;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,7 @@ public class AuthController {
 
     @RequestMapping(value = "/date_grid.json" )
     @ResponseBody
+    @RequiresPermissions("auth:view")
     public Map getGridData(
             @RequestParam( value = "menuid", defaultValue = "0") Long menuid,
             @RequestParam(value = "deptid", defaultValue = "") Long organizationId,
@@ -108,7 +110,7 @@ public class AuthController {
 
     @RequestMapping(value = "/save" )
     @ResponseBody
-//    @RequiresPermissions("resourcesmenu:save")
+    @RequiresPermissions("auth:save")
     public Map saveInfo(@RequestBody AuthRow authRow){
         Auth auth = new Auth();
         auth.setType(AuthType.getKeyEnum(authRow.getTypeAuth()));

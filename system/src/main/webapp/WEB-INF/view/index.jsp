@@ -1,12 +1,5 @@
 <%--<%@ page import="com.SpringOS.util.MessageKey" %>--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%
-    String loaclPath = "views.system.user.user.";
-//    String form1_username = MessageKey.getMsg(loaclPath+"form1.username");
-//    String form1_password = MessageKey.getMsg(loaclPath+"form1.password");
-//    String dialog_button_apply = MessageKey.getMsg(loaclPath+"dialog.button.apply");
-//    String dialog_button_cancel = MessageKey.getMsg(loaclPath+"dialog.button.cancel");
-%>
 <!DOCTYPE html>
 <html>
 <head>

@@ -1,9 +1,9 @@
-package com.springboot.system.service;
+package com.springboot.system.oa.service;
 
 
 
 import com.springboot.common.service.CommonService;
-import com.springboot.system.entity.secondDsE.Hrmresource;
+import com.springboot.system.oa.entity.secondDsE.Hrmresource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -30,8 +30,6 @@ public interface HrmresourceService extends CommonService<Hrmresource>
 
     @Override
     public List<Hrmresource> findAll();
-//  @Override
-//    public Page<Hrmresource> findAll(Pageable pageable);
 
     @Override
     public Page<Hrmresource> findAll(Specification<Hrmresource> spec, Pageable pageable);

@@ -1,51 +1,55 @@
+<%@ taglib prefix="m" uri="/MyTag" %>
 <%@page contentType="text/html; charset=utf-8"
         pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <%@ include file="../../systemLayout/layout_system.jsp"%>
+    <%@ include file="/WEB-INF/view/systemLayout/layout_system_iframe.jsp"%>
 </head>
 <%-- 调用方法script --%>
 <script>
 </script>
 <body>
-<table id="table-menu" title="<i class='icon-save'/><m:info name='菜单管理'/>&nbsp;" style="width:100%;height:400px"></table>
-<div id="dialog-menu" title="" class="easyui-dialog" style="width:500px;height:400px;"
-     data-options="left:360,top:70,closed:true,resizable:false,modal:true,buttons:button_dialog">
-    <form id="form1" method="post">
-        <input type="hidden" id="id" name="id" value=""/>
-        <input type="hidden" id="life" name="life" value="1"/>
-        <input type="hidden" id="parentid" name="parentid" value="1"/>
-        <input type="hidden" id="name_old" name="parentid" value=""/>
-        <table style="width: 100%;height:70px;">
-            <tr>
-                <td><m:info name='菜单编号'/></td>
-                <td><input class="easyui-textbox" type="text" id="appid" name="appid" data-options="required:true"/></td>
-                <td><m:info name='菜单名称'/></td>
-                <td><input class="easyui-textbox" type="text" id="name" name="name" data-options="required:true"/></td>
-            </tr>
-            <tr>
-                <td><m:info name='备注'/></td>
-                <td><input class="easyui-textbox" type="text" id="remark" name="remark" /></td>
-                <td><m:info name='是否启用'/></td>
-                <td>
-                    <a id="btn" href="#" class="easyui-linkbutton"
-                       data-options="toggle:true,selected:true" onclick="clickLife()">
-                        <m:info name='启用'/></a>
-                </td>
-            </tr>
-        </table>
-        <div style="margin:10px 0 10px 0;"></div>
-    </form>
-    <div class="easyui-panel" title="<m:info name='上级目录'/>" style="height:236px;"  data-options="border:false">
-        <ul id="menu_tree"></ul>
+<div id="menu" class="easyui-layout">
+    <div id="table-menu" title="<i class='icon-save'/><m:info name='菜单管理'/>&nbsp;" style="width:100%;"></div>
+    <div id="dialog-menu" title="" class="easyui-dialog" style="width:500px;height:400px;"
+         data-options="left:360,top:70,closed:true,resizable:false,modal:true,buttons:button_dialog">
+        <form id="form1-menu" method="post">
+            <input type="hidden" id="id" name="id" value=""/>
+            <input type="hidden" id="life" name="life" value="1"/>
+            <input type="hidden" id="parentid" name="parentid" value="1"/>
+            <input type="hidden" id="name_old" name="parentid" value=""/>
+            <table style="width: 100%;height:70px;">
+                <tr>
+                    <td><m:info name='菜单编号'/></td>
+                    <td><input class="easyui-textbox" type="text" id="appid" name="appid" data-options="required:true"/></td>
+                    <td><m:info name='菜单名称'/></td>
+                    <td><input class="easyui-textbox" type="text" id="name" name="name" data-options="required:true"/></td>
+                </tr>
+                <tr>
+                    <td><m:info name='备注'/></td>
+                    <td><input class="easyui-textbox" type="text" id="remark" name="remark" /></td>
+                    <td><m:info name='是否启用'/></td>
+                    <td>
+                        <a id="btn" href="#" class="easyui-linkbutton"
+                           data-options="toggle:true,selected:true" onclick="clickLife()">
+                            <m:info name='启用'/></a>
+                    </td>
+                </tr>
+            </table>
+            <div style="margin:10px 0 10px 0;"></div>
+        </form>
+        <div class="easyui-panel" title="<m:info name='上级目录'/>" style="height:236px;"  data-options="border:false">
+            <ul id="menu_tree-menu"></ul>
+        </div>
     </div>
 </div>
 </body>
 <%--初始化Html Script--%>
 <script>
     $(function() {
+//        $("#dialog-menu").css("display","");
         //初始化treegrid数据
         $('#table-menu').treegrid({
             title:"<i class='icon-save'/>&nbsp;<m:info name='菜单管理'/>",
@@ -54,6 +58,7 @@
             idField: 'id',
             treeField: 'name',
             fitColumns:true,
+            fit:true,
 //            striped:true,
             rownumbers:true,
             toolbar:toolbar,
@@ -71,7 +76,7 @@
             }
         });
         //初始化上级目录tree数据
-        $('#menu_tree').tree({
+        $('#menu_tree-menu').tree({
             url:"/menu/tag/menu_tree.json?parentid=-1",
             type:"POST",
             lines:true,
@@ -136,7 +141,7 @@
                 break;
             case "reload":
                 $('#table-menu').treegrid("reload");
-                $('#menu_tree').tree("reload");
+                $('#menu_tree-menu').tree("reload");
                 break;
             case "menuReload":
                 refush_menu();
@@ -174,7 +179,7 @@
         $.ajax({
             url:"menu/save",
             type: "POST",
-            data:$('#form1').serialize(),
+            data:$('#form1-menu').serialize(),
             onSubmit: function(){
             },
             success:function(data){
@@ -266,10 +271,10 @@
     }
     //选择对话框目录tree并赋值
     function menuTreeSelect(id){
-        var tag = id && $('#menu_tree').tree('find', id) != null?$('#menu_tree').tree('find', id):$('#menu_tree').tree('getRoot');//无id默认到根目录
+        var tag = id && $('#menu_tree-menu').tree('find', id) != null?$('#menu_tree-menu').tree('find', id):$('#menu_tree-menu').tree('getRoot');//无id默认到根目录
         if(tag) {
-            $('#menu_tree').tree('select', tag.target);
-            $('#menu_tree').tree('expandTo', tag.id);
+            $('#menu_tree-menu').tree('select', tag.target);
+            $('#menu_tree-menu').tree('expandTo', tag.id);
             $('#parentid').val(tag.id);
         }
     }

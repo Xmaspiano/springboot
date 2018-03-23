@@ -2,7 +2,7 @@ package com.springboot.system.web;
 
 import com.springboot.common.util.MsgUtil;
 import com.springboot.common.util.MsgUtilNative;
-import com.springboot.system.entity.secondDsE.Hrmresource;
+import com.springboot.system.oa.entity.secondDsE.Hrmresource;
 import com.springboot.system.util.AjaxMsgUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -31,7 +31,6 @@ import java.util.Map;
 public class LoginController {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
     private final MsgUtil msgUtil = new MsgUtilNative(LoginController.class);
-    private final String RememberMe = "rememberMe";
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
@@ -40,17 +39,15 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public Map loginUserAjax(HttpServletRequest request, String username, String password, HttpSession session) {
+    public Map loginUserAjax(HttpServletRequest request, String username, String password, boolean rememberMe,HttpSession session) {
         UsernamePasswordToken usernamePasswordToken=new UsernamePasswordToken(username,password);
         Subject subject = SecurityUtils.getSubject();
         Map model = new HashMap(16);
         String error = "";
         try {
-            if(request.getParameter(RememberMe)!=null){
-                usernamePasswordToken.setRememberMe(true);
-            }
             //完成登录
             subject.login(usernamePasswordToken);
+            usernamePasswordToken.setRememberMe(rememberMe);
             subject.getSession().setAttribute("__pwd",password);
             Hrmresource hrmresource=(Hrmresource) subject.getPrincipal();
             session.setAttribute("hrmresource", hrmresource);

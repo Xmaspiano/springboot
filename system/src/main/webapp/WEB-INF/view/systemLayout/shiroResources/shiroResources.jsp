@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <%@ include file="../layout_system.jsp"%>
+    <%@ include file="/WEB-INF/view/systemLayout/layout_system_iframe.jsp"%>
 </head>
 <style>
     .e-icon{
@@ -16,10 +16,10 @@
 
 </script>
 <body>
-<table id="table-resources" title="<i class='icon-save'/>&nbsp;<m:info name='资源编辑'/>" style="width:100%;height:400px"></table>
-<div id="dialog-resources" title="" class="easyui-dialog" style="width:500px;height:400px;"
+<table id="table-shiro-resources" title="<i class='icon-save'/>&nbsp;<m:info name='资源编辑'/>" style="width:100%;height:400px"></table>
+<div id="dialog-shiro-resources" title="" class="easyui-dialog" style="width:500px;height:400px;"
      data-options="left:360,top:70,closed:true,resizable:false,modal:true,buttons:button_dialog">
-    <form id="form1" method="post">
+    <form id="form1-shiro-resources" method="post">
         <input type="hidden" id="id" name="id" value=""/>
         <input type="hidden" id="available" name="available" value="0"/>
         <%--<input type="hidden" id="resourcesId" name="resourcesId" value="1"/>--%>
@@ -58,11 +58,12 @@
 <script>
     $(function() {
         //初始化treegrid数据
-        $('#table-resources').datagrid({
+        $('#table-shiro-resources').datagrid({
             title:"<i class='icon-save'/>&nbsp;<m:info name='资源编辑'/>",
             url: '/shiroResources/date_grid.json',
             loadMsg:"<m:info name='数据加载中...'/>",
             fitColumns:true,
+//            fit:true,
 //            resizable:true,
 //            fixed:true,
 //            striped:true,
@@ -131,23 +132,23 @@
     function actionOver(code){
         switch(code){
             case "colse":
-                $('#dialog-resources').dialog('close');
+                $('#dialog-shiro-resources').dialog('close');
                 break;
             case "reload":
-                $('#table-resources').datagrid("reload");
+                $('#table-shiro-resources').datagrid("reload");
                 break;
             case "add":
             <shiro:hasPermission name="resources:save:add">
                 addChangeresourcesTree();
-                $('#dialog-resources').dialog({title: "<m:info name='新增资源'/>"});
-                $('#dialog-resources').dialog('open');
+                $('#dialog-shiro-resources').dialog({title: "<m:info name='新增资源'/>"});
+                $('#dialog-shiro-resources').dialog('open');
                 break;
                 </shiro:hasPermission>
             case "edit":
             <shiro:hasPermission name="resources:save:edit">
                 if(editChangeresourcesTree()) {
-                    $('#dialog-resources').dialog({title: "<m:info name='修改资源'/>"});
-                    $('#dialog-resources').dialog('open');
+                    $('#dialog-shiro-resources').dialog({title: "<m:info name='修改资源'/>"});
+                    $('#dialog-shiro-resources').dialog('open');
                 }else{
                     $.messager.alert('Warning',"<m:info name='请选择...'/>");
                 }
@@ -166,7 +167,7 @@
 <script>
     //form1确认提交
     function submitApply(){
-        $('#form1').form('submit', {
+        $('#form1-shiro-resources').form('submit', {
             url:"resources/save",
             onSubmit: function(){
 
@@ -193,7 +194,7 @@
     }
 
     function ChangeresourcesTree(idFlag){
-        var row = $('#table-resources').datagrid('getSelected');
+        var row = $('#table-shiro-resources').datagrid('getSelected');
         if(row != null) {//有选择资料,将资料值初始化到表单
             if(idFlag){//新增时id制空
                 row.id = "";
@@ -207,7 +208,7 @@
     }
     //删除treegrid数据
     function deleteRow() {
-        var row = $('#table-resources').treegrid('getSelected');
+        var row = $('#table-shiro-resources').treegrid('getSelected');
         if (row != null) {
             $.ajax({
                 url: "resources/delete?id=" + row.id,

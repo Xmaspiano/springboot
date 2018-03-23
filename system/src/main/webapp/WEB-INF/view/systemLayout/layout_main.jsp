@@ -3,8 +3,7 @@
 <html>
 <head>
     <title>OA辅助管理系统</title>
-    <%@include file="layout_system.jsp"%>
-
+    <%@ include file="/WEB-INF/view/systemLayout/layout_system.jsp"%>
 </head>
 <style>
     .right-float {
@@ -89,12 +88,11 @@
         });
     }
 </script>
-<body id="cc" class="easyui-layout">
+<body id="layout_main" class="easyui-layout">
 <div data-options="region:'north',border:false" style="height:50px;padding:0px" >
     <div id="numm" class="easyui-meun left-float" style="padding:5px;">
         <img class="easyui-linkbutton" src="/init/yellowman.png" style="height: 40px">
         <a href="#" class="easyui-linkbutton" data-options="plain:true" onclick="addTabIndex()"><m:info name='首页'/></a>
-        <a id="menuList" href="#" class="easyui-menubutton" data-options="menu:'#mm1'"><m:info name='菜单'/></a>
         <a href="#" class="easyui-menubutton" data-options="menu:'#mm2'"><m:info name='收藏夹'/></a>
         <a href="#" class="easyui-menubutton" data-options="menu:'#mm3'"><m:info name='关于'/></a>
     </div>
@@ -103,13 +101,8 @@
         Hello, <span style="color: #00bbee">
             <shiro:principal property="lastname" />&nbsp;
         </span>
-        <%--<a href="#" class="easyui-menubutton" data-options="menu:'#mm5'"><m:info name='系统</a>--%>
         <a href="#" class="easyui-menubutton" data-options="menu:'#mm4'"><m:info name='设置'/></a>
         <img class="easyui-linkbutton" src="/init/yellowman.png" style="height: 40px">
-    </div>
-
-    <div id="mm1" style="width:150px;">
-
     </div>
 
     <div id="mm2" style="width:100px;">
@@ -123,10 +116,6 @@
     <div id="mm4" style="width:100px;">
         <div onclick="window.location.href = '/logout' "><m:info name='退出'/></div>
     </div>
-
-    <%--<div id="mm5" style="width:100px;">--%>
-    <%--<div onclick="addTab('<m:info name='组织机构管理'/>','/system/dept/dept')"><m:info name='收藏'/></div>--%>
-    <%--</div>--%>
 </div>
 <div class="hid-overflow" data-options="region:'west',split:true,collapsed:false,title:'<m:info name='菜单目录'/>'" style="width:200px;" >
     <%@ include file="home/left.jsp"%>
@@ -140,12 +129,22 @@
 
     </div>
 </div>
+<div data-options="region:'south',border:false" style="height: 23px;">
+    <div id="div_json" class="footer" style="text-align-all: center">Copyright © RDIFramework.NET V2.9, All Rights Reserved</div>
+</div>
 <div id="SuperWin"></div>
-<%--<div data-options="region:'south',border:false" style="height: 23px;">--%>
-<%--<div id="div_json" class="footer" style="text-align-all: center">Copyright © RDIFramework.NET V2.9, All Rights Reserved</div>--%>
-<%--</div>--%>
 </body>
 <script type="text/javascript">
+    var isFirst = true;
+    //页面渲染完成
+    $.parser.onComplete = function(){
+//        if(isFirst){
+//            loading_close(1000);
+//            isFirst = false;
+//        }
+//
+    }
+
     $(function(){
         $(document).bind('contextmenu',function(e){
             e.preventDefault();
@@ -155,26 +154,22 @@
             });
         });
 
-        var menu_list = getCookie("MENU_LIST");
-        if(menu_list != null && menu_list != ""){
-            var jsonObj = JSON.parse(menu_list);
-            for(var i = 0; i<jsonObj.length; i++){
-                if(jsonObj[i] != null) {
-                    if(i == 0) {
-                        addTabByClick(jsonObj[i]);
-                    }else
-                    if(jsonObj[i].title && jsonObj[i].url){
-                        addTab(jsonObj[i]);
-                    }else{
-                        alert(jsonObj[i].title +" && "+ jsonObj[i].url);//!!!!!!!!!!!!!!!!!!!!!!!!
-                    }
-                    change_favarite_icon(jsonObj[i].favarite, jsonObj[i].title);
-                }
-            }
-        }
-
         $('#body').tabs({
+//            tabWidth:80,
             tools:[{
+                text:'<i class="fa fa-refresh" />',
+                width:26,
+                handler:function(){
+                    var tab = $('#body').tabs('getSelected');
+                    $('#body').tabs('update', {
+                        tab: tab,
+                        options: {
+                            title: tab.panel("options").title,
+                            content: tab.panel("options").content
+                        }
+                    });
+                }
+            },{
                 text:'<i class="fa fa-star-o" />',
                 width:26,
 //                iconCls: 'e-icon icon-star-empty icon-large',
@@ -194,37 +189,30 @@
                 var jsonObj = JSON.parse(getCookie("MENU_LIST"));
                 removeJsonMenu(jsonObj, title);
                 save_menu_list(jsonObj);
-                if(jsonObj == ''){
-                    $('#menuList').menubutton({text: '<m:info name='菜单'/>'});
-                    show_menu_data(1);
-                }
             },
             onSelect: function(title, index){
-                var menu_list = JSON.parse(getCookie("MENU_LIST"));
-                var jsonObj = getJsonMenu(menu_list, title);
-                ajax_getTreeTagById(jsonObj.id);
             }
         });
 
-        if(jsonObj.length == 0) {
-            show_menu_data(1);
-//            addTabIndex();
-        }
         refush_favarite();
     });
 
-    var isFirst = true;
-    //页面渲染完成
-    $.parser.onComplete = function(){
-        loading_close(1000);
-
-        if(isFirst){
-
-
-
-            isFirst = false;
+    window.onload = function() {
+        var menu_list = getCookie("MENU_LIST");
+        if (menu_list != null && menu_list != "") {
+            var jsonObj = JSON.parse(menu_list);
+            for (var i = 0; i < jsonObj.length; i++) {
+                if (jsonObj[i] != null) {
+                    if (jsonObj[i].title && jsonObj[i].url) {
+                        var aa = addTab(jsonObj[i]);
+                    } else {
+                        alert(jsonObj[i].title + " && " + jsonObj[i].url);//!!!!!!!!!!!!!!!!!!!!!!!!
+                    }
+                    change_favarite_icon(jsonObj[i].favarite, jsonObj[i].title);
+                }
+            }
         }
-    }
+    };
 
     function clear_favarite(tab){
         if (tab){
@@ -249,7 +237,11 @@
                         id:item.id,
                         onclick: function(){
                             if(item.children == null){
-                                ajax_getTreeTagById(item.id);
+                                if ($('#body').tabs('exists', item.text)){
+                                    $('#body').tabs('select', item.text);
+                                } else if (item.text) {
+                                    ajax_getTreeTagById(item.menuId);
+                                }
                             }
                         }
                     });
@@ -288,20 +280,12 @@
     }
 
     function addTabByClick(jsonObj){
-        var title, id, url, parentId, parentName;
+        var title, id, url;
         title = jsonObj.title == null?jsonObj.title:jsonObj.title;
         id = jsonObj.id;
         url = jsonObj.url;
-        parentId = jsonObj.parentId;
-        parentName = jsonObj.parentName;
 
-        if(parentName == '首页'){
-            $('#menuList').menubutton({text: '<m:info name='菜单'/>'});
-        }else {
-            $('#menuList').menubutton({text: parentName});
-        }
         jsonObj.favariteFlag = $('#mm2').menu('findItem', title) != null;
-        show_menu_data(parentId);
         set_menu_remenber(jsonObj);
         addTab(jsonObj);
         if(jsonObj.favariteFlag){
@@ -327,22 +311,31 @@
         url = jsonObj.url;
         id = jsonObj.id;
 
-//        parentName = parentName==null?title:parentName;
         if ($('#body').tabs('exists', title)){
             $('#body').tabs('select', title);
-
         } else if (title) {
-            var content = '<iframe scrolling="auto" frameborder="0" src="'+url+'" style="width:100%;height:100%;"></iframe>';
+//            var h = $("#body").children("div.tabs-panels").height();
+//            var w = $("#body").children("div.tabs-panels").width();
+//            var content = '<iframe id="'+title+'" data-url="'+url+'" scrolling="false" frameborder="0" ' +
+//                'style="width:'+w+'px;height:'+h+'px;"></iframe>';
+            var content = '<iframe scrolling="no" frameborder="0" src="'+url+'" style="width:100%;height:100%;"></iframe>';
             $('#body').tabs('add',{
                 title:title,
                 content:content,
                 id:id,
                 fit:true,
                 closable:true,
-                iconCls:'',
+                iconCls:''
+//                width:w,
+//                height:h
 //                toolPosition:'left',
             });
             $('#body').tabs('getTab', title).css('overflow', 'hidden');
+
+//            $("#"+title).attr("src", url);
+//            var load = $("#"+title).load(function(){
+//                return "success";
+//            });
         }
     }
 
@@ -376,6 +369,7 @@
         }
         save_menu_list(jsonObj);
     }
+
     function set_menu_favarite(menu_index, is_favarite){
         if(getCookie("MENU_FAVARITE") == null || getCookie("MENU_FAVARITE") == ""){
             var jsonObj = [{index:menu_index, favarite:is_favarite}];
@@ -392,6 +386,7 @@
         }
         save_menu_list(jsonObj);
     }
+
     function save_menu_list(jsonObj){
         var jsonTab = "MENU_LIST="+JSON.stringify(jsonObj);
         document.cookie= jsonTab;
@@ -412,15 +407,12 @@
         return null;
     }
     function removeJsonMenu(jsonObj,title){
-//        var index = -1;
         for(var i = 0; i<jsonObj.length; i++){
             if(jsonObj[i] != null && jsonObj[i].title == title){
                 jsonObj.splice(i,1);
                 return;
-//                delete jsonObj[i];
             }
         }
-//        jsonObj.remove()
     }
     function getCookie(c_name)
     {
@@ -436,38 +428,6 @@
             }
         }
         return "[]"
-    }
-    function show_menu_data(pid){
-        pid = pid == undefined?0:pid;
-        $.ajax({
-            url: "/menu/tag/menu_tree.json?parentid="+pid,
-            type:"POST",
-            success: function(data){
-                if(data.rows) {
-                    $('#mm1').empty();
-                    set_menu_data(data.rows);
-                }
-            }
-        });
-    }
-    //第一层
-    function set_menu_data(data, target){
-        $.each(data, function(i, item) {
-            $('#mm1').menu('appendItem', {
-                parent:target,
-                text: item.text,
-                id:item.id,
-                onclick: function(){
-                    if(item.children == null){
-                        ajax_getTreeTagById(item.id);
-                    }
-                }
-            });
-            if(item.children != null){
-                var m_it = $('#mm1').menu('findItem', item.text).target;
-                set_menu_data(item.children, m_it);
-            }
-        });
     }
 </script>
 </html>
