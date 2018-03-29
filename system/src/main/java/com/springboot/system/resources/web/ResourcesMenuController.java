@@ -3,7 +3,7 @@ package com.springboot.system.resources.web;
 import com.springboot.common.util.CommonUtil;
 import com.springboot.system.resources.entity.firstDsE.Resources;
 import com.springboot.system.resources.entity.firstDsE.ResourcesMenu;
-import com.springboot.system.resources.model.EffectRow;
+import com.springboot.common.model.EffectRow;
 import com.springboot.system.resources.service.ResourcesMenuService;
 import com.springboot.system.resources.service.ResourcesService;
 import com.springboot.system.util.AjaxMsgUtil;
@@ -66,7 +66,7 @@ public class ResourcesMenuController {
     @RequestMapping(value = "/save" )
     @ResponseBody
     @RequiresPermissions("resourcesmenu:save")
-    public Map saveInfo(@RequestBody EffectRow effectRow){
+    public Map saveInfo(@RequestBody EffectRow<Resources> effectRow){
         List<ResourcesMenu> resourcesMenuList = new ArrayList<ResourcesMenu>();
 
         effectRow.getDeleted().forEach(resources ->{

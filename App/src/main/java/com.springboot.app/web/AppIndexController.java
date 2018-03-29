@@ -36,7 +36,7 @@ public class AppIndexController {
 
     @RequestMapping
     public String index(){
-        return "appIndex ssdd 是大咖高大上";
+        return "appIndex";
     }
 
     @ModelAttribute

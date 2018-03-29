@@ -73,7 +73,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>1.0.25</version>
+            <version>1.1.9</version>
         </dependency>
 
         <!-- EXCEL -->
@@ -219,7 +219,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>1.4.2.RELEASE</version>
                 <configuration>
-                    <mainClass>Application</mainClass>
+                    <mainClass>com.springboot.Application</mainClass>
                     <!--<finalName>OAHelper</finalName>-->
                     <classifier>exec</classifier>
                 </configuration>

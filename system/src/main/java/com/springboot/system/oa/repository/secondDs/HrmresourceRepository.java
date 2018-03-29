@@ -22,7 +22,6 @@ public interface HrmresourceRepository extends JpaRepository<Hrmresource,Long>,C
     @Query(nativeQuery = true, value = "select a.* from hrmresource a\n" +
             " left join (select touser,count(*) as ans from touser group by touser) b on b.touser=a.id \n" +
             "  where a.departmentid in (select b.id from hrmdepartment b where b.id = '2305' or b.supdepid = '2305') and a.loginid is not null order by b.ans desc nulls last,a.lastname")
-//    @Query(nativeQuery = true, value = "select * from hrmresource")
     public List<Hrmresource> findByDDC();
 
     public List<Hrmresource> findByDepartmentidAndLoginidNotNull(Long departmentid);

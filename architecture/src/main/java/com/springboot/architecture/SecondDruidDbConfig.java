@@ -13,6 +13,8 @@ import org.springframework.orm.hibernate4.support.OpenSessionInViewFilter;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewInterceptor;
+import org.springframework.orm.jpa.vendor.Database;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -143,13 +145,16 @@ public class SecondDruidDbConfig {
 //        Map properties = new HashMap(16);
 //        properties.put("spring.jpa.open-in-view","true");
 
-        return builder
+        LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = builder
                 .dataSource(secondDataSource())
                 .packages("com.springboot.**.entity.secondDsE")
-
                 .persistenceUnit("secondDBSource")
 //                .properties(properties)
                 .build();
+
+        localContainerEntityManagerFactoryBean.setJpaVendorAdapter(hibernateJpaVendorAdapter());
+
+        return localContainerEntityManagerFactoryBean;
     }
 
     /**
@@ -162,13 +167,23 @@ public class SecondDruidDbConfig {
         return new JpaTransactionManager(secondEntityManagerFactory(builder).getObject());
     }
 
+    public HibernateJpaVendorAdapter hibernateJpaVendorAdapter(){
+        HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
+        hibernateJpaVendorAdapter.setDatabase(Database.ORACLE);
+        hibernateJpaVendorAdapter.setDatabasePlatform("org.hibernate.dialect.Oracle10gDialect");
+        hibernateJpaVendorAdapter.setShowSql(true);
+        hibernateJpaVendorAdapter.setGenerateDdl(false);
+        return hibernateJpaVendorAdapter;
+    }
+
 //    /**
 //     * 实体管理对象
 //     * @param builder
 //     * @return
 //     */
 //    @Bean(name = "entityManagerSecondary")
-//    public EntityManager entityManager(EntityManagerFactoryBuilder builder) {
+//    public EntityManager entityManager(LocalContainerEntityManagerFactoryBean builder) {
+//        builder.
 //        EntityManagerImpl entityManager = secondEntityManagerFactory(builder).getObject().createEntityManager();
 //        return entityManager;
 //    }

@@ -5,7 +5,6 @@ import com.springboot.common.service.impl.BaseCommonServiceImpl;
 import com.springboot.system.oa.entity.secondDsE.Hrmdepartment;
 import com.springboot.system.oa.repository.secondDs.HrmdepartmentRepository;
 import com.springboot.system.oa.service.HrmdepartmentService;
-import com.sun.tools.javac.code.Attribute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
@@ -13,16 +12,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-/**  
- *    
- *   
- * @author XmasPiano  
+/**
+ *
+ *
+ * @author XmasPiano
  * @date 2018/3/1 上午10:26
- * @param   
- * @return   
- */  
+ * @param
+ * @return
+ */
 
 @Service
 @Transactional("secondTransactionManager")
