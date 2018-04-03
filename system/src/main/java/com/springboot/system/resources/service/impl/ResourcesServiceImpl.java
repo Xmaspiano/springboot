@@ -24,7 +24,7 @@ import java.util.List;
  * @return   
  */  
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class ResourcesServiceImpl
         extends BaseCommonServiceImpl<Resources, ResourcesRepository>
         implements ResourcesService {

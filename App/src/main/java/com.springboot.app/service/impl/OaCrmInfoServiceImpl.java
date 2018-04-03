@@ -17,7 +17,7 @@ import java.util.List;
  * Created by IntelliJ IDEA.
  */
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class OaCrmInfoServiceImpl
         extends BaseCommonServiceImpl<OaCrmInfo, OaCrmInfoRepository>
         implements OaCrmInfoService {

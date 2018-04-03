@@ -38,12 +38,14 @@ public class HrmdepartmentServiceImpl
      * @return Map 返回包含Tree数据结构的数据
      */
     @Override
+    @Transactional(readOnly=true)
     public Map[] findByYXDept() {//DEPT_YX_ALL
         return deptListForMap(findByCommonDeptTree());
     }
 
     @Cacheable(value = "DEPT_OA_ALL",key = "#root.methodName")
     @Override
+    @Transactional(readOnly=true)
     public List<Hrmdepartment> findByCommonDeptTree(){
         List<Hrmdepartment> superDepts = getRepository().findSub1YX();
         List<Hrmdepartment> depts = getRepository().findAll();
@@ -94,6 +96,7 @@ public class HrmdepartmentServiceImpl
      */
     @Override
     @Cacheable(value = "DEPT_YX_ALL",key = "#root.methodName")
+    @Transactional(readOnly=true)
     public List<Hrmdepartment> findByCommonDept() {
         List<Hrmdepartment> hrmdepartmentList = getRepository().findSub1YX();
         List<BigDecimal> countTlevel = getRepository().getCountTlevel();
@@ -120,8 +123,14 @@ public class HrmdepartmentServiceImpl
     }
 
     @Override
+    @Transactional(readOnly=true)
     public Map[] findAllBySuper(Long id){
         return deptListForMap(getRepository().findBySupdepid(id));
+    }
+
+    @Override
+    public List<Hrmdepartment> findSubCompany() {
+        return getRepository().getSubCompany();
     }
 
     private Map[] deptListForMap(List<Hrmdepartment> departmentList){

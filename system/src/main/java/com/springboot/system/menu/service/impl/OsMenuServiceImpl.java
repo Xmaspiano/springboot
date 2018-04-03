@@ -23,7 +23,7 @@ import java.util.List;
  * @return   
  */  
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class OsMenuServiceImpl
         extends BaseCommonServiceImpl<OsMenu, OsMenuRepository>
         implements OsMenuService {

@@ -20,7 +20,7 @@ import java.util.List;
  * @return   
  */  
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class ShiroResourcesServiceImpl
         extends BaseCommonServiceImpl<ShiroResources, ShiroResourcesRepository>
         implements ShiroResourcesService {

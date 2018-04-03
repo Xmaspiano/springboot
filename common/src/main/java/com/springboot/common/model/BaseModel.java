@@ -3,9 +3,8 @@ package com.springboot.common.model;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+
 /**
  * 供页面View使用的基础类
  *

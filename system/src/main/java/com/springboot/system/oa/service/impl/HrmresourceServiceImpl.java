@@ -32,23 +32,27 @@ public class HrmresourceServiceImpl
 
     @Override
     @CachePut(value = "hrmresourceRetryCache", key = "#id")//数据放入缓存
+    @Transactional(readOnly=true)
     public Hrmresource findOne(Long id) {
         return getRepository().findOne(id);
     }
 
     @Override
+    @Transactional(readOnly=true)
     public List<Hrmresource> findByDepartmentid(Long departmentid) {
         return getRepository().findByDepartmentidAndLoginidNotNull(departmentid);
     }
 
     @Override
     @CachePut(value = "hrmresourceRetryCache", key = "#loginid")//数据放入缓存
+    @Transactional(readOnly=true)
     public Hrmresource findByLoginid(String loginid) {
         return getRepository().findByLoginid(loginid);
     }
 
     @Cacheable(value = "hrmresourceRetryCache")//数据放入缓存
     @Override
+    @Transactional(readOnly=true)
     public List<Hrmresource> findByDDC(){
         return getRepository().findByDDC();
     }

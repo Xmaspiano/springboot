@@ -32,4 +32,10 @@ public interface HrmdepartmentRepository extends JpaRepository<Hrmdepartment,Lon
     @Query(nativeQuery = true, value = "select DISTINCT a.Tlevel from Hrmdepartment a " +
             "where a.Tlevel is not null order by tlevel asc")
     public List<BigDecimal> getCountTlevel();
+
+    @Query(nativeQuery = true, value =
+            " select a.id,a.subcompanyname as departmentname,a.companyid as subcompanyid1, " +
+            " a.supsubcomid as supdepid,a.canceled,a.tlevel from Hrmsubcompany a " +
+            " where canceled is null or canceled <> 1 ")
+    public List<Hrmdepartment> getSubCompany();
 }

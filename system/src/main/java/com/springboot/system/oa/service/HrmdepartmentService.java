@@ -25,4 +25,6 @@ public interface HrmdepartmentService extends CommonService<Hrmdepartment> {
     public List<Hrmdepartment> findByCommonDept();
 
     public Map[] findAllBySuper(Long id);
+
+    public List<Hrmdepartment> findSubCompany();
 }

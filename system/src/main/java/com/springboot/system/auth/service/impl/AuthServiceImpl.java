@@ -30,7 +30,7 @@ import java.util.*;
  * @return   
  */  
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class AuthServiceImpl
         extends BaseCommonServiceImpl<Auth, AuthRepository>
         implements AuthService {

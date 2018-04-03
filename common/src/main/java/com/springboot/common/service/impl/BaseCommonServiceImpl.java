@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,21 +29,31 @@ public abstract class BaseCommonServiceImpl<E, R> implements CommonService<E>{
     private CommonRepository<E> commonRepository;
 
     @Override
+    @Transactional(readOnly=true)
     public E findOne(Long id) {
         return commonRepository.findOne(id);
     }
 
     @Override
+    @Transactional(readOnly=true)
     public List<E> findAll() {
         return (List<E>)commonRepository.findAll();
     }
 
-//    @Override
-//    public Page<E> findAll(Pageable pageable){
-//        return commonRepository.findAll(pageable);
-//    }
+    @Override
+    @Transactional(readOnly=true)
+    public Page<E> findAll(Pageable pageable){
+        return commonRepository.findAll(pageable);
+    }
 
     @Override
+    @Transactional(readOnly=true)
+    public List<E> findAll(Specification<E> spec) {
+        return commonRepository.findAll(spec);
+    }
+
+    @Override
+    @Transactional(readOnly=true)
     public Page<E> findAll(Specification<E> spec, Pageable pageable) {
         return commonRepository.findAll(spec, pageable);
     }

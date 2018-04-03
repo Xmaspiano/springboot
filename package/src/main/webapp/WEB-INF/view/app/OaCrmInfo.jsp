@@ -27,26 +27,21 @@
 </body>
 <%--初始化Html Script--%>
 <script>
-    $(function() {
-        //初始化treegrid数据
-        $('#table-oacrminfo').datagrid({
+    var __date={
+        idName:"table-oacrminfo",
+        tollIdName:"tb-OaCrmInfo",
+        validateField:[
+            "name",
+            "gysbh",
+            "ekor"
+        ],
+        datagrid:{
             title:"<i class='icon-save'/>&nbsp;<m:info name='供应商管理'/>",
             url: '/app/crm/date_treegrid.json',
-            pagination:true,
             method:"POST",
             loadMsg:"<m:info name='数据加载中...'/>",
-            fitColumns:true,
-            fit:true,
             pageSize:30,
-            toolbar:"#tb-OaCrmInfo",
-//            striped:true,
-            rownumbers:true,
-            singleSelect:true,
-            idField:"id",
-            queryParams: {
-                "sreachname":""
-            },
-            columns: [[
+            columns:[[
                 {field: 'ck-table-oacrminfo', checkbox:true},
                 {field: 'id', title: "<m:info name='主键'/>", width: 180, hidden:true},
                 {field: 'name', title: "<m:info name='名称'/>", width: 180,
@@ -59,11 +54,40 @@
                     editor:{type:'validatebox',options:{ required:true, validType:'length[4,10]'} }
                 }
             ]],
+            idField:"id",
+            queryParams: {
+                sreachname:""
+            }
+        },
+
+    }
+
+    var $targetTag = $("#"+__date.idName);
+    var $targetToolTag = $("#"+__date.tollIdName);
+
+    $(function() {
+        //初始化treegrid数据
+        $targetTag.datagrid({
+            title: __date.datagrid.title,
+            url: __date.datagrid.url,
+            pagination:true,
+            method: __date.datagrid.method,
+            loadMsg: __date.datagrid.loadMsg,
+            fitColumns:true,
+            fit:true,
+            pageSize:__date.datagrid.pageSize,
+            toolbar: "#"+__date.tollIdName,
+//            striped:true,
+            rownumbers:true,
+            singleSelect:true,
+            idField:__date.datagrid.idField,
+            queryParams: __date.datagrid.queryParams,
+            columns: __date.datagrid.columns,
             onDblClickRow:onDblClickRow,
             onClickRow:onClickRow
         });
 
-        $("#tb-OaCrmInfo").children("span.searchbox").css("float","right")
+        $targetToolTag.children("span.searchbox").css("float","right")
     });
 
     //定义页面操作集合
@@ -93,51 +117,51 @@
     }
 
     function search(value,name){
-        $("#table-oacrminfo").datagrid('options').queryParams[name] = value;
-        $('#table-oacrminfo').datagrid("reload");
+        $targetTag.datagrid('options').queryParams[name] = value;
+        $targetTag.datagrid("reload");
     }
 </script>
 <script type="text/javascript">
     var editIndex = undefined;
     function endEditing(){
         if (editIndex == undefined){return true}
-        $('#table-oacrminfo').datagrid('endEdit', editIndex);
+        $targetTag.datagrid('endEdit', editIndex);
         editIndex = undefined;
         return true;
     }
     function onClickRow(index){
         if (editIndex != index){
             if (endEditing()){
-                $('#table-oacrminfo').datagrid('selectRow', index);
+                $targetTag.datagrid('selectRow', index);
                 editIndex = index;
             } else {
-                $('#table-oacrminfo').datagrid('selectRow', editIndex);
+                $targetTag.datagrid('selectRow', editIndex);
             }
         }
     }
 
     function onDblClickRow(index){
         onClickRow(index);
-        $('#table-oacrminfo').datagrid('selectRow', index)
+        $targetTag.datagrid('selectRow', index)
             .datagrid('beginEdit', index);
-        $("#table-oacrminfo").datagrid('getEditors',index)[0].target.focus();
+        $targetTag.datagrid('getEditors',index)[0].target.focus();
     }
 
     //增行
     function append(){
         if (endEditing()){
-            $('#table-oacrminfo').datagrid('appendRow',{});
-            editIndex = $('#table-oacrminfo').datagrid('getRows').length-1;
-            $('#table-oacrminfo').datagrid('selectRow', editIndex)
+            $targetTag.datagrid('appendRow',{});
+            editIndex = $targetTag.datagrid('getRows').length-1;
+            $targetTag.datagrid('selectRow', editIndex)
                 .datagrid('beginEdit', editIndex);
         }
     }
     //删除
     function removeit(){
-        var checkedRows = $("#table-oacrminfo").datagrid('getSelected');
-        var checkedIndex =  $("#table-oacrminfo").datagrid('getRowIndex',checkedRows);
+        var checkedRows = $targetTag.datagrid('getSelected');
+        var checkedIndex =  $targetTag.datagrid('getRowIndex',checkedRows);
 
-        $('#table-oacrminfo').datagrid('cancelEdit', checkedIndex)
+        $targetTag.datagrid('cancelEdit', checkedIndex)
             .datagrid('deleteRow', checkedIndex);
         editIndex = undefined;
     }
@@ -146,17 +170,17 @@
         clearEmpty();
 
         var effectRow = new Object();
-        effectRow["inserted"] = $('#table-oacrminfo').datagrid('getChanges', 'inserted');
-        effectRow["deleted"] = $('#table-oacrminfo').datagrid('getChanges', 'deleted');
-        effectRow["updated"] = $('#table-oacrminfo').datagrid('getChanges', 'updated');
+        effectRow["inserted"] = $targetTag.datagrid('getChanges', 'inserted');
+        effectRow["deleted"] = $targetTag.datagrid('getChanges', 'deleted');
+        effectRow["updated"] = $targetTag.datagrid('getChanges', 'updated');
 
-        var rows = $('#table-oacrminfo').datagrid('getRows');
+        var rows = $targetTag.datagrid('getRows');
         var validateRowFlag = true;
         for(var i=0; i<rows.length; i++) {
-            if (!$('#table-oacrminfo').datagrid('validateRow', i)) {
+            if (!$targetTag.datagrid('validateRow', i)) {
                 validateRowFlag = false;
             }else{
-                $('#table-oacrminfo').datagrid('endEdit', i);
+                $targetTag.datagrid('endEdit', i);
             }
         }
         if(!validateRowFlag){
@@ -174,7 +198,7 @@
                 success: function (data) {
                     if (data.status) {
                         if (endEditing()) {
-                            $('#table-oacrminfo').datagrid('acceptChanges');
+                            $targetTag.datagrid('acceptChanges');
                         }
                         $.messager.alert('信息提示', "保存成功...", 'info');
                     } else {
@@ -189,12 +213,12 @@
     }
     //还原
     function reject(){
-        $('#table-oacrminfo').datagrid('rejectChanges');
+        $targetTag.datagrid('rejectChanges');
         editIndex = undefined;
     }
 
     function getChanges(){
-        var rows = $('#table-oacrminfo').datagrid('getChanges');
+        var rows = $targetTag.datagrid('getChanges');
         $.messager.show({
             title:"保存信息",
             msg:rows.length+" rows are changed!",
@@ -203,39 +227,32 @@
     }
 
     function clearEmpty() {
-        clearEmptyCommon({
-            idName:"table-oacrminfo",
-            validateField:[
-                "name",
-                "gysbh",
-                "ekor"
-            ]
-        });
+        clearEmptyCommon(__date);
     }
 
 
     function clearEmptyCommon(data) {
         endEditing();
-        var rows = $("#"+data.idName).datagrid('getChanges');
+        var rows = $targetTag.datagrid('getChanges');
         var deleteIndex= new Array();
 
         out:
-        for(var i=0; i<rows.length; i++){
-            var rowIndex = $("#"+data.idName).datagrid('getRowIndex',rows[i]);
+            for(var i=0; i<rows.length; i++){
+                var rowIndex = $targetTag.datagrid('getRowIndex',rows[i]);
 
-            for(var j=0; j<data.validateField.length; j++){
-                var ed = $("#"+data.idName).datagrid('getEditor', {index:rowIndex,field:data.validateField[j]});
-                if(!ed || $(ed.target).val() != ""){
-                    $("#"+data.idName).datagrid('endEdit', rowIndex);
-                    continue out;
+                for(var j=0; j<data.validateField.length; j++){
+                    var ed = $targetTag.datagrid('getEditor', {index:rowIndex,field:data.validateField[j]});
+                    if(!ed || $(ed.target).val() != ""){
+                        $targetTag.datagrid('endEdit', rowIndex);
+                        continue out;
+                    }
                 }
+                deleteIndex.push(rowIndex);
             }
-            deleteIndex.push(rowIndex);
-        }
 
         for(var rowIndex=0; rowIndex<deleteIndex.length; rowIndex++) {
             var moveIndex = deleteIndex[rowIndex] - rowIndex;
-            $('#table-oacrminfo').datagrid('cancelEdit', moveIndex)
+            $targetTag.datagrid('cancelEdit', moveIndex)
                 .datagrid('deleteRow', moveIndex);
         }
 

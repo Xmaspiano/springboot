@@ -20,7 +20,7 @@ import java.util.List;
  * @return   
  */  
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class FavariteServiceImpl
         extends BaseCommonServiceImpl<Favarite, FavariteRepository>
         implements FavariteService {

@@ -1,5 +1,6 @@
 package com.springboot.system.common.tag.dept;
 
+import com.springboot.common.util.CommonUtil;
 import com.springboot.system.common.tag.BaseTagController;
 import com.springboot.system.oa.entity.secondDsE.Hrmdepartment;
 import com.springboot.system.oa.service.HrmdepartmentService;
@@ -98,5 +99,11 @@ public class DepartmentTagController extends BaseTagController {
             osPartdept.setId(id);
         }
         return osPartdept;
+    }
+
+    @RequestMapping("/getSubCompany.json")
+    @ResponseBody
+    public List<Hrmdepartment> getSubCompany(){
+        return departmentService.findSubCompany();
     }
 }

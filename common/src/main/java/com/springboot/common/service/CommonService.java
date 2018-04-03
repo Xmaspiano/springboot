@@ -22,7 +22,9 @@ public interface CommonService<E>{
 
     public List<E> findAll();
 
-//    public Page<E> findAll(Pageable pageable);
+    public Page<E> findAll(Pageable pageable);
+
+    public List<E> findAll(Specification<E> spec);
 
     public Page<E> findAll(Specification<E> spec, Pageable pageable);
 

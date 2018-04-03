@@ -20,7 +20,7 @@ import java.util.List;
  * @return   
  */  
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class ResourcesMenuServiceImpl
         extends BaseCommonServiceImpl<ResourcesMenu, ResourcesMenuRepository>
         implements ResourcesMenuService {
